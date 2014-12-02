@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:ldap="http://www.springframework.org/schema/ldap"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/ldap 
+        http://www.springframework.org/schema/ldap/spring-ldap-2.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<context:component-scan base-package="gdp" />
+	
+	<mvc:annotation-driven />
+	
+	<mvc:default-servlet-handler />
+	
+	<beans>
+		<mvc:interceptors>
+			<mvc:interceptor>
+				<mvc:mapping path="/rest/**" />
+				<bean class="gdp.spring.interceptors.RequestHandlerInterceptor" />
+			</mvc:interceptor>
+		</mvc:interceptors>
+		<!-- -->
+		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<property name="suffix">
+				<value>.html</value>
+			</property>
+		</bean>
+		<!-- -->
+		<bean id="credentials" class="gdp.vomodel.VOCredential" scope="session"></bean>
+		
+		<!-- EntityManagerFactory Init -->
+		<bean id="emfh" init-method="init" scope="singleton" class="gdp.spring.bootstrap.EntityManagerFactoryHolder" />
+		
+		<!-- DAOs Declarations -->
+		<bean id="asignaturaDAO" class="gdp.dao.asignatura.AsignaturaDAOImpl" scope="request" />
+		<bean id="carreraDAO" class="gdp.dao.carrera.CarreraDAOImpl" scope="request" />
+		<bean id="contactoDAO" class="gdp.dao.contacto.ContactoDAOImpl" scope="request" />
+		<bean id="desempenioDAO" class="gdp.dao.desempenio.DesempenioDAOImpl" scope="request" />
+		<bean id="docenteDAO" class="gdp.dao.docente.DocenteDAOImpl" scope="request" />
+		<bean id="documentacionDAO" class="gdp.dao.documentacion.DocumentacionDAOImpl" scope="request" />
+		<bean id="domicilioDAO" class="gdp.dao.domicilio.DomicilioDAOImpl" scope="request" />
+		<bean id="empleoDAO" class="gdp.dao.empleo.EmpleoDAOImpl" scope="request" />
+		<bean id="formacionacAdemicaDAO" class="gdp.dao.formacionacademica.FormacionAcademicaDAOImpl" scope="request" />
+		<bean id="infoAdministrativaDAO" class="gdp.dao.infoadministrativa.InfoAdministrativaDAOImpl" scope="request" />
+		<bean id="institutoDAO" class="gdp.dao.instituto.InstitutoDAOImpl" scope="request" />
+		<bean id="localidadDAO" class="gdp.dao.localidad.LocalidadDAOImpl" scope="request" />
+		<bean id="partidoDAO" class="gdp.dao.partido.PartidoDAOImpl" scope="request" />
+		<bean id="personaDAO" class="gdp.dao.persona.PersonaDAOImpl" scope="request" />
+		<bean id="provinciaDAO" class="gdp.dao.provincia.ProvinciaDAOImpl" scope="request" />
+		<bean id="sedeDAO" class="gdp.dao.sede.SedeDAOImpl" scope="request" />
+		<bean id="tipoAdministracionDAO" class="gdp.dao.tipoadministracion.TipoAdministracionDAOImpl" scope="request" />
+		<bean id="tipoCargoDAO" class="gdp.dao.tipocargo.TipoCargoDAOImpl" scope="request" />
+		<bean id="tipoContactoDAO" class="gdp.dao.tipocontacto.TipoContactoDAOImpl" scope="request" />
+		<bean id="tipoDocumentoDAO" class="gdp.dao.tipodocumento.TipoDocumentoDAOImpl" scope="request" />
+		<bean id="tipoEstadoContractualDAO" class="gdp.dao.tipoestadocontractual.TipoEstadoContractualDAOImpl" scope="request" />
+		<bean id="tipoEstadoFormacionDAO" class="gdp.dao.tipoestadoformacion.TipoEstadoFormacionDAOImpl" scope="request" />
+		<bean id="tipoFormacionDAO" class="gdp.dao.tipoformacion.TipoFormacionDAOImpl" scope="request" />
+		<bean id="tipoMotivoDAO" class="gdp.dao.tipomotivo.TipoMotivoDAOImpl" scope="request" />
+		<bean id="tipoPersonalDAO" class="gdp.dao.tipopersonal.TipoPersonalDAOImpl" scope="request" />
+		<bean id="tipoRelacionDAO" class="gdp.dao.tiporelacion.TipoRelacionDAOImpl" scope="request" />
+		<bean id="tipoSituacionDAO" class="gdp.dao.tiposituacion.TipoSituacionDAOImpl" scope="request" />
+		<bean id="tipoSituacionRevistaDAO" class="gdp.dao.tiposituacionrevista.TipoSituacionRevistaDAOImpl" scope="request" />
+		<bean id="usuarioDAO" class="gdp.dao.usuario.UsuarioDAOImpl" scope="request" />
+		
+		<!-- Json Utilities -->
+		<bean id="gson" class="gdp.spring.factoryBeans.GsonSpringFactoryBean" scope="singleton" />
+
+		<!-- The quartz scheduler configuration -->
+		<!-- <bean id="jobFactoryBean" class="gdp.spring.factoryBeans.AutowiringSpringBeanJobFactory"/> -->
+		<!-- <bean id="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> -->
+		<!-- <property name="waitForJobsToCompleteOnShutdown" value="true"/> -->
+		<!-- <property name="jobFactory" ref="jobFactoryBean"/> -->
+		<!-- <property name="triggers"> -->
+		<!-- <list> -->
+		<!-- Jobs -->
+		<!-- <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> -->
+		<!-- <property name="jobDetail"> -->
+		<!-- Job para recordatorios del día -->
+		<!-- <bean id="mailSenderJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"> -->
+		<!-- <property name="jobClass" value="gdp.spring.schedulers.MailSenderJob" 
+			/> -->
+		<!-- <property name="durability" value="true" /> -->
+		<!-- </bean> -->
+		<!-- </property> -->
+		<!-- Cron para producción -->
+		<!-- <property name="cronExpression" value="0 0 8 ? * MON-FRI"/> -->
+
+		<!-- Cron para Testing -->
+		<!-- <property name="cronExpression" value="0 0/3 * * * ?"/> -->
+
+		<!-- <property name="misfireInstructionName" value="MISFIRE_INSTRUCTION_DO_NOTHING" 
+			/> -->
+		<!-- </bean> -->
+
+		<!-- <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> -->
+		<!-- <property name="jobDetail"> -->
+		<!-- Job para vencimiento de convenios -->
+		<!-- <bean id="vencimientoConveniosJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"> -->
+		<!-- <property name="jobClass" value="gdp.spring.schedulers.VencimientoConveniosJob" 
+			/> -->
+		<!-- <property name="durability" value="true" /> -->
+		<!-- </bean> -->
+		<!-- </property> -->
+		<!-- Cron para producción -->
+		<!-- <property name="cronExpression" value="0 0 8 ? * MON-FRI"/> -->
+
+		<!-- Cron para Testing -->
+		<!-- <property name="cronExpression" value="0 0/3 * * * ?"/> -->
+
+		<!-- <property name="misfireInstructionName" value="MISFIRE_INSTRUCTION_DO_NOTHING" 
+			/> -->
+		<!-- </bean> -->
+		<!-- </list> -->
+		<!-- </property> -->
+		<!-- </bean> -->
+	</beans>
+</beans>
