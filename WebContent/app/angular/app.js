@@ -1,7 +1,6 @@
 'use strict';
 
-// var gdpApp = angular.module('gdpApp', [ 'ngRoute' ])
-var gdpApp = angular.module('gdpApp', [ 'ngRoute', 'gdpControllers' ]);
+var gdpApp = angular.module('gdpApp', [ 'ngRoute', 'gdpControllers', 'gdpServices' ]);
 
 gdpApp.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/administracion', {
