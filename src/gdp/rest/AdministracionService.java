@@ -1,5 +1,7 @@
 package gdp.rest;
 
+import java.util.List;
+
 import gdp.dao.tipoadministracion.ITipoAdministracionDAO;
 import gdp.spring.bootstrap.EntityManagerFactoryHolder;
 import gdp.vomodel.VOResponse;
@@ -42,8 +44,10 @@ public class AdministracionService {
 		VOTipoAdministracion voTipoAdministracion = gson.fromJson(object.get("nuevo"), VOTipoAdministracion.class);
 		try {
 			emfh.beginTransaction(em);
-			administracionDAO.guardar(voTipoAdministracion, em);
+			VOTipoAdministracion tipoAdministracion = administracionDAO.guardar(voTipoAdministracion, em);
 			emfh.commitTransaction(em);
+			voResponse.setData(gson.toJson(tipoAdministracion));
+			voResponse.setOk(true);
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
 			voResponse.setErrorMessage("No pudo guardarse el nuevo tipo.");
@@ -52,4 +56,17 @@ public class AdministracionService {
 		return gson.toJson(voResponse);
 	}
 
+	@RequestMapping(value = "/administracion/listar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	public String listarTipos(@RequestBody String data) {
+		VOResponse voResponse = new VOResponse();
+		try {
+			List<VOTipoAdministracion> tiposAdministracion = administracionDAO.listar();
+			voResponse.setData(gson.toJson(tiposAdministracion));
+			voResponse.setOk(true);
+		} catch (Exception e) {
+			voResponse.setErrorMessage("No se pudieron listar los tipo.");
+			voResponse.setOk(false);
+		}
+		return gson.toJson(voResponse);
+	}
 }

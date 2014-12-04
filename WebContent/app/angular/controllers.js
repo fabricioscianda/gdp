@@ -4,28 +4,44 @@ var gdpControllers = angular.module('gdpControllers', []);
 gdpControllers.controller('AdministracionCtrl', [ '$scope',
 		'AdministracionService', function($scope, AdministracionService) {
 
-			$scope.tiposAdmin = [ {
-				'nombre' : 'Publica'
-			}, {
-				'nombre' : 'Privada'
-			} ];
-
+			$scope.success = null;
+			$scope.msgSuccess = null;
+			$scope.msgError = null;
+			
 			$scope.nuevoTipo = {};
+			$scope.tiposAdmin = {};
 
 			$scope.guardar = function(nuevo) {
 				AdministracionService.guardar({
 					'nuevo' : nuevo
 				}, function(response) {
+					$scope.success = response.ok;
 					if (response.ok) {
+						$scope.msgSuccess = 'Guardado.';
+						$scope.listar();
 						console.log('Tipo Administracion Guardada.');
 					} else {
+						$scope.msgError = 'No se pudo guardar.';
 						console.log('No se pudo guardar el elemento.');
 					}
 				}, function(error) {
 					alert(error);
 				})
-//				$scope.tiposAdmin.push(nuevo);
-//				$scope.nuevoTipo = {};
+			};
+
+			$scope.listar = function() {
+				AdministracionService.listar( {},
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.tiposAdmin = angular.fromJson(response.data);
+						} else {
+							$scope.msgError = 'No se pudieron obtener los tipos.';
+						};
+					}, 
+					function(error) {
+						alert(error);
+					});
 			};
 
 			$scope.borrar = function(index) {

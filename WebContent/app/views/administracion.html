@@ -19,6 +19,16 @@
 							type="text" class="form-control" id="admin-nombre"
 							ng-model="nuevoTipo.nombre">
 					</div>
+					<div>
+						<div class="alert alert-success alert-dismissible" role="alert" ng-show="success && success!=null && msgSuccess!=null" >
+						  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						  {{msgSuccess}}
+						</div>
+						<div class="alert alert-danger alert-dismissible" role="alert" ng-show="!success && success!=null && msgError!=null">
+						  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						  {{msgError}}
+						</div>
+					</div>
 				</form>
 			</div>
 			<!-- Panel Footer : Buttons -->
@@ -37,7 +47,7 @@
 				<h4>Tipos Actuales</h4>
 			</div>
 			<!-- Listado -->
-			<div class="tipos">
+			<div class="tipos" ng-init="listar()">
 				<table class="table table-hover table-bordered table-condensed">
 					<tbody>
 						<tr ng-repeat="tipo in tiposAdmin">
