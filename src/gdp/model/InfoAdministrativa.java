@@ -5,6 +5,7 @@ import gdp.utils.DBUtils;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ public class InfoAdministrativa implements Serializable {
 	private Long id;
 	private Long fechaAlta;
 	private Long fechaMotivo;
+	@Column(unique = true, nullable = true)
 	private String legajo;
 	private String nroExpe;
 	private String nroResol;

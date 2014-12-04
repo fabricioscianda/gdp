@@ -4,6 +4,7 @@ import gdp.utils.DBUtils;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class TipoSituacion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_TIPOSITU")
 	@SequenceGenerator(schema = DBUtils.SCHEMA, name = "SEQUENCE_TIPOSITU", sequenceName = "TIPOSITU_SEQ", allocationSize = 1)
 	private Long id;
+	@Column(unique = true)
 	private String nombre;
 
 	public TipoSituacion() {

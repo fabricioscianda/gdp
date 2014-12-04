@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,10 @@ public class Persona implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
 	@JoinColumn(name = "id_infoadmin")
 	private InfoAdministrativa infoAdministrativa;
+	@Column(unique = true, nullable = false)
 	private Integer numeroDoc;
+	@Column(unique = true, nullable = true)
+	private Integer cuil;
 	private String nombre;
 	private String apellido;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -152,6 +156,14 @@ public class Persona implements Serializable {
 
 	public void setFechaNac(Long fechaNac) {
 		this.fechaNac = fechaNac;
+	}
+
+	public Integer getCuil() {
+		return cuil;
+	}
+
+	public void setCuil(Integer cuil) {
+		this.cuil = cuil;
 	}
 
 }

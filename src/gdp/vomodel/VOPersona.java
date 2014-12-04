@@ -10,6 +10,7 @@ public class VOPersona implements Serializable {
 	private Long fechaNac;
 	private VOInfoAdministrativa infoAdministrativa;
 	private Integer numeroDoc;
+	private Integer cuil;
 	private String nombre;
 	private String apellido;
 	private VOTipoDocumento tipoDoc;
@@ -119,6 +120,14 @@ public class VOPersona implements Serializable {
 
 	public void setFechaNac(Long fechaNac) {
 		this.fechaNac = fechaNac;
+	}
+
+	public Integer getCuil() {
+		return cuil;
+	}
+
+	public void setCuil(Integer cuil) {
+		this.cuil = cuil;
 	}
 
 }
