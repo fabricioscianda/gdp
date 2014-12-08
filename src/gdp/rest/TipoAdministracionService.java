@@ -20,23 +20,23 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 @RestController
-@RequestMapping(value = "/rest/administracionService")
+@RequestMapping(value = "/rest/tipoAdministracionService")
 @Scope("request")
-public class AdministracionService {
+public class TipoAdministracionService {
 
 	@Inject
 	private EntityManagerFactoryHolder emfh;
 
 	@Inject
-	private ITipoAdministracionDAO administracionDAO;
+	private ITipoAdministracionDAO tipoAdministracionDAO;
 
 	@Inject
 	private Gson gson;
 
-	public AdministracionService() {
+	public TipoAdministracionService() {
 	}
 
-	@RequestMapping(value = "/administracion/guardar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoAdministracion/guardar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String guardar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
@@ -46,9 +46,9 @@ public class AdministracionService {
 			VOTipoAdministracion tipoAdministracion = null;
 			emfh.beginTransaction(em);
 			if (voTipoAdministracion.getId()!=null && voTipoAdministracion.getId()!=0) {
-				tipoAdministracion = administracionDAO.modificar(voTipoAdministracion, em);
+				tipoAdministracion = tipoAdministracionDAO.modificar(voTipoAdministracion, em);
 			} else {
-				tipoAdministracion = administracionDAO.guardar(voTipoAdministracion, em);
+				tipoAdministracion = tipoAdministracionDAO.guardar(voTipoAdministracion, em);
 			}
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(tipoAdministracion));
@@ -61,7 +61,7 @@ public class AdministracionService {
 		return gson.toJson(voResponse);
 	}
 	
-	@RequestMapping(value = "/administracion/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoAdministracion/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String editar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
@@ -69,7 +69,7 @@ public class AdministracionService {
 		VOTipoAdministracion voTipoAdministracion = gson.fromJson(object.get("nuevo"), VOTipoAdministracion.class);
 		try {
 			emfh.beginTransaction(em);
-			VOTipoAdministracion tipoAdministracion = administracionDAO.modificar(voTipoAdministracion, em);
+			VOTipoAdministracion tipoAdministracion = tipoAdministracionDAO.modificar(voTipoAdministracion, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(tipoAdministracion));
 			voResponse.setOk(true);
@@ -81,12 +81,12 @@ public class AdministracionService {
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/administracion/listar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoAdministracion/listar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String listar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		try {
-			List<VOTipoAdministracion> tiposAdministracion = administracionDAO.listar(em);
+			List<VOTipoAdministracion> tiposAdministracion = tipoAdministracionDAO.listar(em);
 			voResponse.setData(gson.toJson(tiposAdministracion));
 			voResponse.setOk(true);
 		} catch (Exception e) {
@@ -96,7 +96,7 @@ public class AdministracionService {
 		return gson.toJson(voResponse);
 	}
 	
-	@RequestMapping(value = "/administracion/borrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoAdministracion/borrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String borrar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
@@ -105,7 +105,7 @@ public class AdministracionService {
 			Long id = object.get("id").getAsLong();
 			if (id!=null) {
 				emfh.beginTransaction(em);
-				administracionDAO.borrar(id, em);
+				tipoAdministracionDAO.borrar(id, em);
 				emfh.commitTransaction(em);
 			}
 			voResponse.setOk(true);
@@ -117,7 +117,7 @@ public class AdministracionService {
 		return gson.toJson(voResponse);
 	}
 	
-	@RequestMapping(value = "/administracion/encontrar", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
+	@RequestMapping(value = "/tipoAdministracion/encontrar", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
 	public String encontrar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
@@ -125,7 +125,7 @@ public class AdministracionService {
 			VOTipoAdministracion voTipoAdministracion = null;
 			JsonObject object = gson.fromJson(data, JsonObject.class);
 			Long id = object.get("id").getAsLong();
-			voTipoAdministracion = administracionDAO.encontrar(id, em);
+			voTipoAdministracion = tipoAdministracionDAO.encontrar(id, em);
 			voResponse.setData(gson.toJson(voTipoAdministracion));
 			voResponse.setOk(true);
 		} catch (Exception e) {

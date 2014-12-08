@@ -1,17 +1,29 @@
 'use strict';
 
-var gdpApp = angular.module('gdpApp', [ 'ngRoute', 'gdpControllers', 'gdpServices' ]);
+var gdpApp = angular.module('gdpApp', [ 'ngRoute', 'gdpControllers',
+		'gdpServices' ]);
 
 gdpApp.config([ '$routeProvider', function($routeProvider) {
-	$routeProvider.when('/administracion', {
+
+	$routeProvider
+	
+	.when('/tiposAdministracion', {
 		templateUrl : 'app/views/formGenerico.html',
-		// templateUrl : 'app/views/administracion.html',
-		controller : 'AdministracionCtrl'
-	}).when('/cargos', {
+		controller : 'TipoAdministracionCtrl'
+	})
+	
+	.when('/tiposCargo', {
 		templateUrl : 'app/views/formGenerico.html',
-		// templateUrl : 'app/views/cargos.html',
-		controller : 'CargoCtrl'
-	}).otherwise({
+		controller : 'TipoCargoCtrl'
+	})
+	
+	.when('/tiposContacto', {
+		templateUrl : 'app/views/formGenerico.html',
+		controller : 'TipoContactoCtrl'
+	})
+	
+	.otherwise({
 		templateUrl : 'app/views/home.html'
 	});
+	
 } ]);

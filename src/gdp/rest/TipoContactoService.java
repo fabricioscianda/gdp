@@ -1,9 +1,9 @@
 package gdp.rest;
 
-import gdp.dao.tipocargo.ITipoCargoDAO;
+import gdp.dao.tipocontacto.ITipoContactoDAO;
 import gdp.spring.bootstrap.EntityManagerFactoryHolder;
 import gdp.vomodel.VOResponse;
-import gdp.vomodel.VOTipoCargo;
+import gdp.vomodel.VOTipoContacto;
 
 import java.util.List;
 
@@ -20,38 +20,38 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 @RestController
-@RequestMapping(value = "/rest/cargoService")
+@RequestMapping(value = "/rest/tipoContactoService")
 @Scope("request")
-public class CargoService {
+public class TipoContactoService {
 
 	@Inject
 	private EntityManagerFactoryHolder emfh;
 
 	@Inject
-	private ITipoCargoDAO cargoDAO;
+	private ITipoContactoDAO tipoContactoDAO;
 
 	@Inject
 	private Gson gson;
 
-	public CargoService() {
+	public TipoContactoService() {
 	}
 
-	@RequestMapping(value = "/cargo/guardar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoContacto/guardar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String guardar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOTipoCargo VOTipoCargo = gson.fromJson(object.get("nuevo"), VOTipoCargo.class);
+		VOTipoContacto voTipoContacto = gson.fromJson(object.get("nuevo"), VOTipoContacto.class);
 		try {
-			VOTipoCargo tipoCargo = null;
+			VOTipoContacto tipoContacto = null;
 			emfh.beginTransaction(em);
-			if (VOTipoCargo.getId() != null && VOTipoCargo.getId() != 0) {
-				tipoCargo = cargoDAO.modificar(VOTipoCargo, em);
+			if (voTipoContacto.getId() != null && voTipoContacto.getId() != 0) {
+				tipoContacto = tipoContactoDAO.modificar(voTipoContacto, em);
 			} else {
-				tipoCargo = cargoDAO.guardar(VOTipoCargo, em);
+				tipoContacto = tipoContactoDAO.guardar(voTipoContacto, em);
 			}
 			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(tipoCargo));
+			voResponse.setData(gson.toJson(tipoContacto));
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
@@ -61,17 +61,17 @@ public class CargoService {
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/cargo/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoContacto/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String editar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOTipoCargo VOTipoCargo = gson.fromJson(object.get("nuevo"), VOTipoCargo.class);
+		VOTipoContacto voTipoContacto = gson.fromJson(object.get("nuevo"), VOTipoContacto.class);
 		try {
 			emfh.beginTransaction(em);
-			VOTipoCargo tipoCargo = cargoDAO.modificar(VOTipoCargo, em);
+			VOTipoContacto tipoContacto = tipoContactoDAO.modificar(voTipoContacto, em);
 			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(tipoCargo));
+			voResponse.setData(gson.toJson(tipoContacto));
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
@@ -81,13 +81,13 @@ public class CargoService {
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/cargo/listar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoContacto/listar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String listar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		try {
-			List<VOTipoCargo> tiposCargo = cargoDAO.listar(em);
-			voResponse.setData(gson.toJson(tiposCargo));
+			List<VOTipoContacto> tiposContacto = tipoContactoDAO.listar(em);
+			voResponse.setData(gson.toJson(tiposContacto));
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			voResponse.setErrorMessage("No se pudieron listar los tipo.");
@@ -96,7 +96,7 @@ public class CargoService {
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/cargo/borrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoContacto/borrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String borrar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
@@ -105,7 +105,7 @@ public class CargoService {
 			Long id = object.get("id").getAsLong();
 			if (id != null) {
 				emfh.beginTransaction(em);
-				cargoDAO.borrar(id, em);
+				tipoContactoDAO.borrar(id, em);
 				emfh.commitTransaction(em);
 			}
 			voResponse.setOk(true);
@@ -117,16 +117,16 @@ public class CargoService {
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/cargo/encontrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/tipoContacto/encontrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String encontrar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		try {
-			VOTipoCargo VOTipoCargo = null;
+			VOTipoContacto voTipoContacto = null;
 			JsonObject object = gson.fromJson(data, JsonObject.class);
 			Long id = object.get("id").getAsLong();
-			VOTipoCargo = cargoDAO.encontrar(id, em);
-			voResponse.setData(gson.toJson(VOTipoCargo));
+			voTipoContacto = tipoContactoDAO.encontrar(id, em);
+			voResponse.setData(gson.toJson(voTipoContacto));
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			voResponse.setErrorMessage("No se pudo encontrar el elemento.");
