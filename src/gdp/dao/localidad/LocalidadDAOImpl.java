@@ -6,8 +6,8 @@ import gdp.vomodel.VOLocalidad;
 
 public class LocalidadDAOImpl extends GenericDAOImpl<VOLocalidad, Localidad> implements ILocalidadDAO {
 
-	public LocalidadDAOImpl(Class<Localidad> persistentClass, Class<VOLocalidad> VOClass) {
-		super(persistentClass, VOClass);
+	public LocalidadDAOImpl() {
+		super(Localidad.class, VOLocalidad.class);
 	}
 
 	@Override

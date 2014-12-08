@@ -6,8 +6,8 @@ import gdp.vomodel.VOUsuario;
 
 public class UsuarioDAOImpl extends GenericDAOImpl<VOUsuario, Usuario> implements IUsuarioDAO {
 
-	public UsuarioDAOImpl(Class<Usuario> persistentClass, Class<VOUsuario> VOClass) {
-		super(persistentClass, VOClass);
+	public UsuarioDAOImpl() {
+		super(Usuario.class, VOUsuario.class);
 	}
 
 	@Override

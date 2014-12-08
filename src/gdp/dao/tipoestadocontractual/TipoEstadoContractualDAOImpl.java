@@ -6,8 +6,8 @@ import gdp.vomodel.VOTipoEstadoContractual;
 
 public class TipoEstadoContractualDAOImpl extends GenericDAOImpl<VOTipoEstadoContractual, TipoEstadoContractual> implements ITipoEstadoContractualDAO {
 
-	public TipoEstadoContractualDAOImpl(Class<TipoEstadoContractual> persistentClass, Class<VOTipoEstadoContractual> VOClass) {
-		super(persistentClass, VOClass);
+	public TipoEstadoContractualDAOImpl() {
+		super(TipoEstadoContractual.class, VOTipoEstadoContractual.class);
 	}
 
 	@Override

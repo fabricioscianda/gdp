@@ -4,10 +4,12 @@ var gdpApp = angular.module('gdpApp', [ 'ngRoute', 'gdpControllers', 'gdpService
 
 gdpApp.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/administracion', {
-		templateUrl : 'app/views/administracion.html',
+		templateUrl : 'app/views/formGenerico.html',
+		// templateUrl : 'app/views/administracion.html',
 		controller : 'AdministracionCtrl'
 	}).when('/cargos', {
-		templateUrl : 'app/views/cargos.html',
+		templateUrl : 'app/views/formGenerico.html',
+		// templateUrl : 'app/views/cargos.html',
 		controller : 'CargoCtrl'
 	}).otherwise({
 		templateUrl : 'app/views/home.html'

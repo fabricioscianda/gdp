@@ -6,8 +6,8 @@ import gdp.vomodel.VODomicilio;
 
 public class DomicilioDAOImpl extends GenericDAOImpl<VODomicilio, Domicilio> implements IDomicilioDAO {
 
-	public DomicilioDAOImpl(Class<Domicilio> persistentClass, Class<VODomicilio> VOClass) {
-		super(persistentClass, VOClass);
+	public DomicilioDAOImpl() {
+		super(Domicilio.class, VODomicilio.class);
 	}
 
 	@Override

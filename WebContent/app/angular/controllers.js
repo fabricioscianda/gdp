@@ -1,85 +1,191 @@
 'use strict';
 var gdpControllers = angular.module('gdpControllers', []);
+/* Tipos Administracion */
+gdpControllers.controller('AdministracionCtrl', [ '$scope', '$filter',
+		'AdministracionService',
+		function($scope, $filter, AdministracionService) {
 
-gdpControllers.controller('AdministracionCtrl', [ '$scope',
-		'AdministracionService', function($scope, AdministracionService) {
-
+			$scope.modulo = 'Administración';
+			$scope.nombreForm = 'Tipo de Administración';
+			$scope.urlModulo = 'administracion';
+	
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
-			
-			$scope.nuevoTipo = {};
-			$scope.tiposAdmin = {};
+
+			$scope.nuevo = {};
+			$scope.tipos = {};
+
+			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {
-				AdministracionService.guardar({
-					'nuevo' : nuevo
-				}, function(response) {
-					$scope.success = response.ok;
-					if (response.ok) {
-						$scope.msgSuccess = 'Guardado.';
-						$scope.listar();
-						console.log('Tipo Administracion Guardada.');
-					} else {
-						$scope.msgError = 'No se pudo guardar.';
-						console.log('No se pudo guardar el elemento.');
-					}
-				}, function(error) {
-					alert(error);
-				})
+				if (nuevo != null && nuevo.nombre != undefined) {
+					AdministracionService.guardar({
+						'nuevo' : nuevo
+					}, function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.msgSuccess = 'Guardado.';
+							$scope.nuevo = {};
+							$scope.listar();
+						} else {
+							$scope.msgError = 'No se pudo guardar.';
+							console.log('No se pudo guardar el elemento.');
+						}
+					}, function(error) {
+						alert(error);
+					})
+				} else {
+					$scope.success = false;
+					$scope.msgError = 'El nombre no puede ser vacio.';
+				}
 			};
 
 			$scope.listar = function() {
-				AdministracionService.listar( {},
-					function(response) {
-						$scope.success = response.ok;
-						if (response.ok) {
-							$scope.tiposAdmin = angular.fromJson(response.data);
-						} else {
-							$scope.msgError = 'No se pudieron obtener los tipos.';
-						};
-					}, 
-					function(error) {
-						alert(error);
-					});
+				AdministracionService.listar({}, function(response) {
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tipos = angular.fromJson(response.data);
+					} else {
+						$scope.msgError = 'No se pudieron obtener los tipos.';
+					}
+					;
+				}, function(error) {
+					alert(error);
+				});
 			};
 
-			$scope.borrar = function(index) {
-				$scope.tiposAdmin.splice(index, 1);
-				$scope.nuevoTipo = {};
+			$scope.borrar = function(tipo) {
+				AdministracionService.borrar({
+					'id' : tipo.id
+				}, function(response) {
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.msgSuccess = "Borrado.";
+						$scope.listar();
+					} else {
+						$scope.msgError = "No se pudo borrar el elemento.";
+					}
+				}, function(error) {
+					alert(error);
+				});
+			}
+
+			$scope.editarElemento = function(tipo) {
+				$scope.nuevo = {};
+				$scope.nuevo.id = tipo.id;
+				$scope.nuevo.nombre = tipo.nombre;
 			}
 
 			$scope.editar = function(tipo) {
-				$scope.nuevoTipo = {};
-				$scope.nuevoTipo.nombre = tipo.nombre;
+				AdministracionService.editar({
+					'tipo' : tipo
+				}, function(response) {
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.msgSuccess = "Guardado.";
+						$scope.listar();
+					} else {
+						$scope.msgError = "No se pudo editar el elemento.";
+					}
+				}, function(error) {
+					alert(error);
+				});
 			}
 
 		} ]);
 
-gdpControllers.controller('CargoCtrl', [ '$scope', function($scope) {
-	$scope.cargos = [ {
-		'nombre' : 'Teniente'
-	}, {
-		'nombre' : 'Director'
-	}, {
-		'nombre' : 'Sub Director'
-	} ];
+/* Tipos Cargo */
+gdpControllers.controller('CargoCtrl', [ '$scope', '$filter',
+		'CargoService',
+		function($scope, $filter, CargoService) {
 
-	$scope.nuevoCargo = {};
+			$scope.modulo = 'Cargos';
+			$scope.nombreForm = 'Tipo de Cargo';
+			$scope.urlModulo = 'cargos';
+	
+			$scope.success = null;
+			$scope.msgSuccess = null;
+			$scope.msgError = null;
 
-	$scope.guardar = function(nuevo) {
-		$scope.cargos.push(nuevo);
-		$scope.nuevoCargo = {};
-	};
+			$scope.nuevo = {};
+			$scope.tipos = {};
 
-	$scope.borrar = function(index) {
-		$scope.cargos.splice(index, 1);
-		$scope.nuevoCargo = {};
-	}
+			var orderBy = $filter('orderBy');
 
-	$scope.editar = function(cargo) {
-		$scope.nuevoCargo = {};
-		$scope.nuevoCargo.nombre = cargo.nombre;
-	}
+			$scope.guardar = function(nuevo) {
+				if (nuevo != null && nuevo.nombre != undefined) {
+					CargoService.guardar({
+						'nuevo' : nuevo
+					}, function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.msgSuccess = 'Guardado.';
+							$scope.nuevo = {};
+							$scope.listar();
+						} else {
+							$scope.msgError = 'No se pudo guardar.';
+							console.log('No se pudo guardar el elemento.');
+						}
+					}, function(error) {
+						alert(error);
+					})
+				} else {
+					$scope.success = false;
+					$scope.msgError = 'El nombre no puede ser vacio.';
+				}
+			};
 
-} ]);
+			$scope.listar = function() {
+				CargoService.listar({}, function(response) {
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tipos = angular.fromJson(response.data);
+					} else {
+						$scope.msgError = 'No se pudieron obtener los tipos.';
+					}
+					;
+				}, function(error) {
+					alert(error);
+				});
+			};
+
+			$scope.borrar = function(tipo) {
+				CargoService.borrar({
+					'id' : tipo.id
+				}, function(response) {
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.msgSuccess = "Borrado.";
+						$scope.listar();
+					} else {
+						$scope.msgError = "No se pudo borrar el elemento.";
+					}
+				}, function(error) {
+					alert(error);
+				});
+			}
+
+			$scope.editarElemento = function(tipo) {
+				$scope.nuevo = {};
+				$scope.nuevo.id = tipo.id;
+				$scope.nuevo.nombre = tipo.nombre;
+			}
+
+			$scope.editar = function(tipo) {
+				CargoService.editar({
+					'tipo' : tipo
+				}, function(response) {
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.msgSuccess = "Guardado.";
+						$scope.listar();
+					} else {
+						$scope.msgError = "No se pudo editar el elemento.";
+					}
+				}, function(error) {
+					alert(error);
+				});
+			}
+
+		} ]);

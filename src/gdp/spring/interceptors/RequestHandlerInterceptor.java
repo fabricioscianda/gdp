@@ -34,31 +34,6 @@ public class RequestHandlerInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		_logger.info("REQUEST INTERCEPTOR URI: {}", request.getRequestURI());
-
-		VOResponse responsevo = new VOResponse();
-
-//		if ((!request.getRequestURI().equals("/gdp/rest/loginService/login"))
-//				&& 
-//			(!request.getRequestURI().equals("/gdp/rest/loginService/logout"))) {
-//			String clientToken = request.getHeader("authorization");
-//			if (clientToken != null) {
-//				VOCredential serverToken = (VOCredential) request.getSession().getAttribute("credentials");
-//				if (serverToken == null) {
-//					responsevo.setOk(false);
-//					responsevo.setErrorCode("2222");
-//					responsevo.setErrorMessage("No autenticado");
-//					response.getWriter().println(gson.toJson(responsevo));
-//					return false;
-//				}
-//			} else {
-//				responsevo.setOk(false);
-//				responsevo.setErrorCode("2222");
-//				responsevo.setErrorMessage("No autenticado");
-//				response.getWriter().println(gson.toJson(responsevo));
-//				return false;
-//			}
-//		}
-
 		return super.preHandle(request, response, handler);
 	}
 }

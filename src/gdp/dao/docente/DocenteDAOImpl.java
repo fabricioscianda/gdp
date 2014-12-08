@@ -6,8 +6,8 @@ import gdp.vomodel.VODocente;
 
 public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implements IDocenteDAO {
 
-	public DocenteDAOImpl(Class<Docente> persistentClass, Class<VODocente> VOClass) {
-		super(persistentClass, VOClass);
+	public DocenteDAOImpl() {
+		super(Docente.class, VODocente.class);
 	}
 
 	@Override

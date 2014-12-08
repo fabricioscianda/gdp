@@ -6,8 +6,8 @@ import gdp.vomodel.VOCarrera;
 
 public class CarreraDAOImpl extends GenericDAOImpl<VOCarrera, Carrera> implements ICarreraDAO {
 
-	public CarreraDAOImpl(Class<Carrera> persistentClass, Class<VOCarrera> VOClass) {
-		super(persistentClass, VOClass);
+	public CarreraDAOImpl() {
+		super(Carrera.class, VOCarrera.class);
 	}
 
 	@Override

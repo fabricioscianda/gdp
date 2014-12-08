@@ -6,8 +6,8 @@ import gdp.vomodel.VOEmpleo;
 
 public class EmpleoDAOImpl extends GenericDAOImpl<VOEmpleo, Empleo> implements IEmpleoDAO {
 
-	public EmpleoDAOImpl(Class<Empleo> persistentClass, Class<VOEmpleo> VOClass) {
-		super(persistentClass, VOClass);
+	public EmpleoDAOImpl() {
+		super(Empleo.class, VOEmpleo.class);
 	}
 
 	@Override

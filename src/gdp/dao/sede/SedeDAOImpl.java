@@ -6,10 +6,10 @@ import gdp.vomodel.VOSede;
 
 public class SedeDAOImpl extends GenericDAOImpl<VOSede, Sede> implements ISedeDAO {
 
-	public SedeDAOImpl(Class<Sede> persistentClass, Class<VOSede> VOClass) {
-		super(persistentClass, VOClass);
+	public SedeDAOImpl() {
+		super(Sede.class, VOSede.class);
 	}
-
+	
 	@Override
 	public Long getId(VOSede objetoVO) {
 		return objetoVO.getId();

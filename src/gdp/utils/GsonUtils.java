@@ -86,16 +86,4 @@ public class GsonUtils {
 		return s;
 	}
 	
-	/*
-	public static JsonObject getObjectFromRequest(HttpServletRequest request) {
-		String data = StreamsUtils.getRequestBody(request);
-		try {
-			JsonParser p = new JsonParser();
-			return p.parse(data).getAsJsonObject();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	*/
 }

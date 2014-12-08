@@ -6,8 +6,8 @@ import gdp.vomodel.VOContacto;
 
 public class ContactoDAOImpl extends GenericDAOImpl<VOContacto, Contacto> implements IContactoDAO {
 
-	public ContactoDAOImpl(Class<Contacto> persistentClass, Class<VOContacto> VOClass) {
-		super(persistentClass, VOClass);
+	public ContactoDAOImpl() {
+		super(Contacto.class, VOContacto.class);
 	}
 
 	@Override

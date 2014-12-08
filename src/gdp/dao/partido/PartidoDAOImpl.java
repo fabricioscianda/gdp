@@ -6,8 +6,8 @@ import gdp.vomodel.VOPartido;
 
 public class PartidoDAOImpl extends GenericDAOImpl<VOPartido, Partido> implements IPartidoDAO {
 
-	public PartidoDAOImpl(Class<Partido> persistentClass, Class<VOPartido> VOClass) {
-		super(persistentClass, VOClass);
+	public PartidoDAOImpl() {
+		super(Partido.class, VOPartido.class);
 	}
 
 	@Override

@@ -6,8 +6,8 @@ import gdp.vomodel.VODesempenio;
 
 public class DesempenioDAOImpl extends GenericDAOImpl<VODesempenio, Desempenio> implements IDesempenioDAO {
 
-	public DesempenioDAOImpl(Class<Desempenio> persistentClass, Class<VODesempenio> VOClass) {
-		super(persistentClass, VOClass);
+	public DesempenioDAOImpl() {
+		super(Desempenio.class, VODesempenio.class);
 	}
 
 	@Override

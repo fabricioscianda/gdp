@@ -6,8 +6,8 @@ import gdp.vomodel.VOFormacionAcademica;
 
 public class FormacionAcademicaDAOImpl extends GenericDAOImpl<VOFormacionAcademica, FormacionAcademica> implements IFormacionAcademicaDAO {
 
-	public FormacionAcademicaDAOImpl(Class<FormacionAcademica> persistentClass, Class<VOFormacionAcademica> VOClass) {
-		super(persistentClass, VOClass);
+	public FormacionAcademicaDAOImpl() {
+		super(FormacionAcademica.class, VOFormacionAcademica.class);
 	}
 
 	@Override

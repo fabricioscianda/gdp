@@ -1,5 +1,9 @@
 package gdp.dao.generic;
 
+import gdp.exceptions.DAOException;
+import gdp.spring.bootstrap.EntityManagerFactoryHolder;
+import gdp.utils.MapperUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +13,6 @@ import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import gdp.exceptions.DAOException;
-import gdp.spring.bootstrap.EntityManagerFactoryHolder;
-import gdp.utils.MapperUtils;
 
 /**
  * U = objeto VO T = entidad
@@ -104,8 +104,7 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 	}
 
 	@Override
-	public U encontrar(Long idObjeto) throws DAOException {
-		EntityManager em = null;
+	public U encontrar(Long idObjeto, EntityManager em) throws DAOException {
 		U objetoVO = null;
 		try {
 			_logger.info("Intentando encontrar " + getPersistentClass().getSimpleName());
@@ -129,11 +128,10 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<U> listar() throws DAOException {
+	public List<U> listar(EntityManager em) throws DAOException {
 		List<U> objetos = new ArrayList<U>();
 		List<T> lista = new ArrayList<T>();
 
-		EntityManager em = null;
 		try {
 			_logger.info("Intentando listar " + persistentClass.getSimpleName());
 

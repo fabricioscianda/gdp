@@ -6,8 +6,8 @@ import gdp.vomodel.VOTipoEstadoFormacion;
 
 public class TipoEstadoFormacionDAOImpl extends GenericDAOImpl<VOTipoEstadoFormacion, TipoEstadoFormacion> implements ITipoEstadoFormacionDAO {
 
-	public TipoEstadoFormacionDAOImpl(Class<TipoEstadoFormacion> persistentClass, Class<VOTipoEstadoFormacion> VOClass) {
-		super(persistentClass, VOClass);
+	public TipoEstadoFormacionDAOImpl() {
+		super(TipoEstadoFormacion.class, VOTipoEstadoFormacion.class);
 	}
 
 	@Override

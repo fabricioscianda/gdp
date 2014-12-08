@@ -6,8 +6,8 @@ import gdp.vomodel.VOTipoMotivo;
 
 public class TipoMotivoDAOImpl extends GenericDAOImpl<VOTipoMotivo, TipoMotivo> implements ITipoMotivoDAO {
 
-	public TipoMotivoDAOImpl(Class<TipoMotivo> persistentClass, Class<VOTipoMotivo> VOClass) {
-		super(persistentClass, VOClass);
+	public TipoMotivoDAOImpl() {
+		super(TipoMotivo.class, VOTipoMotivo.class);
 	}
 
 	@Override

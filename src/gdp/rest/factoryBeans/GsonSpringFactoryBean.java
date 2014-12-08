@@ -29,7 +29,7 @@ public class GsonSpringFactoryBean implements FactoryBean<Gson> {
 
 			gsb.setDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
 //			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOInfo.class, false, "infoAdicional"));
-			//gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOCliente.class, false, "infoAdicional"));
+//			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOCliente.class, false, "infoAdicional"));
 
 			// returns the created builder
 			this.singleton = gsb.create();

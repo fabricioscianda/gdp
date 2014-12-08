@@ -6,8 +6,8 @@ import gdp.vomodel.VOPersona;
 
 public class PersonaDAOImpl extends GenericDAOImpl<VOPersona, Persona> implements IPersonaDAO {
 
-	public PersonaDAOImpl(Class<Persona> persistentClass, Class<VOPersona> VOClass) {
-		super(persistentClass, VOClass);
+	public PersonaDAOImpl() {
+		super(Persona.class, VOPersona.class);
 	}
 
 	@Override

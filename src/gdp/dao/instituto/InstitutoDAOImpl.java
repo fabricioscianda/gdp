@@ -6,8 +6,8 @@ import gdp.vomodel.VOInstituto;
 
 public class InstitutoDAOImpl extends GenericDAOImpl<VOInstituto, Instituto> implements IInstitutoDAO {
 
-	public InstitutoDAOImpl(Class<Instituto> persistentClass, Class<VOInstituto> VOClass) {
-		super(persistentClass, VOClass);
+	public InstitutoDAOImpl() {
+		super(Instituto.class, VOInstituto.class);
 	}
 
 	@Override

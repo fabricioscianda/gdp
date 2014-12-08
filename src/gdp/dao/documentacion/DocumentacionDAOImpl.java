@@ -6,8 +6,8 @@ import gdp.vomodel.VODocumentacion;
 
 public class DocumentacionDAOImpl extends GenericDAOImpl<VODocumentacion, Documentacion> implements IDocumentacionDAO {
 
-	public DocumentacionDAOImpl(Class<Documentacion> persistentClass, Class<VODocumentacion> VOClass) {
-		super(persistentClass, VOClass);
+	public DocumentacionDAOImpl() {
+		super(Documentacion.class, VODocumentacion.class);
 	}
 
 	@Override
