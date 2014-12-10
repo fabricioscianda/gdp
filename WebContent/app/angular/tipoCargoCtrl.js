@@ -1,27 +1,31 @@
 'use strict';
 var gdpControllers = angular.module('gdpControllers', []);
 
-gdpControllers.controller('AdministracionCtrl', [ '$scope', '$filter', 'AdministracionService',
-		function($scope, $filter, AdministracionService) {
+gdpControllers.controller('TipoCargoCtrl', [ '$scope', '$filter', 'TipoCargoService', 
+                                             function($scope, $filter, TipoCargoService) {
+
+			$scope.modulo = 'Cargos';
+			$scope.nombreForm = 'Tipo de Cargo';
+			$scope.urlModulo = 'tiposCargo';
 
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
-			$scope.nuevoTipo = {};
-			$scope.tiposAdmin = {};
+			$scope.nuevo = {};
+			$scope.tipos = {};
 
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {
 				if (nuevo != null && nuevo.nombre != undefined) {
-					AdministracionService.guardar({
+					TipoCargoService.guardar({
 						'nuevo' : nuevo
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = 'Guardado.';
-							$scope.nuevoTipo = {};
+							$scope.nuevo = {};
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
@@ -37,10 +41,10 @@ gdpControllers.controller('AdministracionCtrl', [ '$scope', '$filter', 'Administ
 			};
 
 			$scope.listar = function() {
-				AdministracionService.listar({}, function(response) {
+				TipoCargoService.listar({}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.tiposAdmin = angular.fromJson(response.data);
+						$scope.tipos = angular.fromJson(response.data);
 					} else {
 						$scope.msgError = 'No se pudieron obtener los tipos.';
 					}
@@ -51,7 +55,7 @@ gdpControllers.controller('AdministracionCtrl', [ '$scope', '$filter', 'Administ
 			};
 
 			$scope.borrar = function(tipo) {
-				AdministracionService.borrar({
+				TipoCargoService.borrar({
 					'id' : tipo.id
 				}, function(response) {
 					$scope.success = response.ok;
@@ -67,13 +71,13 @@ gdpControllers.controller('AdministracionCtrl', [ '$scope', '$filter', 'Administ
 			}
 
 			$scope.editarElemento = function(tipo) {
-				$scope.nuevoTipo = {};
-				$scope.nuevoTipo.id = tipo.id;
-				$scope.nuevoTipo.nombre = tipo.nombre;
+				$scope.nuevo = {};
+				$scope.nuevo.id = tipo.id;
+				$scope.nuevo.nombre = tipo.nombre;
 			}
 
 			$scope.editar = function(tipo) {
-				AdministracionService.editar({
+				TipoCargoService.editar({
 					'tipo' : tipo
 				}, function(response) {
 					$scope.success = response.ok;

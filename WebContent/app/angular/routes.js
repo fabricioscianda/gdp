@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('routes', []).config(
-		[ '$routeProvider', function($routeProvider) {
+angular.module('routes', []).config([ '$routeProvider', function($routeProvider) {
 
 			var routes = [ {
 				path : '/tiposAdministracion',

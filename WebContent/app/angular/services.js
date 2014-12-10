@@ -1,5 +1,5 @@
 'use strict';
-var gdpServices = angular.module('gdpServices');
+var gdpServices = angular.module('gdpServices', []);
 
 /* Tipos Administracion */
 gdpServices.factory('TipoAdministracionService', function(srvHttp) {
