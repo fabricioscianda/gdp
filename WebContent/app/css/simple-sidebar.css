@@ -35,7 +35,7 @@
 }
 
 #wrapper.toggled #sidebar-wrapper {
-	width: 180px;
+	width: 220px;
 /* 	width: 250px; */
 }
 
@@ -54,7 +54,7 @@
 .sidebar-nav {
 	position: absolute;
 	top: 0;
-	width: 180px;
+	width: 220px;
 	/* 	width: 250px; */
 	margin: 0;
 	padding: 0;
@@ -106,7 +106,7 @@
 		padding-left: 0;
 	}
 	#sidebar-wrapper {
-		width: 180px;
+		width: 220px;
 		/* 		width: 250px; */
 	}
 	#wrapper.toggled #sidebar-wrapper {

@@ -51,18 +51,18 @@
 			<property name="eclipselink.logging.level" value="FINEST" />
 			<property name="eclipselink.logging.logger" value="eclipselink.logging.logger.customizer.CustomSessionLogger" />
 			<property name="eclipselink.logging.parameters" value="true" />
-
 			<property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc" />
 			<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc" />
-			<property name="eclipselink.cache.shared.default" value="false"/>
-
 			<property name="eclipselink.ddl-generation.output-mode" value="both" />
+			<property name="eclipselink.cache.shared.default" value="false"/>
+			
 			<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
 			<!-- 
 				<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/> 
 				<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/> 
 				<property name="eclipselink.ddl-generation" value="none" /> 
 			-->
+
 			<property name="eclipselink.target-database" value="PostgreSQL" />
 			<property name="eclipselink.jpa.uppercase-column-names" value="true" />
 

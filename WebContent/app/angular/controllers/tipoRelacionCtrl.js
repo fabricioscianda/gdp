@@ -1,12 +1,16 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers', []);
+var gdpControllers = angular.module('gdpControllers');
 
-gdpControllers.controller('TipoAdministracionCtrl', [ '$scope', '$filter', 'TipoAdministracionService', 
-                                                      function($scope, $filter, TipoAdministracionService) {
+/* Tipos Relacion */
+gdpControllers.controller('TipoRelacionCtrl', [
+		'$scope',
+		'$filter',
+		'TipoRelacionService',
+		function($scope, $filter, TipoRelacionService) {
 
-			$scope.modulo = 'Administración';
-			$scope.nombreForm = 'Tipo de Administración';
-			$scope.urlModulo = 'tiposAdministracion';
+			$scope.modulo = 'Relacion Laboral';
+			$scope.nombreForm = 'Tipo de Relacion Laboral';
+			$scope.urlModulo = 'tiposRelacion';
 
 			$scope.success = null;
 			$scope.msgSuccess = null;
@@ -19,34 +23,37 @@ gdpControllers.controller('TipoAdministracionCtrl', [ '$scope', '$filter', 'Tipo
 
 			$scope.guardar = function(nuevo) {
 				if (nuevo != null && nuevo.nombre != undefined) {
-					TipoAdministracionService.guardar({
+					TipoRelacionService.guardar({
 						'nuevo' : nuevo
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
-							$scope.msgSuccess = 'Guardado.';
+							$scope.msgSuccess = nuevo.nombre + ', Guardado.';
 							$scope.nuevo = {};
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
 							console.log('No se pudo guardar el elemento.');
 						}
+						$('#message-modal').modal('show');
 					}, function(error) {
 						alert(error);
 					})
 				} else {
 					$scope.success = false;
 					$scope.msgError = 'El nombre no puede ser vacio.';
+					$('#message-modal').modal('show');
 				}
 			};
 
 			$scope.listar = function() {
-				TipoAdministracionService.listar({}, function(response) {
+				TipoRelacionService.listar({}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
 						$scope.tipos = angular.fromJson(response.data);
 					} else {
 						$scope.msgError = 'No se pudieron obtener los tipos.';
+						$('#message-modal').modal('show');
 					}
 					;
 				}, function(error) {
@@ -55,16 +62,17 @@ gdpControllers.controller('TipoAdministracionCtrl', [ '$scope', '$filter', 'Tipo
 			};
 
 			$scope.borrar = function(tipo) {
-				TipoAdministracionService.borrar({
+				TipoRelacionService.borrar({
 					'id' : tipo.id
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = "Borrado.";
+						$scope.msgSuccess = tipo.nombre + ", Borrado.";
 						$scope.listar();
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$('#message-modal').modal('show');
 				}, function(error) {
 					alert(error);
 				});
@@ -77,16 +85,18 @@ gdpControllers.controller('TipoAdministracionCtrl', [ '$scope', '$filter', 'Tipo
 			}
 
 			$scope.editar = function(tipo) {
-				TipoAdministracionService.editar({
+				TipoRelacionService.editar({
 					'tipo' : tipo
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = "Guardado.";
+						$scope.msgSuccess = tipo.nombre + ", Guardado.";
 						$scope.listar();
 					} else {
-						$scope.msgError = "No se pudo editar el elemento.";
+						$scope.msgError = "No se pudo editar el elemento, "
+								+ tipo.nombre;
 					}
+					$('#message-modal').modal('show');
 				}, function(error) {
 					alert(error);
 				});

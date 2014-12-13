@@ -1,5 +1,6 @@
 'use strict';
-var gdpServices = angular.module('gdpServices', []);
+var gdpServices = angular.module('gdpServices');
+//var gdpServices = angular.module('gdpServices', []);
 
 gdpServices.factory('srvHttp', function($http, $rootScope, $location) {
 
