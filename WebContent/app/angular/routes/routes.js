@@ -4,6 +4,10 @@ angular.module('routes', []).config(
 		[ '$routeProvider', function($routeProvider) {
 
 			var routes = [ {
+				path : '/provincias',
+				template : 'app/views/provincias.html',
+				controller : "ProvinciaCtrl"
+			}, {
 				path : '/tiposAdministracion',
 				template : 'app/views/formGenerico.html',
 				controller : "TipoAdministracionCtrl"

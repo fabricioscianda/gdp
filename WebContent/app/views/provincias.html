@@ -1,0 +1,70 @@
+<div class="row">
+	<!-- Page Header -->
+	<div class="page-header">
+		<h2>{{modulo}}</h2>
+	</div>
+	<!-- Alert Modal -->
+	<div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="message-modal" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	    		<h4 class="modal-title">Informacion</h4>
+	    	</div>
+	    	<div class="modal-body">
+				<div class="alert alert-success alert-dismissible" role="alert" ng-show="success && success!=null && msgSuccess!=null" >
+				  <h4 class="text-center">{{msgSuccess}}</h4>
+				</div>
+				<div class="alert alert-danger alert-dismissible" role="alert" ng-show="!success && success!=null && msgError!=null">
+				  <h4 class="text-center">{{msgError}}</h4>
+				</div>
+	    	</div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Form Nuevo -->
+	<div class="row col-sm-5">
+		<!-- Panel -->
+		<div class="panel panel-default">
+			<!-- Panel Header -->
+			<div class="panel-heading">
+				<h4>Nueva {{nombreForm}}</h4>
+			</div>
+			<!-- Panel Body -->
+			<div class="panel-body">
+				<form role="form" name="formAction">
+					<div class="form-group">
+						<label for="nombre" class="control-label">Nombre</label>
+						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre">
+					</div>
+				</form>
+			</div>
+			<!-- Panel Footer : Buttons -->
+			<div class="panel-footer">
+				<button type="submit" class="btn btn-primary" ng-click="guardar(nuevo)">Guardar</button>
+			</div>
+		</div>
+	</div>
+	<!-- Listado Actuales -->
+	<div class="row col-sm-4 col-sm-offset-3">
+		<!-- Panel -->
+		<div class="panel panel-default">
+			<!-- Panel Header -->
+			<div class="panel-heading">
+				<h4>{{modulo}} Actuales</h4>
+			</div>
+			<!-- Listado -->
+			<div class="tipos" ng-init="listar()">
+				<table class="table table-hover table-bordered table-condensed">
+					<tbody>
+						<tr ng-repeat="tipo in tipos | orderBy: 'nombre'">
+							<td>{{tipo.nombre}}</td>
+							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(tipo)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+							<td><a href="#/{{urlModulo}}" ng-click="borrar(tipo)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
