@@ -1,9 +1,12 @@
 'use strict';
 
-angular.module('routes', []).config(
-		[ '$routeProvider', function($routeProvider) {
+angular.module('routes', []).config([ '$routeProvider', function($routeProvider) {
 
 			var routes = [ {
+				path : '/partidos',
+				template : 'app/views/partidos.html',
+				controller : "PartidoCtrl"
+			}, {
 				path : '/provincias',
 				template : 'app/views/provincias.html',
 				controller : "ProvinciaCtrl"

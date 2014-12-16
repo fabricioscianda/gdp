@@ -14,7 +14,7 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 			$scope.msgError = null;
 
 			$scope.nuevo = {};
-			$scope.tipos = {};
+			$scope.provincias = {};
 
 			var orderBy = $filter('orderBy');
 
@@ -47,9 +47,9 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 				ProvinciaService.listar({}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.tipos = angular.fromJson(response.data);
+						$scope.provincias = angular.fromJson(response.data);
 					} else {
-						$scope.msgError = 'No se pudieron obtener los tipos.';
+						$scope.msgError = 'No se pudieron obtener los provincias.';
 						$('#message-modal').modal('show');
 					}
 					;
@@ -58,13 +58,13 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 				});
 			};
 
-			$scope.borrar = function(tipo) {
+			$scope.borrar = function(provincia) {
 				ProvinciaService.borrar({
-					'id' : tipo.id
+					'id' : provincia.id
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = tipo.nombre + ", Borrado.";
+						$scope.msgSuccess = provincia.nombre + ", Borrado.";
 						$scope.listar();
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
@@ -75,23 +75,22 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 				});
 			}
 
-			$scope.editarElemento = function(tipo) {
+			$scope.editarElemento = function(provincia) {
 				$scope.nuevo = {};
-				$scope.nuevo.id = tipo.id;
-				$scope.nuevo.nombre = tipo.nombre;
+				$scope.nuevo.id = provincia.id;
+				$scope.nuevo.nombre = provincia.nombre;
 			}
 
-			$scope.editar = function(tipo) {
+			$scope.editar = function(provincia) {
 				ProvinciaService.editar({
-					'tipo' : tipo
+					'provincia' : provincia
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = tipo.nombre + ", Guardado.";
+						$scope.msgSuccess = provincia.nombre + ", Guardado.";
 						$scope.listar();
 					} else {
-						$scope.msgError = "No se pudo editar el elemento, "
-								+ tipo.nombre;
+						$scope.msgError = "No se pudo editar el elemento, " + provincia.nombre;
 					}
 					$('#message-modal').modal('show');
 				}, function(error) {
