@@ -102,4 +102,8 @@ gdpControllers.controller('TipoEstadoContractualCtrl', [
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

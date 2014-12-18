@@ -102,4 +102,8 @@ gdpControllers.controller('TipoMotivoCtrl', [
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

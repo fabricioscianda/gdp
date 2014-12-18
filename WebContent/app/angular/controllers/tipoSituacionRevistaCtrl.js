@@ -102,4 +102,8 @@ gdpControllers.controller('TipoSituacionRevistaCtrl', [
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

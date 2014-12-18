@@ -101,5 +101,9 @@ gdpControllers.controller('TipoSituacionCtrl', [
 					alert(error);
 				});
 			}
+			
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
 
 		} ]);

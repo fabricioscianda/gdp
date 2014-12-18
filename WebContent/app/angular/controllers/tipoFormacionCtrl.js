@@ -102,4 +102,8 @@ gdpControllers.controller('TipoFormacionCtrl', [
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

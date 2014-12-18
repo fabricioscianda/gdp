@@ -1,6 +1,7 @@
 package gdp.spring.factoryBeans;
 
 import gdp.utils.jsonUtils.strategies.CustomExclusionStrategy;
+import gdp.vomodel.VOPartido;
 import gdp.vomodel.VOProvincia;
 
 import org.springframework.beans.factory.FactoryBean;
@@ -32,6 +33,7 @@ public class GsonSpringFactoryBean implements FactoryBean<Gson> {
 
 			gsb.setDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOProvincia.class, false, "partidos"));
+			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOPartido.class, false, "localidades"));
 
 			// returns the created builder
 			this.singleton = gsb.create();

@@ -102,4 +102,8 @@ gdpControllers.controller('TipoCargoCtrl', [
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

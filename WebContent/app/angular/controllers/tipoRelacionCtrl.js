@@ -102,4 +102,8 @@ gdpControllers.controller('TipoRelacionCtrl', [
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

@@ -102,4 +102,8 @@ gdpControllers.controller('TipoPersonalCtrl', [
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

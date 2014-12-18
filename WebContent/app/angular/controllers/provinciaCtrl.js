@@ -6,7 +6,7 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 		function($scope, $filter, ProvinciaService) {
 
 			$scope.modulo = 'Provincias';
-			$scope.nombreForm = 'Provincias';
+			$scope.nombreForm = 'Provincia';
 			$scope.urlModulo = 'provincias';
 
 			$scope.success = null;
@@ -98,4 +98,8 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

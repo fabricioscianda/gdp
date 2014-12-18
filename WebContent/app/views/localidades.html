@@ -31,20 +31,24 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body">
-				<form role="form" name="formAction" ng-init="listarProvincias()">
+				<form role="form" name="formAction" ng-init="listarPartidos()">
 					<div class="form-group">
-						<label for="provincia" class="control-label">Provincia</label>
-						<select class="form-control" ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel"></select>
+						<label for="partido" class="control-label">Partido</label>
+						<select class="form-control" ng-options="partido.nombre for partido in partidos" required ng-model="partidoSel"></select>
 					</div>
 					<div class="form-group">
-						<label for="nombre" class="control-label">Nombre</label>
-						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre">
+						<label for="nombre" class="control-label">Localidad</label>
+						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre">
+					</div>
+					<div class="form-group">
+						<label for="cp" class="control-label">CP</label>
+						<input type="text" class="form-control" id="cp" name="cp" ng-model="nueva.cp">
 					</div>
 				</form>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer">
-				<button type="submit" class="btn btn-primary" ng-click="guardar(nuevo)">Guardar</button>
+				<button type="submit" class="btn btn-primary" ng-click="guardar(nueva)">Guardar</button>
 				<button type="submit" class="btn btn-default pull-right" ng-click="limpiar()">Limpiar</button>
 			</div>
 		</div>
@@ -62,25 +66,27 @@
 				<table class="table table-hover table-bordered table-condensed table-striped">
 					<thead>
 						<tr>
-							<td><em>Provincia</em></td>
 							<td><em>Partido</em></td>
+							<td><em>Localidad</em></td>
+							<td><em>CP</em></td>
 							<td></td>
 							<td></td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="partido in partidos | orderBy:['provincia.nombre', 'nombre']">
-							<td>{{partido.provincia.nombre}}</td>
-							<td>{{partido.nombre}}</td>
-							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(partido)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-							<td><a href="#/{{urlModulo}}" ng-click="borrar(partido)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+						<tr ng-repeat="localidad in localidades | orderBy:['partido.nombre', 'nombre']">
+							<td>{{localidad.partido.nombre}}</td>
+							<td>{{localidad.nombre}}</td>
+							<td>{{localidad.cp}}</td>
+							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(localidad)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+							<td><a href="#/{{urlModulo}}" ng-click="borrar(localidad)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<!-- Panel Footer -->
 			<div class="panel-footer">
-				<h5>Total de partidos: <strong>{{partidos.length}}</strong>.</h5>
+				<h5>Total de localidades: <strong>{{localidades.length}}</strong>.</h5>
 			</div>
 		</div>
 	</div>

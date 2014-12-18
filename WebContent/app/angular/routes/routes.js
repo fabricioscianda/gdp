@@ -3,6 +3,10 @@
 angular.module('routes', []).config([ '$routeProvider', function($routeProvider) {
 
 			var routes = [ {
+				path : '/localidades',
+				template : 'app/views/localidades.html',
+				controller : "LocalidadCtrl"
+			}, {
 				path : '/partidos',
 				template : 'app/views/partidos.html',
 				controller : "PartidoCtrl"

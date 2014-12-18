@@ -102,4 +102,8 @@ gdpControllers.controller('TipoContactoCtrl', [
 				});
 			}
 
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+			}
+			
 		} ]);

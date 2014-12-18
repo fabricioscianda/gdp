@@ -6,7 +6,7 @@ gdpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService',
 		function($scope, $filter, PartidoService, ProvinciaService) {
 
 			$scope.modulo = 'Partidos';
-			$scope.nombreForm = 'Partidos';
+			$scope.nombreForm = 'Partido';
 			$scope.urlModulo = 'partidos';
 
 			$scope.success = null;
@@ -26,7 +26,7 @@ gdpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService',
 						$scope.success = response.ok;
 						if (response.ok) {
 							 $scope.provincias = angular.fromJson(response.data);
-							 $scope.provinciaSel = $scope.provincias[0];
+							 $scope.provinciaSel = $scope.provincias[-1];
 							 $scope.provincias = orderBy($scope.provincias, 'nombre');
 						} else {
 							$scope.msgError = 'No se pudieron obtener las Provincias';
@@ -135,6 +135,11 @@ gdpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService',
 			        	return i;
 			    }
 			    return -1;
+			}
+			
+			$scope.limpiar = function() {
+				$scope.nuevo = {};
+				$scope.provinciaSel = $scope.provincias[-1];
 			}
 			
 		} ]);
