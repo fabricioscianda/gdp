@@ -14,6 +14,7 @@ gdpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadServi
 			$scope.msgError = null;
 
 			$scope.nueva = {};
+			$scope.localidad = {};
 			$scope.localidades = {};
 			$scope.partidoSel = {};
 			$scope.partidos = {};
@@ -92,6 +93,7 @@ gdpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadServi
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
 					alert(error);
@@ -141,6 +143,16 @@ gdpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadServi
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.partidoSel = $scope.partidos[-1];
+			}
+			
+			$scope.confirmarBorrar = function(localidad) {
+				$scope.localidad = localidad;
+				$('#confirm-modal').modal('show');
+			}
+
+			$scope.cancelarBorrar = function(localidad) {
+				$('#confirm-modal').modal('hide');
+				$scope.localidad = {};
 			}
 			
 		} ]);

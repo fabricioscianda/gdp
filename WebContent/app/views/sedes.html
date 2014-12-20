@@ -22,6 +22,29 @@
 	    </div>
 	  </div>
 	</div>
+	<!-- Confirmacion Borrar -->
+	<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-modal" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	    	<div class="modal-header alert alert-danger" role="alert">
+	    		<h4 class="modal-title"><strong>Atencion!</strong></h4>
+	    	</div>
+	    	<div class="modal-body">
+	    		<form role="form" name="confirmBorrar">
+	    			<div class="form-group">
+	    				<h4 class="text-center">¿Desea borrar <strong>{{nombreForm}} {{sede.nombre}}</strong>?</h4>
+	    			</div>
+	    		</form>
+	    	</div>
+	    	<div class="modal-footer">
+    			<div class="form-group">
+					<button type="submit" class="btn btn-default pull-left" ng-click="cancelarBorrar()">Cancelar</button>
+    				<button type="submit" class="btn btn-danger pull-right" ng-click="borrar(sede)">Borrar</button>
+    			</div>
+	    	</div>
+	    </div>
+	  </div>
+	</div>
 	<!-- Form Nuevo -->
 	<div class="row col-sm-4">
 		<!-- Panel -->
@@ -34,8 +57,8 @@
 			<div class="panel-body">
 				<form role="form" name="formAction" ng-init="listarLocalidades()">
 					<div class="form-group">
-						<label for="localidad" class="control-label">Localidad</label>
-						<select class="form-control" ng-options="localidad.nombre for localidad in localidades" required ng-model="localidadSel"></select>
+						<label for="localidad" class="control-label">Localidad, Partido, Provincia</label>
+						<select class="form-control" ng-options="(localidad.nombre + ' , ' + localidad.partido.nombre + ' , ' + localidad.partido.provincia.nombre) for localidad in localidades" required ng-model="localidadSel"></select>
 					</div>
 					<div class="form-group">
 						<label for="nombre" class="control-label">Nombre</label>
@@ -63,18 +86,18 @@
 				<table class="table table-hover table-bordered table-condensed table-striped">
 					<thead>
 						<tr>
-							<td><em>Localidad</em></td>
 							<td><em>Sede</em></td>
+							<td><em>Localidad, Partido, Provincia</em></td>
 							<td></td>
 							<td></td>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="sede in sedes | orderBy:['localidad.nombre', 'nombre']">
-							<td>{{sede.localidad.nombre}}</td>
-							<td>{{sede.nombre}}</td>
+							<td><strong>{{sede.nombre}}</strong></td>
+							<td>{{sede.localidad.nombre}}, {{sede.localidad.partido.nombre}}, {{sede.localidad.partido.provincia.nombre}}</td>
 							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(sede)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-							<td><a href="#/{{urlModulo}}" ng-click="borrar(sede)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+							<td><a href="#/{{urlModulo}}" ng-click="confirmarBorrar(sede)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
 						</tr>
 					</tbody>
 				</table>

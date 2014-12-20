@@ -14,6 +14,7 @@ gdpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService',
 			$scope.msgError = null;
 
 			$scope.nuevo = {};
+			$scope.partido = {};
 			$scope.partidos = {};
 			$scope.provinciaSel = {};
 			$scope.provincias = {};
@@ -92,6 +93,7 @@ gdpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService',
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
 					alert(error);
@@ -140,6 +142,16 @@ gdpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService',
 			$scope.limpiar = function() {
 				$scope.nuevo = {};
 				$scope.provinciaSel = $scope.provincias[-1];
+			}
+			
+			$scope.confirmarBorrar = function(partido) {
+				$scope.partido = partido;
+				$('#confirm-modal').modal('show');
+			}
+
+			$scope.cancelarBorrar = function(partido) {
+				$('#confirm-modal').modal('hide');
+				$scope.partido = {};
 			}
 			
 		} ]);

@@ -14,6 +14,7 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 			$scope.msgError = null;
 
 			$scope.nuevo = {};
+			$scope.provincia = {};
 			$scope.provincias = {};
 
 			var orderBy = $filter('orderBy');
@@ -69,6 +70,7 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
 					alert(error);
@@ -100,6 +102,16 @@ gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaServi
 
 			$scope.limpiar = function() {
 				$scope.nuevo = {};
+			}
+			
+			$scope.confirmarBorrar = function(provincia) {
+				$scope.provincia = provincia;
+				$('#confirm-modal').modal('show');
+			}
+
+			$scope.cancelarBorrar = function(provincia) {
+				$('#confirm-modal').modal('hide');
+				$scope.provincia = {};
 			}
 			
 		} ]);
