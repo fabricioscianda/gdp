@@ -1,7 +1,7 @@
 
 <div class="row">
 	<!-- Page Header -->
-	<div class="page-header">
+	<div class="page-header col-sm-offset-1">
 		<h2>{{modulo}}</h2>
 	</div>
 	<!-- Alert Modal -->
@@ -46,7 +46,7 @@
 	  </div>
 	</div>
 	<!-- Form Nuevo -->
-	<div class="row col-sm-4">
+	<div class="row col-sm-4 col-sm-offset-1">
 		<!-- Panel -->
 		<div class="panel panel-default">
 			<!-- Panel Header -->
@@ -55,7 +55,11 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body">
-				<form role="form" name="formAction" ng-init="listarLocalidades()">
+				<form role="form" name="formAction" ng-init="inicializarListados()">
+					<div class="form-group">
+						<label for="instituto" class="control-label">Instituto</label>
+						<select class="form-control" ng-options="instituto.nombre for instituto in institutos" required ng-model="institutoSel"></select>
+					</div>
 					<div class="form-group">
 						<label for="localidad" class="control-label">Localidad, Partido, Provincia</label>
 						<select class="form-control" ng-options="(localidad.nombre + ' , ' + localidad.partido.nombre + ' , ' + localidad.partido.provincia.nombre) for localidad in localidades" required ng-model="localidadSel"></select>
@@ -74,7 +78,7 @@
 		</div>
 	</div>
 	<!-- Listado Actuales -->
-	<div class="row col-sm-6 col-sm-offset-1">
+	<div class="row col-sm-5 col-sm-offset-1">
 		<!-- Panel -->
 		<div class="panel panel-default">
 			<!-- Panel Header -->
@@ -87,14 +91,16 @@
 					<thead>
 						<tr>
 							<td><em>Sede</em></td>
+							<td><em>Instituto</em></td>
 							<td><em>Localidad, Partido, Provincia</em></td>
 							<td></td>
 							<td></td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="sede in sedes | orderBy:['localidad.nombre', 'nombre']">
+						<tr ng-repeat="sede in sedes | orderBy:['instituto.nombre', 'localidad.nombre', 'nombre']">
 							<td><strong>{{sede.nombre}}</strong></td>
+							<td><strong>{{sede.instituto.nombre}}</strong></td>
 							<td>{{sede.localidad.nombre}}, {{sede.localidad.partido.nombre}}, {{sede.localidad.partido.provincia.nombre}}</td>
 							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(sede)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
 							<td><a href="#/{{urlModulo}}" ng-click="confirmarBorrar(sede)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>

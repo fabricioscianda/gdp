@@ -3,6 +3,10 @@
 angular.module('routes', []).config([ '$routeProvider', function($routeProvider) {
 
 			var routes = [ {
+				path : '/institutos',
+				template : 'app/views/institutos.html',
+				controller : "InstitutoCtrl"
+			}, {
 				path : '/carreras',
 				template : 'app/views/carreras.html',
 				controller : "CarreraCtrl"
@@ -24,51 +28,51 @@ angular.module('routes', []).config([ '$routeProvider', function($routeProvider)
 				controller : "ProvinciaCtrl"
 			}, {
 				path : '/tiposAdministracion',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoAdministracionCtrl"
 			}, {
 				path : '/tiposCargo',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoCargoCtrl"
 			}, {
 				path : '/tiposContacto',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoContactoCtrl"
 			}, {
 				path : '/tiposDocumento',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoDocumentoCtrl"
 			}, {
 				path : '/tiposEstadoContractual',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoEstadoContractualCtrl"
 			}, {
 				path : '/tiposEstadoFormacion',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoEstadoFormacionCtrl"
 			}, {
 				path : '/tiposFormacion',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoFormacionCtrl"
 			}, {
 				path : '/tiposMotivo',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoMotivoCtrl"
 			}, {
 				path : '/tiposPersonal',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoPersonalCtrl"
 			}, {
 				path : '/tiposRelacion',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoRelacionCtrl"
 			}, {
 				path : '/tiposSituacion',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoSituacionCtrl"
 			}, {
 				path : '/tiposSituacionRevista',
-				template : 'app/views/formGenerico.html',
+				template : 'app/views/formTipos.html',
 				controller : "TipoSituacionRevistaCtrl"
 			}, {
 				path : '/',

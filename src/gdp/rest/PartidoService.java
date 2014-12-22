@@ -66,10 +66,10 @@ public class PartidoService {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOPartido VOPartido = gson.fromJson(object.get("nuevo"), VOPartido.class);
+		VOPartido voPartido = gson.fromJson(object.get("nuevo"), VOPartido.class);
 		try {
 			emfh.beginTransaction(em);
-			VOPartido partido = partidoDAO.modificar(VOPartido, em);
+			VOPartido partido = partidoDAO.modificar(voPartido, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(partido));
 			voResponse.setOk(true);
@@ -122,11 +122,11 @@ public class PartidoService {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		try {
-			VOPartido VOPartido = null;
+			VOPartido voPartido = null;
 			JsonObject object = gson.fromJson(data, JsonObject.class);
 			Long id = object.get("id").getAsLong();
-			VOPartido = partidoDAO.encontrar(id, em);
-			voResponse.setData(gson.toJson(VOPartido));
+			voPartido = partidoDAO.encontrar(id, em);
+			voResponse.setData(gson.toJson(voPartido));
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			voResponse.setErrorMessage("No se pudo encontrar el partido.");

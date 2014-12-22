@@ -1,8 +1,8 @@
 package gdp.rest;
 
-import gdp.dao.provincia.IProvinciaDAO;
+import gdp.dao.instituto.IInstitutoDAO;
 import gdp.spring.bootstrap.EntityManagerFactoryHolder;
-import gdp.vomodel.VOProvincia;
+import gdp.vomodel.VOInstituto;
 import gdp.vomodel.VOResponse;
 
 import java.util.List;
@@ -20,83 +20,83 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 @RestController
-@RequestMapping(value = "/rest/provinciaService")
+@RequestMapping(value = "/rest/institutoService")
 @Scope("request")
-public class ProvinciaService {
+public class InstitutoService {
 
 	@Inject
 	private EntityManagerFactoryHolder emfh;
 
 	@Inject
-	private IProvinciaDAO provinciaDAO;
+	private IInstitutoDAO institutoDAO;
 
 	@Inject
 	private Gson gson;
 
-	public ProvinciaService() {
+	public InstitutoService() {
 	}
 
-	@RequestMapping(value = "/provincia/guardar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/instituto/guardar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String guardar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOProvincia voProvincia = gson.fromJson(object.get("nuevo"), VOProvincia.class);
+		VOInstituto voInstituto = gson.fromJson(object.get("nuevo"), VOInstituto.class);
 		try {
-			VOProvincia provincia = null;
+			VOInstituto instituto = null;
 			emfh.beginTransaction(em);
-			if (voProvincia.getId() != null && voProvincia.getId() != 0) {
-				provincia = provinciaDAO.modificar(voProvincia, em);
+			if (voInstituto.getId() != null && voInstituto.getId() != 0) {
+				instituto = institutoDAO.modificar(voInstituto, em);
 			} else {
-				provincia = provinciaDAO.guardar(voProvincia, em);
+				instituto = institutoDAO.guardar(voInstituto, em);
 			}
 			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(provincia));
+			voResponse.setData(gson.toJson(instituto));
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse la nueva provincia.");
+			voResponse.setErrorMessage("No pudo guardarse el nuevo instituto.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/provincia/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/instituto/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String editar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOProvincia VOProvincia = gson.fromJson(object.get("nuevo"), VOProvincia.class);
+		VOInstituto voInstituto = gson.fromJson(object.get("nuevo"), VOInstituto.class);
 		try {
 			emfh.beginTransaction(em);
-			VOProvincia provincias = provinciaDAO.modificar(VOProvincia, em);
+			VOInstituto instituto = institutoDAO.modificar(voInstituto, em);
 			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(provincias));
+			voResponse.setData(gson.toJson(instituto));
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse la nueva provincia.");
+			voResponse.setErrorMessage("No pudo guardarse el nuevo instituto.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/provincia/listar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/instituto/listar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String listar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		try {
-			List<VOProvincia> provincias = provinciaDAO.listar(em);
-			voResponse.setData(gson.toJson(provincias));
+			List<VOInstituto> institutos = institutoDAO.listar(em);
+			voResponse.setData(gson.toJson(institutos));
 			voResponse.setOk(true);
 		} catch (Exception e) {
-			voResponse.setErrorMessage("No se pudieron listar las provincias.");
+			voResponse.setErrorMessage("No se pudieron listar los institutos.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/provincia/borrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/instituto/borrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String borrar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
@@ -105,31 +105,31 @@ public class ProvinciaService {
 			Long id = object.get("id").getAsLong();
 			if (id != null) {
 				emfh.beginTransaction(em);
-				provinciaDAO.borrar(id, em);
+				institutoDAO.borrar(id, em);
 				emfh.commitTransaction(em);
 			}
 			voResponse.setOk(true);
 		} catch (Exception e) {
-			voResponse.setErrorMessage("No se pudo borrar la provincia.");
+			voResponse.setErrorMessage("No se pudo borrar el instituto.");
 			voResponse.setOk(false);
 			emfh.rollbackTransaction(em);
 		}
 		return gson.toJson(voResponse);
 	}
 
-	@RequestMapping(value = "/provincia/encontrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/instituto/encontrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String encontrar(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		try {
-			VOProvincia VOProvincia = null;
+			VOInstituto VOInstituto = null;
 			JsonObject object = gson.fromJson(data, JsonObject.class);
 			Long id = object.get("id").getAsLong();
-			VOProvincia = provinciaDAO.encontrar(id, em);
-			voResponse.setData(gson.toJson(VOProvincia));
+			VOInstituto = institutoDAO.encontrar(id, em);
+			voResponse.setData(gson.toJson(VOInstituto));
 			voResponse.setOk(true);
 		} catch (Exception e) {
-			voResponse.setErrorMessage("No se pudo encontrar la provincia.");
+			voResponse.setErrorMessage("No se pudo encontrar el instituto.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);

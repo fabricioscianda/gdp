@@ -2,8 +2,8 @@
 var gdpControllers = angular.module('gdpControllers');
 
 /* Sede */
-gdpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'LocalidadService', 
-		function($scope, $filter, SedeService, LocalidadService) {
+gdpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'LocalidadService', 'InstitutoService', 
+		function($scope, $filter, SedeService, LocalidadService, InstitutoService) {
 
 			$scope.modulo = 'Sedes';
 			$scope.nombreForm = 'Sede';
@@ -16,12 +16,20 @@ gdpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'Loca
 			$scope.nueva = {};
 			$scope.sede = {};
 			$scope.sedes = {};
-			$scope.localidadSel = {};
 			$scope.localidad = {};
+			$scope.localidadSel = {};
 			$scope.localidades = {};
+			$scope.instituto = {};
+			$scope.institutoSel = {};
+			$scope.institutos = {};
 
 			var orderBy = $filter('orderBy');
 
+			$scope.inicializarListados = function() {
+				$scope.listarLocalidades();
+				$scope.listarInstitutos();
+			}
+			
 			$scope.listarLocalidades = function() {
 				LocalidadService.listar({},
 					function (response){
@@ -41,9 +49,29 @@ gdpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'Loca
 					})
 			};
 			
+			$scope.listarInstitutos = function() {
+				InstitutoService.listar({},
+						function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.institutos = angular.fromJson(response.data);
+						$scope.institutoSel = $scope.institutos[-1];
+						$scope.institutos = orderBy($scope.institutos, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los institutos';
+						console.log('No se pudieron obtener los institutos');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
 			$scope.guardar = function(nueva) {
 				nueva.localidad = $scope.localidadSel; 
-				if (nueva != null && nueva.nombre != undefined && nueva.localidad!=null) {
+				nueva.instituto = $scope.institutoSel; 
+				if (nueva != null && nueva.nombre != undefined && nueva.localidad!=null && nueva.instituto!=null) {
 					SedeService.guardar({
 						'nueva' : nueva
 					}, function(response) {
@@ -51,6 +79,7 @@ gdpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'Loca
 						if (response.ok) {
 							$scope.msgSuccess = nueva.nombre + ', Guardada.';
 							$scope.localidadSel = $scope.localidades[-1];
+							$scope.institutoSel = $scope.institutos[-1];
 							$scope.nueva = {};
 							$scope.listar();
 						} else {
@@ -63,7 +92,7 @@ gdpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'Loca
 					})
 				} else {
 					$scope.success = false;
-					$scope.msgError = 'El nombre no puede ser vacio.';
+					$scope.msgError = 'Tanto el nombre como la localidad o la institucion no pueden ser vacios.';
 					$('#message-modal').modal('show');
 				}
 			};
@@ -112,10 +141,18 @@ gdpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'Loca
 					$scope.msgError = 'Error buscando la localidad de la sede a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
+				var i = $scope.indiceDe($scope.institutos, sede.instituto.id, 'id');
+				if (i!=-1) {
+					$scope.institutoSel = $scope.institutos[i];
+				} else {
+					$scope.msgError = 'Error buscando el instituto de la sede a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
 			}
 
 			$scope.editar = function(sede) {
 				sede.localidad = $scope.localidadSel;
+				sede.instituto = $scope.institutoSel;
 				SedeService.editar({
 					'sede' : sede
 				}, function(response) {
@@ -143,6 +180,7 @@ gdpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'Loca
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.localidadSel = $scope.localidades[-1];
+				$scope.institutoSel = $scope.institutos[-1];
 			}
 			
 			$scope.confirmarBorrar = function(sede) {

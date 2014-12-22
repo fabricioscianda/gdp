@@ -5,7 +5,6 @@ import gdp.utils.DBUtils;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,9 +33,9 @@ public class Sede implements Serializable {
 	private String nombre;
 	@ManyToOne
 	private Localidad localidad;
-	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "sede", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sede")
 	private List<Carrera> carreras;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Instituto instituto;
 
 	public Sede() {
