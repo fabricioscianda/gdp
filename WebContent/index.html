@@ -28,9 +28,14 @@
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
+							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Planes<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#/asignaturas">Asignaturas</a></li>
+									<li><a href="#/carreras">Carreras</a></li>
+								</ul>
+							</li>
 							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Instituciones<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#/carreras">Carreras</a></li>
 									<li><a href="#/institutos">Institutos</a></li>
 									<li><a href="#/sedes">Sedes</a></li>
 								</ul>
@@ -87,6 +92,7 @@
 <!-- Services -->
 <script src="app/angular/services/services.js"></script>
 <script src="app/angular/services/server.js"></script>
+<script src="app/angular/services/asignaturaService.js"></script>
 <script src="app/angular/services/institutoService.js"></script>
 <script src="app/angular/services/carreraService.js"></script>
 <script src="app/angular/services/sedeService.js"></script>
@@ -107,6 +113,7 @@
 <script src="app/angular/services/tipoSituacionRevistaService.js"></script>
 <!-- Controllers -->
 <script src="app/angular/controllers/controllers.js"></script>
+<script src="app/angular/controllers/asignaturaCtrl.js"></script>
 <script src="app/angular/controllers/institutoCtrl.js"></script>
 <script src="app/angular/controllers/carreraCtrl.js"></script>
 <script src="app/angular/controllers/sedeCtrl.js"></script>

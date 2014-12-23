@@ -19,6 +19,16 @@ gdpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraService',
 			$scope.sedeSel = {};
 			$scope.sede = {};
 			$scope.sedes = {};
+			
+			$scope.anios = [ {
+				'value' : 1
+			}, {
+				'value' : 2
+			}, {
+				'value' : 3
+			} ];
+			
+			$scope.anioSel = {};
 
 			var orderBy = $filter('orderBy');
 
@@ -43,6 +53,7 @@ gdpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraService',
 			
 			$scope.guardar = function(nueva) {
 				nueva.sede = $scope.sedeSel; 
+				nueva.cantAnios = $scope.anioSel;
 				if (nueva != null && nueva.nombre != undefined && nueva.sede!=null) {
 					CarreraService.guardar({
 						'nueva' : nueva
@@ -52,6 +63,7 @@ gdpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraService',
 							$scope.msgSuccess = nueva.nombre + ', Guardada.';
 							$scope.sedeSel = $scope.sedes[-1];
 							$scope.nueva = {};
+							$scope.anioSel = {};
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
@@ -105,6 +117,8 @@ gdpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraService',
 				$scope.nueva = {};
 				$scope.nueva.id = carrera.id;
 				$scope.nueva.nombre = carrera.nombre;
+				$scope.nueva.cantAnios = carrera.cantAnios;
+				$scope.anioSel = carrera.cantAnios;
 				var i = $scope.indiceDe($scope.sedes, carrera.sede.id, 'id');
 				if (i!=-1) {
 					$scope.sedeSel = $scope.sedes[i];
@@ -116,6 +130,7 @@ gdpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraService',
 
 			$scope.editar = function(carrera) {
 				carrera.localidad = $scope.localidadSel;
+				carrera.cantAnios = $scope.anioSel;
 				CarreraService.editar({
 					'carrera' : carrera
 				}, function(response) {
@@ -143,6 +158,9 @@ gdpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraService',
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.sedeSel = $scope.sedes[-1];
+				$scope.nueva.cantAnios = {};
+				$scope.carrera.cantAnios = {};
+				$scope.anioSel = {};
 			}
 			
 			$scope.confirmarBorrar = function(carrera) {

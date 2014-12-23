@@ -32,11 +32,12 @@ public class Carrera implements Serializable {
 	@SequenceGenerator(schema = DBUtils.SCHEMA, name = "SEQUENCE_CARRERA", sequenceName = "CARRERA_SEQ", allocationSize = 1)
 	private Long id;
 	private String nombre;
+	private Integer cantAnios;
 	@ManyToOne
 	private Sede sede;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "carrera", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Asignatura> asignaturas;
-
+	
 	public Carrera() {
 	}
 
@@ -82,6 +83,14 @@ public class Carrera implements Serializable {
 
 	public void setSede(Sede sede) {
 		this.sede = sede;
+	}
+
+	public Integer getCantAnios() {
+		return cantAnios;
+	}
+
+	public void setCantAnios(Integer cantAnios) {
+		this.cantAnios = cantAnios;
 	}
 
 }

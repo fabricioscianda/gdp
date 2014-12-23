@@ -8,6 +8,7 @@ public class VOCarrera implements Serializable {
 	private static final long serialVersionUID = 8878813645484021339L;
 	private Long id;
 	private String nombre;
+	private Integer cantAnios;
 	private VOSede sede;
 	private List<VOAsignatura> asignaturas;
 
@@ -55,6 +56,14 @@ public class VOCarrera implements Serializable {
 
 	public void setSede(VOSede sede) {
 		this.sede = sede;
+	}
+
+	public Integer getCantAnios() {
+		return cantAnios;
+	}
+
+	public void setCantAnios(Integer cantAnios) {
+		this.cantAnios = cantAnios;
 	}
 
 }
