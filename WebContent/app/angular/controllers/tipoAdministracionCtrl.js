@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Tipos Administracion */
-gdpControllers.controller('TipoAdministracionCtrl', [
+msegErpControllers.controller('TipoAdministracionCtrl', [
 		'$scope',
 		'$filter',
 		'TipoAdministracionService',

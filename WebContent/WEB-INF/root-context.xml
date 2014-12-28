@@ -18,7 +18,7 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<context:component-scan base-package="gdp" />
+	<context:component-scan base-package="mseg.erp" />
 	
 	<mvc:annotation-driven />
 	
@@ -28,7 +28,7 @@
 		<mvc:interceptors>
 			<mvc:interceptor>
 				<mvc:mapping path="/rest/**" />
-				<bean class="gdp.spring.interceptors.RequestHandlerInterceptor" />
+				<bean class="mseg.erp.spring.interceptors.RequestHandlerInterceptor" />
 			</mvc:interceptor>
 		</mvc:interceptors>
 		<!-- -->
@@ -38,47 +38,47 @@
 			</property>
 		</bean>
 		<!-- -->
-		<bean id="credentials" class="gdp.vomodel.VOCredential" scope="session"></bean>
+		<bean id="credentials" class="mseg.erp.vomodel.VOCredential" scope="session"></bean>
 		
 		<!-- EntityManagerFactory Init -->
-		<bean id="emfh" init-method="init" scope="singleton" class="gdp.spring.bootstrap.EntityManagerFactoryHolder" />
+		<bean id="emfh" init-method="init" scope="singleton" class="mseg.erp.spring.bootstrap.EntityManagerFactoryHolder" />
 		
 		<!-- DAOs Declarations -->
-		<bean id="asignaturaDAO" class="gdp.dao.asignatura.AsignaturaDAOImpl" scope="request" />
-		<bean id="carreraDAO" class="gdp.dao.carrera.CarreraDAOImpl" scope="request" />
-		<bean id="contactoDAO" class="gdp.dao.contacto.ContactoDAOImpl" scope="request" />
-		<bean id="desempenioDAO" class="gdp.dao.desempenio.DesempenioDAOImpl" scope="request" />
-		<bean id="docenteDAO" class="gdp.dao.docente.DocenteDAOImpl" scope="request" />
-		<bean id="documentacionDAO" class="gdp.dao.documentacion.DocumentacionDAOImpl" scope="request" />
-		<bean id="domicilioDAO" class="gdp.dao.domicilio.DomicilioDAOImpl" scope="request" />
-		<bean id="empleoDAO" class="gdp.dao.empleo.EmpleoDAOImpl" scope="request" />
-		<bean id="formacionacAdemicaDAO" class="gdp.dao.formacionacademica.FormacionAcademicaDAOImpl" scope="request" />
-		<bean id="infoAdministrativaDAO" class="gdp.dao.infoadministrativa.InfoAdministrativaDAOImpl" scope="request" />
-		<bean id="institutoDAO" class="gdp.dao.instituto.InstitutoDAOImpl" scope="request" />
-		<bean id="localidadDAO" class="gdp.dao.localidad.LocalidadDAOImpl" scope="request" />
-		<bean id="partidoDAO" class="gdp.dao.partido.PartidoDAOImpl" scope="request" />
-		<bean id="personaDAO" class="gdp.dao.persona.PersonaDAOImpl" scope="request" />
-		<bean id="provinciaDAO" class="gdp.dao.provincia.ProvinciaDAOImpl" scope="request" />
-		<bean id="sedeDAO" class="gdp.dao.sede.SedeDAOImpl" scope="request" />
-		<bean id="tipoAdministracionDAO" class="gdp.dao.tipoadministracion.TipoAdministracionDAOImpl" scope="request" />
-		<bean id="tipoCargoDAO" class="gdp.dao.tipocargo.TipoCargoDAOImpl" scope="request" />
-		<bean id="tipoContactoDAO" class="gdp.dao.tipocontacto.TipoContactoDAOImpl" scope="request" />
-		<bean id="tipoDocumentoDAO" class="gdp.dao.tipodocumento.TipoDocumentoDAOImpl" scope="request" />
-		<bean id="tipoEstadoContractualDAO" class="gdp.dao.tipoestadocontractual.TipoEstadoContractualDAOImpl" scope="request" />
-		<bean id="tipoEstadoFormacionDAO" class="gdp.dao.tipoestadoformacion.TipoEstadoFormacionDAOImpl" scope="request" />
-		<bean id="tipoFormacionDAO" class="gdp.dao.tipoformacion.TipoFormacionDAOImpl" scope="request" />
-		<bean id="tipoMotivoDAO" class="gdp.dao.tipomotivo.TipoMotivoDAOImpl" scope="request" />
-		<bean id="tipoPersonalDAO" class="gdp.dao.tipopersonal.TipoPersonalDAOImpl" scope="request" />
-		<bean id="tipoRelacionDAO" class="gdp.dao.tiporelacion.TipoRelacionDAOImpl" scope="request" />
-		<bean id="tipoSituacionDAO" class="gdp.dao.tiposituacion.TipoSituacionDAOImpl" scope="request" />
-		<bean id="tipoSituacionRevistaDAO" class="gdp.dao.tiposituacionrevista.TipoSituacionRevistaDAOImpl" scope="request" />
-		<bean id="usuarioDAO" class="gdp.dao.usuario.UsuarioDAOImpl" scope="request" />
+		<bean id="asignaturaDAO" class="mseg.erp.dao.asignatura.AsignaturaDAOImpl" scope="request" />
+		<bean id="carreraDAO" class="mseg.erp.dao.carrera.CarreraDAOImpl" scope="request" />
+		<bean id="contactoDAO" class="mseg.erp.dao.contacto.ContactoDAOImpl" scope="request" />
+		<bean id="desempenioDAO" class="mseg.erp.dao.desempenio.DesempenioDAOImpl" scope="request" />
+		<bean id="docenteDAO" class="mseg.erp.dao.docente.DocenteDAOImpl" scope="request" />
+		<bean id="documentacionDAO" class="mseg.erp.dao.documentacion.DocumentacionDAOImpl" scope="request" />
+		<bean id="domicilioDAO" class="mseg.erp.dao.domicilio.DomicilioDAOImpl" scope="request" />
+		<bean id="empleoDAO" class="mseg.erp.dao.empleo.EmpleoDAOImpl" scope="request" />
+		<bean id="formacionacAdemicaDAO" class="mseg.erp.dao.formacionacademica.FormacionAcademicaDAOImpl" scope="request" />
+		<bean id="infoAdministrativaDAO" class="mseg.erp.dao.infoadministrativa.InfoAdministrativaDAOImpl" scope="request" />
+		<bean id="institutoDAO" class="mseg.erp.dao.instituto.InstitutoDAOImpl" scope="request" />
+		<bean id="localidadDAO" class="mseg.erp.dao.localidad.LocalidadDAOImpl" scope="request" />
+		<bean id="partidoDAO" class="mseg.erp.dao.partido.PartidoDAOImpl" scope="request" />
+		<bean id="personaDAO" class="mseg.erp.dao.persona.PersonaDAOImpl" scope="request" />
+		<bean id="provinciaDAO" class="mseg.erp.dao.provincia.ProvinciaDAOImpl" scope="request" />
+		<bean id="sedeDAO" class="mseg.erp.dao.sede.SedeDAOImpl" scope="request" />
+		<bean id="tipoAdministracionDAO" class="mseg.erp.dao.tipoadministracion.TipoAdministracionDAOImpl" scope="request" />
+		<bean id="tipoCargoDAO" class="mseg.erp.dao.tipocargo.TipoCargoDAOImpl" scope="request" />
+		<bean id="tipoContactoDAO" class="mseg.erp.dao.tipocontacto.TipoContactoDAOImpl" scope="request" />
+		<bean id="tipoDocumentoDAO" class="mseg.erp.dao.tipodocumento.TipoDocumentoDAOImpl" scope="request" />
+		<bean id="tipoEstadoContractualDAO" class="mseg.erp.dao.tipoestadocontractual.TipoEstadoContractualDAOImpl" scope="request" />
+		<bean id="tipoEstadoFormacionDAO" class="mseg.erp.dao.tipoestadoformacion.TipoEstadoFormacionDAOImpl" scope="request" />
+		<bean id="tipoFormacionDAO" class="mseg.erp.dao.tipoformacion.TipoFormacionDAOImpl" scope="request" />
+		<bean id="tipoMotivoDAO" class="mseg.erp.dao.tipomotivo.TipoMotivoDAOImpl" scope="request" />
+		<bean id="tipoPersonalDAO" class="mseg.erp.dao.tipopersonal.TipoPersonalDAOImpl" scope="request" />
+		<bean id="tipoRelacionDAO" class="mseg.erp.dao.tiporelacion.TipoRelacionDAOImpl" scope="request" />
+		<bean id="tipoSituacionDAO" class="mseg.erp.dao.tiposituacion.TipoSituacionDAOImpl" scope="request" />
+		<bean id="tipoSituacionRevistaDAO" class="mseg.erp.dao.tiposituacionrevista.TipoSituacionRevistaDAOImpl" scope="request" />
+		<bean id="usuarioDAO" class="mseg.erp.dao.usuario.UsuarioDAOImpl" scope="request" />
 		
 		<!-- Json Utilities -->
-		<bean id="gson" class="gdp.spring.factoryBeans.GsonSpringFactoryBean" scope="singleton" />
+		<bean id="gson" class="mseg.erp.spring.factoryBeans.GsonSpringFactoryBean" scope="singleton" />
 
 		<!-- The quartz scheduler configuration -->
-		<!-- <bean id="jobFactoryBean" class="gdp.spring.factoryBeans.AutowiringSpringBeanJobFactory"/> -->
+		<!-- <bean id="jobFactoryBean" class="mseg.erp.spring.factoryBeans.AutowiringSpringBeanJobFactory"/> -->
 		<!-- <bean id="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> -->
 		<!-- <property name="waitForJobsToCompleteOnShutdown" value="true"/> -->
 		<!-- <property name="jobFactory" ref="jobFactoryBean"/> -->
@@ -89,7 +89,7 @@
 		<!-- <property name="jobDetail"> -->
 		<!-- Job para recordatorios del día -->
 		<!-- <bean id="mailSenderJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"> -->
-		<!-- <property name="jobClass" value="gdp.spring.schedulers.MailSenderJob" 
+		<!-- <property name="jobClass" value="mseg.erp.spring.schedulers.MailSenderJob" 
 			/> -->
 		<!-- <property name="durability" value="true" /> -->
 		<!-- </bean> -->
@@ -108,7 +108,7 @@
 		<!-- <property name="jobDetail"> -->
 		<!-- Job para vencimiento de convenios -->
 		<!-- <bean id="vencimientoConveniosJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"> -->
-		<!-- <property name="jobClass" value="gdp.spring.schedulers.VencimientoConveniosJob" 
+		<!-- <property name="jobClass" value="mseg.erp.spring.schedulers.VencimientoConveniosJob" 
 			/> -->
 		<!-- <property name="durability" value="true" /> -->
 		<!-- </bean> -->

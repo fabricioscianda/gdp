@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Provincia */
-gdpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaService',
+msegErpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaService',
 		function($scope, $filter, ProvinciaService) {
 
 			$scope.modulo = 'Provincias';

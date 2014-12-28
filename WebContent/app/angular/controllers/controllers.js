@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('gdpControllers', []);
+angular.module('msegErpControllers', []);

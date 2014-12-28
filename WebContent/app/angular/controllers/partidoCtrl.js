@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Partido */
-gdpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService', 'ProvinciaService', 
+msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService', 'ProvinciaService', 
 		function($scope, $filter, PartidoService, ProvinciaService) {
 
 			$scope.modulo = 'Partidos';

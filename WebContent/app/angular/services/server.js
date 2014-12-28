@@ -1,11 +1,11 @@
 'use strict';
-var gdpServices = angular.module('gdpServices');
-//var gdpServices = angular.module('gdpServices', []);
+var msegErpServices = angular.module('msegErpServices');
+//var msegErpServices = angular.module('msegErpServices', []);
 
-gdpServices.factory('srvHttp', function($http, $rootScope, $location) {
+msegErpServices.factory('srvHttp', function($http, $rootScope, $location) {
 
 	var s = window.location.protocol + "//" + window.location.host;
-	var serviceUrl = s + "/gdp/rest/";
+	var serviceUrl = s + "/msegErp/rest/";
 
 	return {
 		post : function(uri, params, successFn, errorFn) {

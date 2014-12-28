@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Tipos Formacion */
-gdpControllers.controller('TipoFormacionCtrl', [
+msegErpControllers.controller('TipoFormacionCtrl', [
 		'$scope',
 		'$filter',
 		'TipoFormacionService',

@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Instituto */
-gdpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoService',
+msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoService',
 		function($scope, $filter, InstitutoService) {
 
 			$scope.modulo = 'Institutos';

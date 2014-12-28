@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Tipos Contacto */
-gdpControllers.controller('TipoContactoCtrl', [
+msegErpControllers.controller('TipoContactoCtrl', [
 		'$scope',
 		'$filter',
 		'TipoContactoService',

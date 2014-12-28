@@ -5,44 +5,44 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0">
 
-	<persistence-unit name="gdp" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="msegErp" transaction-type="RESOURCE_LOCAL">
 
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
 		<!-- Tomcat DS -->
-		<non-jta-data-source>java:/comp/env/jdbc/gdpDS</non-jta-data-source>
+		<non-jta-data-source>java:/comp/env/jdbc/msegErpDS</non-jta-data-source>
 		<!-- JBoss -->
-<!--    		<non-jta-data-source>java:/gdpDS</non-jta-data-source> -->
+<!--    		<non-jta-data-source>java:/msegErpDS</non-jta-data-source> -->
 
 		<!-- Clases -->
-		<class>gdp.model.Asignatura</class>
-		<class>gdp.model.Carrera</class>
-		<class>gdp.model.Contacto</class>
-		<class>gdp.model.Desempenio</class>
-		<class>gdp.model.Docente</class>
-		<class>gdp.model.Documentacion</class>
-		<class>gdp.model.Domicilio</class>
-		<class>gdp.model.Empleo</class>
-		<class>gdp.model.FormacionAcademica</class>
-		<class>gdp.model.InfoAdministrativa</class>
-		<class>gdp.model.Instituto</class>
-		<class>gdp.model.Localidad</class>
-		<class>gdp.model.Partido</class>
-		<class>gdp.model.Persona</class>
-		<class>gdp.model.Provincia</class>
-		<class>gdp.model.Sede</class>
-		<class>gdp.model.TipoAdministracion</class>
-		<class>gdp.model.TipoCargo</class>
-		<class>gdp.model.TipoContacto</class>
-		<class>gdp.model.TipoDocumento</class>
-		<class>gdp.model.TipoEstadoContractual</class>
-		<class>gdp.model.TipoEstadoFormacion</class>
-		<class>gdp.model.TipoFormacion</class>
-		<class>gdp.model.TipoMotivo</class>
-		<class>gdp.model.TipoPersonal</class>
-		<class>gdp.model.TipoRelacion</class>
-		<class>gdp.model.TipoSituacion</class>
-		<class>gdp.model.TipoSituacionRevista</class>
+		<class>mseg.erp.model.Asignatura</class>
+		<class>mseg.erp.model.Carrera</class>
+		<class>mseg.erp.model.Contacto</class>
+		<class>mseg.erp.model.Desempenio</class>
+		<class>mseg.erp.model.Docente</class>
+		<class>mseg.erp.model.Documentacion</class>
+		<class>mseg.erp.model.Domicilio</class>
+		<class>mseg.erp.model.Empleo</class>
+		<class>mseg.erp.model.FormacionAcademica</class>
+		<class>mseg.erp.model.InfoAdministrativa</class>
+		<class>mseg.erp.model.Instituto</class>
+		<class>mseg.erp.model.Localidad</class>
+		<class>mseg.erp.model.Partido</class>
+		<class>mseg.erp.model.Persona</class>
+		<class>mseg.erp.model.Provincia</class>
+		<class>mseg.erp.model.Sede</class>
+		<class>mseg.erp.model.TipoAdministracion</class>
+		<class>mseg.erp.model.TipoCargo</class>
+		<class>mseg.erp.model.TipoContacto</class>
+		<class>mseg.erp.model.TipoDocumento</class>
+		<class>mseg.erp.model.TipoEstadoContractual</class>
+		<class>mseg.erp.model.TipoEstadoFormacion</class>
+		<class>mseg.erp.model.TipoFormacion</class>
+		<class>mseg.erp.model.TipoMotivo</class>
+		<class>mseg.erp.model.TipoPersonal</class>
+		<class>mseg.erp.model.TipoRelacion</class>
+		<class>mseg.erp.model.TipoSituacion</class>
+		<class>mseg.erp.model.TipoSituacionRevista</class>
 
 		<properties>
 			<property name="eclipselink.session.customizer" value="eclipselink.session.customizer.JPAEclipseLinkSessionCustomizer" />

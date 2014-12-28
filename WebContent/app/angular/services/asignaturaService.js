@@ -1,8 +1,8 @@
 'use strict';
-var gdpServices = angular.module('gdpServices');
+var msegErpServices = angular.module('msegErpServices');
 
 /* Asignaturas */
-gdpServices.factory('AsignaturaService', function(srvHttp) {
+msegErpServices.factory('AsignaturaService', function(srvHttp) {
 	return {
 		guardar : function(data, success, error) {
 			return srvHttp.post('asignaturaService/asignatura/guardar', data, success, error);

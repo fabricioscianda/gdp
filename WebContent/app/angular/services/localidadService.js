@@ -1,8 +1,8 @@
 'use strict';
-var gdpServices = angular.module('gdpServices');
+var msegErpServices = angular.module('msegErpServices');
 
 /* Localidades */
-gdpServices.factory('LocalidadService', function(srvHttp) {
+msegErpServices.factory('LocalidadService', function(srvHttp) {
 	return {
 		guardar : function(data, success, error) {
 			return srvHttp.post('localidadService/localidad/guardar', data, success, error);

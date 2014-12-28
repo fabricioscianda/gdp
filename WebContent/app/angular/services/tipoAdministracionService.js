@@ -1,8 +1,8 @@
 'use strict';
-var gdpServices = angular.module('gdpServices');
+var msegErpServices = angular.module('msegErpServices');
 
 /* Tipos Administracion */
-gdpServices.factory('TipoAdministracionService', function(srvHttp) {
+msegErpServices.factory('TipoAdministracionService', function(srvHttp) {
 	return {
 		guardar : function(data, success, error) {
 			return srvHttp.post(

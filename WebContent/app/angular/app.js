@@ -1,5 +1,5 @@
 'use strict';
 
-var gdpApp = angular.module('gdpApp', [ 'ngRoute', 'routes', 'gdpControllers', 'gdpServices']);
+var msegErpApp = angular.module('msegErpApp', [ 'ngRoute', 'routes', 'msegErpControllers', 'msegErpServices']);
 
-gdpApp.config([ '$routeProvider', function($routeProvider) {} ]);
+msegErpApp.config([ '$routeProvider', function($routeProvider) {} ]);

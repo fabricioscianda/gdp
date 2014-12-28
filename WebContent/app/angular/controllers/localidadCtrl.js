@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Localidad */
-gdpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadService', 'PartidoService', 
+msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadService', 'PartidoService', 
 		function($scope, $filter, LocalidadService, PartidoService) {
 
 			$scope.modulo = 'Localidades';

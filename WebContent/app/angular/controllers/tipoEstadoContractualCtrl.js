@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Tipos Estado Contractual */
-gdpControllers.controller('TipoEstadoContractualCtrl', [
+msegErpControllers.controller('TipoEstadoContractualCtrl', [
 		'$scope',
 		'$filter',
 		'TipoEstadoContractualService',

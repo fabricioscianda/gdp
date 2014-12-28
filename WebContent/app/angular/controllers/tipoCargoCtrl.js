@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Tipos Cargo */
-gdpControllers.controller('TipoCargoCtrl', [
+msegErpControllers.controller('TipoCargoCtrl', [
 		'$scope',
 		'$filter',
 		'TipoCargoService',

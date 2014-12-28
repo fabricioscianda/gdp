@@ -1,8 +1,8 @@
 'use strict';
-var gdpServices = angular.module('gdpServices');
+var msegErpServices = angular.module('msegErpServices');
 
 /* Partidos */
-gdpServices.factory('PartidoService', function(srvHttp) {
+msegErpServices.factory('PartidoService', function(srvHttp) {
 	return {
 		guardar : function(data, success, error) {
 			return srvHttp.post('partidoService/partido/guardar', data,

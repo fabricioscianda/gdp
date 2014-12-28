@@ -1,8 +1,8 @@
 'use strict';
-var gdpControllers = angular.module('gdpControllers');
+var msegErpControllers = angular.module('msegErpControllers');
 
 /* Asignatura */
-gdpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'AsignaturaService', 'CarreraService', 
+msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'AsignaturaService', 'CarreraService', 
 		function($scope, $filter, AsignaturaService, CarreraService) {
 
 			$scope.modulo = 'Asignaturas';
@@ -18,7 +18,9 @@ gdpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'AsignaturaSer
 			$scope.asignaturas = {};
 			$scope.carreraSel = {};
 			$scope.carreras = {};
-
+			$scope.anios = {};
+			$scope.anioSel = {};
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.listarCarreras = function() {
@@ -153,6 +155,18 @@ gdpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'AsignaturaSer
 			$scope.cancelarBorrar = function(asignatura) {
 				$('#confirm-modal').modal('hide');
 				$scope.asignatura = {};
+			}
+
+			$scope.initAnios = function (){
+				if ($scope.carreraSel==undefined || $scope.carreraSel.cantAnios==undefined) {
+					$scope.anios = new Array(0);
+				} else {
+					$scope.anios = new Array($scope.carreraSel.cantAnios);
+					for (var i = 0; i < $scope.anios.length; i++) {
+						$scope.anios[i] = i+1;
+						
+					}
+				}
 			}
 			
 		} ]);

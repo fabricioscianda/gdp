@@ -48,7 +48,7 @@
 	  </div>
 	</div>
 	<!-- Form Nuevo -->
-	<div class="row col-sm-4 col-sm-offset-1">
+	<div class="row col-sm-5 col-sm-offset-1">
 		<!-- Panel -->
 		<div class="panel panel-default">
 			<!-- Panel Header -->
@@ -60,15 +60,20 @@
 				<form role="form" name="formAction" ng-init="listarCarreras()">
 					<div class="form-group">
 						<label for="carrera" class="control-label">Carrera, Instituto, Sede, Localidad, Partido</label>
-						<select class="form-control" ng-options="(carrera.nombre + ', ' + carrera.sede.instituto.nombre + ', ' + carrera.sede.nombre + ', ' + carrera.sede.localidad.nombre + ', ' + carrera.sede.localidad.partido.nombre ) for carrera in carreras" required ng-model="carreraSel"></select>
+						<select class="form-control" ng-options="(carrera.nombre + ', ' + carrera.sede.instituto.nombre + ', ' + carrera.sede.nombre + ', ' + carrera.sede.localidad.nombre + ', ' + carrera.sede.localidad.partido.nombre ) for carrera in carreras" required ng-model="carreraSel" ng-click="initAnios()"></select>
 					</div>
 					<div class="form-group">
 						<label for="nombre" class="control-label">Asignatura</label>
-						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre">
+						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre" placeholder="Nombre de la Asignatura">
 					</div>
-					<div class="form-group">
-						<label for="anio" class="control-label">Año</label>
-						<input type="text" class="form-control" id="anio" name="anio" ng-model="nueva.anio">
+					<div class="form-group" ng-show="(carreraSel.cantAnios!=undefined && carreraSel.cantAnios>0)">
+						<label for="anio" class="control-label">Año en que se cursa</label>
+						<br>
+						<div>
+							<label class="radio-inline" ng-repeat="anio in anios"> 
+								<input type="radio" id="anioSel" name="anioSel" value="{{anio}}" ng-model="$parent.anioSel"> {{anio}} año 
+							</label>
+						</div>
 					</div>
 				</form>
 			</div>
