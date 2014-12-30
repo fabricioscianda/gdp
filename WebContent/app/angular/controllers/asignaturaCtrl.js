@@ -44,6 +44,7 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 			
 			$scope.guardar = function(nueva) {
 				nueva.carrera = $scope.carreraSel; 
+				nueva.anio = $scope.anioSel;
 				if (nueva != null && nueva.nombre!=undefined && nueva.anio!=undefined && nueva.carrera!=null) {
 					AsignaturaService.guardar({
 						'nueva' : nueva
@@ -52,6 +53,7 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 						if (response.ok) {
 							$scope.msgSuccess = nueva.nombre + ', Guardada.';
 							$scope.carreraSel = $scope.carreras[-1];
+							$scope.anioSel = {};
 							$scope.nueva = {};
 							$scope.listar();
 						} else {
@@ -105,8 +107,10 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 			$scope.editarElemento = function(asignatura) {
 				$scope.nueva = {};
 				$scope.nueva.id = asignatura.id;
-				$scope.nueva.anio = asignatura.anio;
 				$scope.nueva.nombre = asignatura.nombre;
+				$scope.nueva.anio = asignatura.anio;
+				$scope.initAnios(asignatura.carrera.cantAnios);
+				$scope.anioSel = asignatura.anio;
 				var i = $scope.indiceDe($scope.carreras, asignatura.carrera.id, 'id');
 				if (i!=-1) {
 					$scope.carreraSel = $scope.carreras[i];
@@ -157,14 +161,11 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 				$scope.asignatura = {};
 			}
 
-			$scope.initAnios = function (){
-				if ($scope.carreraSel==undefined || $scope.carreraSel.cantAnios==undefined) {
-					$scope.anios = new Array(0);
-				} else {
-					$scope.anios = new Array($scope.carreraSel.cantAnios);
+			$scope.initAnios = function (index){
+				if (index!=0) {
+					$scope.anios = new Array(index);
 					for (var i = 0; i < $scope.anios.length; i++) {
 						$scope.anios[i] = i+1;
-						
 					}
 				}
 			}
