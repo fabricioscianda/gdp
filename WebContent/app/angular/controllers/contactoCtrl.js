@@ -1,35 +1,37 @@
 'use strict';
 var msegErpControllers = angular.module('msegErpControllers');
 
-/* Tipos Documento */
-msegErpControllers.controller('TipoDocumentoCtrl', [
+/* Contacto */
+msegErpControllers.controller('ContactoCtrl', [
 		'$scope',
 		'$filter',
-		'TipoDocumentoService',
-		function($scope, $filter, TipoDocumentoService) {
+		'ContactoService',
+		function($scope, $filter, ContactoService) {
 
-			$scope.modulo = 'Documentos';
-			$scope.nombreForm = 'Tipo de Documento';
-			$scope.urlModulo = 'tiposDocumento';
+			$scope.modulo = 'Contactos';
+			$scope.nombreForm = 'Contacto';
+			$scope.urlModulo = 'contacto';
 
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
 			$scope.nuevo = {};
-			$scope.tipos = {};
+			$scope.contactos = {};
 
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {
+//				$scope.tipoContactoSel =
 				if (nuevo != null && nuevo.nombre != undefined) {
-					TipoDocumentoService.guardar({
+					ContactoService.guardar({
 						'nuevo' : nuevo
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = nuevo.nombre + ', Guardado.';
 							$scope.nuevo = {};
+							$scope.tipoContactoSel = {};
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
@@ -47,12 +49,12 @@ msegErpControllers.controller('TipoDocumentoCtrl', [
 			};
 
 			$scope.listar = function() {
-				TipoDocumentoService.listar({}, function(response) {
+				ContactoService.listar({}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.tipos = angular.fromJson(response.data);
+						$scope.contactos = angular.fromJson(response.data);
 					} else {
-						$scope.msgError = 'No se pudieron obtener los tipos.';
+						$scope.msgError = 'No se pudieron obtener los contactos.';
 						$('#message-modal').modal('show');
 					}
 					;
@@ -61,13 +63,13 @@ msegErpControllers.controller('TipoDocumentoCtrl', [
 				});
 			};
 
-			$scope.borrar = function(tipo) {
-				TipoDocumentoService.borrar({
-					'id' : tipo.id
+			$scope.borrar = function(contacto) {
+				ContactoService.borrar({
+					'id' : contacto.id
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = tipo.nombre + ", Borrado.";
+						$scope.msgSuccess = contacto.nombre + ", Borrado.";
 						$scope.listar();
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
@@ -79,23 +81,23 @@ msegErpControllers.controller('TipoDocumentoCtrl', [
 				});
 			}
 
-			$scope.editarElemento = function(tipo) {
+			$scope.editarElemento = function(contacto) {
 				$scope.nuevo = {};
-				$scope.nuevo.id = tipo.id;
-				$scope.nuevo.nombre = tipo.nombre;
+				$scope.nuevo.id = contacto.id;
+				$scope.nuevo.tipoContacto = contacto.tipoContacto;
+				$scope.nuevo.valor = contacto.valor;
 			}
 
-			$scope.editar = function(tipo) {
-				TipoDocumentoService.editar({
-					'tipo' : tipo
+			$scope.editar = function(contacto) {
+				ContactoService.editar({
+					'contacto' : contacto
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = tipo.nombre + ", Guardado.";
+						$scope.msgSuccess = contacto.nombre + ", Guardado.";
 						$scope.listar();
 					} else {
-						$scope.msgError = "No se pudo editar el elemento, "
-								+ tipo.nombre;
+						$scope.msgError = "No se pudo editar el elemento, " + contacto.nombre;
 					}
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -107,14 +109,14 @@ msegErpControllers.controller('TipoDocumentoCtrl', [
 				$scope.nuevo = {};
 			}
 			
-			$scope.confirmarBorrar = function(tipo) {
-				$scope.tipo = tipo;
+			$scope.confirmarBorrar = function(contacto) {
+				$scope.contacto = contacto;
 				$('#confirm-modal').modal('show');
 			}
 
-			$scope.cancelarBorrar = function(tipo) {
+			$scope.cancelarBorrar = function(contacto) {
 				$('#confirm-modal').modal('hide');
-				$scope.tipo = {};
+				$scope.contacto = {};
 			}
 			
 		} ]);

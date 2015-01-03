@@ -59,15 +59,17 @@
 			<div class="panel-body">
 				<form role="form" name="formAction" ng-init="listarPartidos()">
 					<div class="form-group">
-						<label for="partido" class="control-label">Partido</label>
-						<select class="form-control" ng-options="partido.nombre for partido in partidos" required ng-model="partidoSel"></select>
+<!-- 						<label for="partido" class="control-label">Partido</label> -->
+						<select class="form-control" ng-options="partido.nombre for partido in partidos" required ng-model="partidoSel">
+							<option value="">-- Partido --</option>
+						</select>
 					</div>
 					<div class="form-group">
-						<label for="nombre" class="control-label">Localidad</label>
-						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre" placeholder="Nombre de la Localidad">
+<!-- 						<label for="nombre" class="control-label">Localidad</label> -->
+						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre" placeholder="Localidad">
 					</div>
 					<div class="form-group">
-						<label for="cp" class="control-label">CP</label>
+<!-- 						<label for="cp" class="control-label">CP</label> -->
 						<input type="text" class="form-control" id="cp" name="cp" ng-model="nueva.cp" placeholder="Código Postal">
 					</div>
 				</form>
@@ -89,7 +91,7 @@
 			</div>
 			<!-- Listado -->
 			<div class="tipos" ng-init="listar()">
-				<table class="table table-hover table-bordered table-condensed table-striped">
+				<table class="table table-hover table-bordered table-condensed table-striped" ng-show="localidades.length!=0">
 					<thead>
 						<tr>
 							<td><em>Localidad</em></td>

@@ -60,15 +60,16 @@
 			<div class="panel-body">
 				<form role="form" name="formAction" ng-init="inicializarListados()">
 					<div class="form-group">
-						<label for="instituto" class="control-label">Instituto</label>
-						<select class="form-control" ng-options="instituto.nombre for instituto in institutos" required ng-model="institutoSel"></select>
+						<select class="form-control" ng-options="instituto.nombre for instituto in institutos" required ng-model="institutoSel">
+							<option value="">-- Instituto --</option>
+						</select>
 					</div>
 					<div class="form-group">
-						<label for="localidad" class="control-label">Localidad, Partido, Provincia</label>
-						<select class="form-control" ng-options="(localidad.nombre + ' , ' + localidad.partido.nombre + ' , ' + localidad.partido.provincia.nombre) for localidad in localidades" required ng-model="localidadSel"></select>
+						<select class="form-control" ng-options="(localidad.nombre + ' , ' + localidad.partido.nombre + ' , ' + localidad.partido.provincia.nombre) for localidad in localidades" required ng-model="localidadSel">
+							<option value="">-- Localidad, Partido, Provincia --</option>
+						</select>
 					</div>
 					<div class="form-group">
-						<label for="nombre" class="control-label">Nombre</label>
 						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre" placeholder="Nombre de la Sede">
 					</div>
 				</form>
@@ -90,7 +91,7 @@
 			</div>
 			<!-- Listado -->
 			<div class="tipos" ng-init="listar()">
-				<table class="table table-hover table-bordered table-condensed table-striped">
+				<table class="table table-hover table-bordered table-condensed table-striped" ng-show="sedes.length!=0">
 					<thead>
 						<tr>
 							<td><em>Sede</em></td>

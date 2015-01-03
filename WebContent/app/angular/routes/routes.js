@@ -7,17 +7,13 @@ angular.module('routes', []).config([ '$routeProvider', function($routeProvider)
 				template : 'app/views/asignaturas.html',
 				controller : "AsignaturaCtrl"
 			}, {
-				path : '/institutos',
-				template : 'app/views/institutos.html',
-				controller : "InstitutoCtrl"
-			}, {
 				path : '/carreras',
 				template : 'app/views/carreras.html',
 				controller : "CarreraCtrl"
 			}, {
-				path : '/sedes',
-				template : 'app/views/sedes.html',
-				controller : "SedeCtrl"
+				path : '/institutos',
+				template : 'app/views/institutos.html',
+				controller : "InstitutoCtrl"
 			}, {
 				path : '/localidades',
 				template : 'app/views/localidades.html',
@@ -27,9 +23,17 @@ angular.module('routes', []).config([ '$routeProvider', function($routeProvider)
 				template : 'app/views/partidos.html',
 				controller : "PartidoCtrl"
 			}, {
+				path : '/personas',
+				template : 'app/views/personas.html',
+				controller : "PersonaCtrl"
+			}, {
 				path : '/provincias',
 				template : 'app/views/provincias.html',
 				controller : "ProvinciaCtrl"
+			}, {
+				path : '/sedes',
+				template : 'app/views/sedes.html',
+				controller : "SedeCtrl"
 			}, {
 				path : '/tiposAdministracion',
 				template : 'app/views/formTipos.html',

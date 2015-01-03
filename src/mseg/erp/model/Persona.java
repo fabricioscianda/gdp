@@ -34,18 +34,15 @@ public class Persona implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_PERS")
 	@SequenceGenerator(schema = DBUtils.SCHEMA, name = "SEQUENCE_PERS", sequenceName = "PERS_SEQ", allocationSize = 1)
 	private Long id;
+	private String nombre;
+	private String apellido;
 	private Long fechaNac;
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
-	@JoinColumn(name = "id_infoadmin")
-	private InfoAdministrativa infoAdministrativa;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private TipoDocumento tipoDoc;
 	@Column(unique = true, nullable = false)
 	private Integer numeroDoc;
 	@Column(unique = true, nullable = true)
 	private Integer cuil;
-	private String nombre;
-	private String apellido;
-	@ManyToOne(fetch = FetchType.LAZY)
-	private TipoDocumento tipoDoc;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
 	private List<Contacto> mediosContacto;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
@@ -54,6 +51,9 @@ public class Persona implements Serializable {
 	private List<Empleo> empleos;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
 	private List<FormacionAcademica> formacionAcadem;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
+	@JoinColumn(name = "id_infoadmin")
+	private InfoAdministrativa infoAdministrativa;
 
 	public Persona() {
 	}

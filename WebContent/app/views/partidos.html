@@ -59,12 +59,14 @@
 			<div class="panel-body">
 				<form role="form" name="formAction" ng-init="listarProvincias()">
 					<div class="form-group">
-						<label for="provincia" class="control-label">Provincia</label>
-						<select class="form-control" ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel"></select>
+<!-- 						<label for="provincia" class="control-label">Provincia</label> -->
+						<select class="form-control" ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel">
+							<option value="">-- Provincia --</option>
+						</select>
 					</div>
 					<div class="form-group">
-						<label for="nombre" class="control-label">Nombre</label>
-						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Nombre del Partido">
+<!-- 						<label for="nombre" class="control-label">Nombre</label> -->
+						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Partido">
 					</div>
 				</form>
 			</div>
@@ -85,7 +87,7 @@
 			</div>
 			<!-- Listado -->
 			<div class="tipos" ng-init="listar()">
-				<table class="table table-hover table-bordered table-condensed table-striped">
+				<table class="table table-hover table-bordered table-condensed table-striped" ng-show="partidos.length!=0">
 					<thead>
 						<tr>
 							<td><em>Partido</em></td>

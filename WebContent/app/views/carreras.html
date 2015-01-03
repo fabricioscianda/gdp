@@ -60,19 +60,20 @@
 			<div class="panel-body">
 				<form role="form" name="formAction" ng-init="listarSedes()">
 					<div class="form-group">
-						<label for="sede" class="control-label">Sede, Instituto, Localidad, Partido, Provincia</label>
-						<select class="form-control" ng-options="( sede.nombre + ' , ' + sede.instituto.nombre + ' , ' + sede.localidad.nombre + ' , ' + sede.localidad.partido.nombre + ' , ' + sede.localidad.partido.provincia.nombre ) for sede in sedes" required ng-model="sedeSel"></select>
+<!-- 						<label for="sede" class="control-label">Sede, Instituto, Localidad, Partido, Provincia</label> -->
+						<select class="form-control" ng-options="( sede.nombre + ' , ' + sede.instituto.nombre + ' , ' + sede.localidad.nombre + ' , ' + sede.localidad.partido.nombre + ' , ' + sede.localidad.partido.provincia.nombre ) for sede in sedes" required ng-model="sedeSel">
+							<option value="">-- Sede, Instituto, Localidad, Partido, Provincia --</option>
+						</select>
 					</div>
 					<div class="form-group">
-						<label for="nombre" class="control-label">Nombre</label>
+<!-- 						<label for="nombre" class="control-label">Nombre</label> -->
 						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre" placeholder="Nombre de la carrera">
 					</div>
 					<div class="form-group">
 						<label for="cantAnios" class="control-label">Duracion</label>
-						<br>
 						<div>
 							<label class="radio-inline" ng-repeat="anio in anios"> 
-								<input type="radio" id="anioSel" name="anioSel" value="{{anio.value}}" ng-model="$parent.anioSel"> {{anio.value}} {{(anio.value==1)?'año':'años'}} </label>
+							<input type="radio" id="anioSel" name="anioSel" value="{{anio.value}}" ng-model="$parent.anioSel"> {{anio.value}} {{(anio.value==1)?'año':'años'}} </label>
 						</div>
 					</div>
 				</form>
@@ -94,7 +95,7 @@
 			</div>
 			<!-- Listado -->
 			<div class="tipos" ng-init="listar()">
-				<table class="table table-hover table-bordered table-condensed table-striped">
+				<table class="table table-hover table-bordered table-condensed table-striped" ng-show="carreras.length!=0">
 					<thead>
 						<tr>
 							<td><em>Carrera</em></td>

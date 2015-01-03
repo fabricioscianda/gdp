@@ -59,8 +59,8 @@
 			<div class="panel-body">
 				<form role="form" name="formAction">
 					<div class="form-group">
-						<label for="nombre" class="control-label">Nombre</label>
-						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Nombre de la Provincia">
+<!-- 						<label for="nombre" class="control-label">Nombre</label> -->
+						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Provincia">
 					</div>
 				</form>
 			</div>
@@ -82,7 +82,7 @@
 			<!-- Listado -->
 			<div class="panel-body">
 				<div class="provincias" ng-init="listar()">
-					<table class="table table-hover table-bordered table-condensed table-striped">
+					<table class="table table-hover table-bordered table-condensed table-striped" ng-show="provincias.length!=0">
 						<tbody>
 							<tr ng-repeat="provincia in provincias | orderBy: 'nombre'">
 								<td><strong>{{provincia.nombre}}</strong></td>

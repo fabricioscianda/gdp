@@ -59,7 +59,7 @@
 			<div class="panel-body">
 				<form role="form" name="formAction">
 					<div class="form-group">
-						<label for="nombre" class="control-label">Nombre</label>
+<!-- 						<label for="nombre" class="control-label">Nombre</label> -->
 						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Nombre">
 					</div>
 				</form>
@@ -82,7 +82,7 @@
 			<!-- Listado -->
 			<div class="panel-body">
 				<div class="tipos" ng-init="listar()">
-					<table class="table table-hover table-bordered table-condensed table-striped">
+					<table class="table table-hover table-bordered table-condensed table-striped" ng-show="tipos.length!=0">
 						<tbody>
 							<tr ng-repeat="tipo in tipos | orderBy: 'nombre'">
 								<td><strong>{{tipo.nombre}}</strong></td>

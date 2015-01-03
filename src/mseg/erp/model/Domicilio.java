@@ -2,7 +2,6 @@ package mseg.erp.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,7 +30,7 @@ public class Domicilio implements Serializable {
 	private Long id;
 	private String domicilio;
 	private Boolean actual;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Persona persona;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Localidad localidad;

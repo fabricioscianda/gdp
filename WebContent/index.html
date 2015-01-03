@@ -28,39 +28,44 @@
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Planes<span class="caret"></span></a>
+							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Personal <span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#/personas">Personas</a></li>
+								</ul>
+							</li>
+							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Planes <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#/asignaturas">Asignaturas</a></li>
 									<li><a href="#/carreras">Carreras</a></li>
 								</ul>
 							</li>
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Instituciones<span class="caret"></span></a>
+							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Instituciones <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#/institutos">Institutos</a></li>
 									<li><a href="#/sedes">Sedes</a></li>
 								</ul>
 							</li>
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Localizacion<span class="caret"></span></a>
+							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Localizacion <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="#/localidades">Localidades</a></li>
 									<li><a href="#/partidos">Partidos</a></li>
 									<li><a href="#/provincias">Provincias</a></li>
 								</ul>
 							</li>
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tipos<span class="caret"></span></a>
+							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tipos <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#/tiposAdministracion">Tipos de Administración</a></li>
-									<li><a href="#/tiposCargo">Tipos de Cargos</a></li>
-									<li><a href="#/tiposContacto">Tipos de Contacto</a></li>
-									<li><a href="#/tiposDocumento">Tipos de Documento</a></li>
-									<li><a href="#/tiposEstadoContractual">Tipos de Estado Contractual</a></li>
-									<li><a href="#/tiposEstadoFormacion">Tipos de Estado Formacion</a></li>
-									<li><a href="#/tiposFormacion">Tipos de Formacion</a></li>
-									<li><a href="#/tiposMotivo">Tipos de Motivos Baja</a></li>
-									<li><a href="#/tiposPersonal">Tipos de Personal</a></li>
-									<li><a href="#/tiposRelacion">Tipos de Relacion Laboral</a></li>
-									<li><a href="#/tiposSituacion">Tipos de Situacion Actual</a></li>
-									<li><a href="#/tiposSituacionRevista">Tipos de Situacion de Revista</a></li>
+									<li><a href="#/tiposAdministracion">de Administración</a></li>
+									<li><a href="#/tiposCargo">de Cargos</a></li>
+									<li><a href="#/tiposContacto">de Contacto</a></li>
+									<li><a href="#/tiposDocumento">de Documento</a></li>
+									<li><a href="#/tiposEstadoContractual">de Estado Contractual</a></li>
+									<li><a href="#/tiposEstadoFormacion">de Estado Formacion</a></li>
+									<li><a href="#/tiposFormacion">de Formacion</a></li>
+									<li><a href="#/tiposMotivo">de Motivos Baja</a></li>
+									<li><a href="#/tiposPersonal">de Personal</a></li>
+									<li><a href="#/tiposRelacion">de Relacion Laboral</a></li>
+									<li><a href="#/tiposSituacion">de Situacion Actual</a></li>
+									<li><a href="#/tiposSituacionRevista">de Situacion de Revista</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -92,6 +97,9 @@
 <!-- Services -->
 <script src="app/angular/services/services.js"></script>
 <script src="app/angular/services/server.js"></script>
+<script src="app/angular/services/domicilioService.js"></script>
+<script src="app/angular/services/contactoService.js"></script>
+<script src="app/angular/services/personaService.js"></script>
 <script src="app/angular/services/asignaturaService.js"></script>
 <script src="app/angular/services/institutoService.js"></script>
 <script src="app/angular/services/carreraService.js"></script>
@@ -113,6 +121,8 @@
 <script src="app/angular/services/tipoSituacionRevistaService.js"></script>
 <!-- Controllers -->
 <script src="app/angular/controllers/controllers.js"></script>
+<script src="app/angular/controllers/contactoCtrl.js"></script>
+<script src="app/angular/controllers/personaCtrl.js"></script>
 <script src="app/angular/controllers/asignaturaCtrl.js"></script>
 <script src="app/angular/controllers/institutoCtrl.js"></script>
 <script src="app/angular/controllers/carreraCtrl.js"></script>
