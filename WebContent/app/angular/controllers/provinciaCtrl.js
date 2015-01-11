@@ -13,10 +13,13 @@ msegErpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaS
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
+			$scope.obj = {};
 			$scope.nuevo = {};
 			$scope.provincia = {};
 			$scope.provincias = {};
 
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {
@@ -105,13 +108,13 @@ msegErpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaS
 			}
 			
 			$scope.confirmarBorrar = function(provincia) {
-				$scope.provincia = provincia;
+				$scope.obj = provincia;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(provincia) {
 				$('#confirm-modal').modal('hide');
-				$scope.provincia = {};
+				$scope.obj = {};
 			}
 			
 		} ]);

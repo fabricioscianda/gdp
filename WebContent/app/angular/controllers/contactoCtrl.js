@@ -19,6 +19,8 @@ msegErpControllers.controller('ContactoCtrl', [
 			$scope.nuevo = {};
 			$scope.contactos = {};
 
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {

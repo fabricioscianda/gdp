@@ -17,6 +17,8 @@ msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoS
 			$scope.instituto = {};
 			$scope.institutos = {};
 
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {

@@ -1,62 +1,24 @@
 <div class="row">
 	<!-- Page Header -->
-	<div class="page-header">
-		<h2>{{modulo}}</h2>
-	</div>
+	<page-header></page-header>
 	<!-- Alert Modal -->
-	<div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="message-modal" aria-hidden="true">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	    	<div class="modal-header">
-	    		<h4 class="modal-title">Informacion</h4>
-	    	</div>
-	    	<div class="modal-body">
-				<div class="alert alert-success alert-dismissible" role="alert" ng-show="success && success!=null && msgSuccess!=null" >
-				  <h4 class="text-center">{{msgSuccess}}</h4>
-				</div>
-				<div class="alert alert-danger alert-dismissible" role="alert" ng-show="!success && success!=null && msgError!=null">
-				  <h4 class="text-center">{{msgError}}</h4>
-				</div>
-	    	</div>
- 		    <div class="modal-footer">
-	    		<button type="button" class="btn btn-default center-block" data-dismiss="modal">Cerrar</button>
-	    	</div>
-	    </div>
-	  </div>
-	</div>
+	<modal-alert></modal-alert>
 	<!-- Confirmacion Borrar -->
-	<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-modal" aria-hidden="true">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	    	<div class="modal-header alert alert-danger" role="alert">
-	    		<h4 class="modal-title"><strong>Atencion!</strong></h4>
-	    	</div>
-	    	<div class="modal-body">
-	    		<form role="form" name="confirmBorrar">
-	    			<div class="form-group">
-	    				<h4 class="text-center">¿Desea borrar <strong>{{nombreForm}} {{persona.nombre}}</strong>?</h4>
-	    			</div>
-	    		</form>
-	    	</div>
-	    	<div class="modal-footer">
-    			<div class="form-group">
-					<button type="submit" class="btn btn-default pull-left" ng-click="cancelarBorrar()">Cancelar</button>
-    				<button type="submit" class="btn btn-danger pull-right" ng-click="borrar(persona)">Borrar</button>
-    			</div>
-	    	</div>
-	    </div>
-	  </div>
-	</div>
+	<modal-confirm></modal-confirm>
 	<!-- Form Nuevo -->
 	<div class="row col-sm-11 col-offset-1">
 		<!-- Panel -->
 		<div class="panel panel-default">
 			<!-- Panel Header -->
 			<div class="panel-heading">
-				<h4>Nueva {{nombreForm}}</h4>
+				<h4 class="panel-title">
+					<a href="" ng-click="colapsarFormulario=!colapsarFormulario">Nueva {{nombreForm}}
+						<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': colapsarFormulario, 'glyphicon-chevron-up': !colapsarFormulario}"></i>
+					</a>
+				</h4>
 			</div>
 			<!-- Panel Body -->
-			<div class="panel-body">
+			<div class="panel-body" collapse="colapsarFormulario">
 				<form role="form" name="formAction" ng-init="listarPersonas()">
 					<div class="row">
 						<div class="col-sm-6">
@@ -116,11 +78,11 @@
 						<div class="col-sm-6">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h5>Medios de Contacto</h5>
+									<h5 class="panel-title">Medios de Contacto</h5>
 								</div>
 								<div class="panel-body">
 									<div class="mediosContacto">
-										<table class="table table-hover table-bordered table-condensed table-striped">
+										<table class="table table-hover table-condensed table-striped">
 											<thead>
 												<tr>
 													<td>Medio</td>
@@ -162,11 +124,11 @@
 						<div class="col-sm-6">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h5>Domicilios</h5>
+									<h5 class="panel-title">Domicilios</h5>
 								</div>
 								<div class="panel-body">
 									<div class="domicilios">
-										<table class="table table-hover table-bordered table-condensed table-striped">
+										<table class="table table-hover table-condensed table-striped">
 											<thead>
 												<tr>
 													<td>Actual</td>
@@ -216,7 +178,7 @@
 				</form>
 			</div>
 			<!-- Panel Footer : Buttons -->
-			<div class="panel-footer">
+			<div class="panel-footer" ng-show="!colapsarFormulario">
 				<button type="submit" class="btn btn-primary" ng-click="guardar(nueva)">Guardar</button>
 				<button type="submit" class="btn btn-default pull-right" ng-click="limpiar()">Limpiar</button>
 			</div>
@@ -228,11 +190,11 @@
 		<div class="panel panel-default">
 			<!-- Panel Header -->
 			<div class="panel-heading">
-				<h4>{{modulo}} Actuales</h4>
+				<h4 class="panel-title">{{modulo}} Actuales</h4>
 			</div>
 			<!-- Listado -->
 			<div class="tipos" ng-init="listar()">
-				<table class="table table-hover table-bordered table-condensed table-striped" ng-show="personas.length!=0">
+				<table class="table table-hover table-condensed table-striped" ng-show="personas.length!=0">
 					<thead>
 						<tr>
 							<td></td>
@@ -251,7 +213,7 @@
 			</div>
 			<!-- Panel Footer -->
 			<div class="panel-footer">
-				<h5>Total de personas: <strong>{{personas.length}}</strong>.</h5>
+				<h5 class="panel-title">Total de personas: <strong>{{personas.length}}</strong>.</h5>
 			</div>
 		</div>
 	</div>

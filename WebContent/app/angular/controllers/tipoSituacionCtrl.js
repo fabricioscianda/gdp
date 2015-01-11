@@ -16,9 +16,12 @@ msegErpControllers.controller('TipoSituacionCtrl', [
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
+			$scope.obj = {};
 			$scope.nuevo = {};
 			$scope.tipos = {};
 
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {
@@ -108,12 +111,13 @@ msegErpControllers.controller('TipoSituacionCtrl', [
 			}
 
 			$scope.confirmarBorrar = function(tipo) {
-				$scope.tipo = tipo;
+				$scope.obj = tipo;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(tipo) {
 				$('#confirm-modal').modal('hide');
-				$scope.tipo = {};
+				$scope.obj = {};
 			}
+			
 		} ]);

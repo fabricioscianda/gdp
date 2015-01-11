@@ -19,6 +19,8 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 			$scope.partidoSel = {};
 			$scope.partidos = {};
 
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.listarPartidos = function() {

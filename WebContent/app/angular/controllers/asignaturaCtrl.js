@@ -21,6 +21,8 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 			$scope.anios = {};
 			$scope.anioSel = {};
 			
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.listarCarreras = function() {

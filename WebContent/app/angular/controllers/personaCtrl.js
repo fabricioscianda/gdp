@@ -13,6 +13,7 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
+			$scope.obj = {};
 			$scope.nueva = {};
 			$scope.persona = {};
 			$scope.personas = {};
@@ -36,6 +37,8 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 
 			$scope.tiposCuil = [20,23,24,27,30,33];
 			$scope.validadoresCuil = [0,1,2,3,4,5,6,7,8,9];
+			
+			$scope.colapsarFormulario = true;
 			
 			var orderBy = $filter('orderBy');
 
@@ -257,13 +260,13 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 			}
 			
 			$scope.confirmarBorrar = function(persona) {
-				$scope.persona = persona;
+				$scope.obj = persona;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(persona) {
 				$('#confirm-modal').modal('hide');
-				$scope.persona = {};
+				$scope.obj = {};
 			}
 
 			$scope.validarCuit = function(cuit) {

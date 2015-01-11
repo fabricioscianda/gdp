@@ -19,6 +19,8 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 			$scope.provinciaSel = {};
 			$scope.provincias = {};
 
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.listarProvincias = function() {

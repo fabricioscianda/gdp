@@ -30,6 +30,8 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			
 			$scope.anioSel = {};
 
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.listarSedes = function() {

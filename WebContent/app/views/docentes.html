@@ -1,0 +1,242 @@
+<div class="row">
+	<!-- Page Header -->
+	<page-header></page-header>
+	<!-- Alert Modal -->
+	<modal-alert></modal-alert>
+	<!-- Confirmacion Borrar -->
+	<modal-confirm></modal-confirm>
+	
+	<!-- Form Nuevo -->
+	<div class="row col-sm-8 col-offset-1">
+		<!-- Panel -->
+		<div class="panel panel-default">
+			<!-- Panel Header -->
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a href="" ng-click="colapsarFormulario=!colapsarFormulario">Nuevo {{nombreForm}} 
+						<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': colapsarFormulario, 'glyphicon-chevron-up': !colapsarFormulario}"></i>
+					</a>
+				</h4>
+			</div>
+			<!-- Panel Body -->
+			<div class="panel-body" collapse="colapsarFormulario">
+				<form role="form" name="formAction">
+					<!-- Informacion Personal -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h5 class="panel-title">Información Personal</h5>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<input type="text" class="form-control text-capitalize" id="nombre" name="nombre" ng-model="nombre" placeholder="Nombre">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<input type="text" class="form-control text-capitalize" id="apellido" name="apellido" ng-model="apellido" placeholder="Apellido">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group form-inline">
+										<div class="form-group" ng-init="listarTiposDoc()">
+											<label class="radio-inline" ng-repeat="tipoDoc in tiposDoc"> 
+												<input type="radio" id="tipoDocSel" name="tipoDocSel" value="{{tipoDoc.id}}" ng-blur="rellenarDNICuil()" ng-model="$parent.tipoDocSel"> {{tipoDoc.nombre}}
+											</label>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control" id="numeroDoc" name="numeroDoc" ng-model="numeroDoc" maxlength="8" placeholder="Número" ng-blur="rellenarDNICuil()">
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group form-inline">
+										<div class="form-group">
+											<label for="fechaNac" class="control-label pull-left">Fecha de Nacimiento</label>
+										</div>
+										<div class="form-group form-inline">
+								            <p class="input-group">
+								              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="fechaNac" is-open="opened" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
+								              <span class="input-group-btn">
+								                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								              </span>
+								            </p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group form-inline">
+										<div class="form-group">
+											<label for="cuil" class="control-label pull-left">CUIL</label>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<select class="form-control" ng-options="tipoCuil for tipoCuil in tiposCuil" ng-model="cuilTipoSel" ng-blur="validarCuit(cuilTipoSel, numeroDocCuil)"></select>
+												<span class="input-group-addon" id="basic-addon1">-</span>
+												<input class="form-control text-center" type="text" name="cuil" ng-model="numeroDocCuil" placeholder="DNI" maxlength="8" ng-blur="validarCuit(cuilTipoSel, numeroDocCuil)">
+												<span class="input-group-addon" id="basic-addon1">-</span>
+												<select class="form-control" ng-options="validadorCuil for validadorCuil in validadoresCuil" ng-model="cuilValidadorSel"></select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Domicilios -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h5 class="panel-title">Domicilios</h5>
+						</div>
+						<div class="panel-body">
+							<div class="domicilios">
+								<table class="table table-hover table-condensed table-striped">
+									<thead>
+										<tr>
+											<td class="text-center">Actual</td>
+											<td>Domicilio</td>
+											<td>Localidad</td>
+											<td></td>
+											<td></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="domicilio in nuevosDomicilios | orderBy:['actual','domicilio']" >
+											<td class="text-center"><span ng-class="{'glyphicon glyphicon-check':domicilio.actual}"></span></td>
+											<td class="text-capitalize"><strong>{{domicilio.domicilio}}</strong></td>
+											<td><strong>{{domicilio.localidad.nombre}}</strong></td>
+											<td><a href="#/{{urlModulo}}" ng-click="editarDomicilio(domicilio)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+											<td><a href="#/{{urlModulo}}" ng-click="removeDomicilio(domicilio)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+										</tr>
+										<tr>
+											<td>
+												<div class="text-center">
+													<input type="checkbox" ng-model="nuevoDomicilio.actual">
+												</div>
+											</td>
+											<td>
+												<div class="form-group">
+													<input class="form-control text-capitalize" type="text" placeholder="Domicilio" ng-model="nuevoDomicilio.domicilio">
+												</div>
+											</td>
+											<td>
+												<select class="form-control text-capitalize" ng-options="localidad.nombre for localidad in localidades" required ng-model="localidadSel" ng-init="listarLocalidades()">
+													<option value="">-- Localidad --</option>
+												</select>
+											</td>
+											<td>
+												<div class="text-center btn btn-md">
+													<a href="#/{{urlModulo}}" ng-click="addDomicilio(nuevoDomicilio)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- Medios de Contacto -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h5 class="panel-title">Medios de Contacto</h5>
+						</div>
+						<div class="panel-body">
+							<div class="mediosContacto">
+								<table class="table table-hover table-condensed table-striped">
+									<thead>
+										<tr>
+											<td>Medio</td>
+											<td>Contacto</td>
+											<td></td>
+											<td></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="medio in nuevosMediosContacto | orderBy:['medio']" >
+											<td><strong>{{medio.medio.nombre}}</strong></td>
+											<td><strong>{{medio.contacto}}</strong></td>
+											<td><a href="#/{{urlModulo}}" ng-click="editarMedioDeContacto(medio)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+											<td><a href="#/{{urlModulo}}" ng-click="removeMedio(medio)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+										</tr>
+										<tr>
+											<td>
+												<select class="form-control" ng-options="medio.nombre for medio in mediosContacto" required ng-model="medioSel" ng-init="listarMediosContacto()">
+													<option value="">-- Medio de Contacto --</option>
+												</select>
+											</td>
+											<td>
+												<div class="form-group">
+													<input class="form-control" type="text" placeholder="Contacto" ng-model="nuevoMedio.contacto">
+												</div>
+											</td>
+											<td>
+												<div class="text-center btn btn-md">
+													<a href="#/{{urlModulo}}" ng-click="addMedio(nuevoMedio)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+												</div>	
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- Panel Footer : Buttons -->
+			<div class="panel-footer" ng-show="!colapsarFormulario">
+				<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
+				<button type="submit" class="btn btn-default pull-right" ng-click="limpiar()">Limpiar</button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Listado Actuales -->
+	<div class="row col-sm-11">
+		<!-- Panel -->
+		<div class="panel panel-default">
+			<!-- Panel Header -->
+			<div class="panel-heading">
+				<h4 class="panel-title">{{modulo}} Actuales</h4>
+			</div>
+			<!-- Listado -->
+			<div class="tipos" ng-init="listar()">
+				<table class="table table-hover table-condensed table-striped" ng-show="docentes.length!=0">
+					<thead>
+						<tr>
+							<td>Nombre</td>
+							<td>Apellido</td>
+							<td>Tipo Doc.</td>
+							<td>Numero</td>
+							<td>Fecha Nac.</td>
+							<td>CUIL</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="docente in docentes | orderBy:['persona.apellido', 'persona.nombre']">
+							<td class="text-capitalize"><strong>{{docente.persona.apellido}}</strong></td>
+							<td class="text-capitalize"><strong>{{docente.persona.nombre}}</strong></td>
+							<td><strong>{{docente.persona.tipoDoc.nombre}}</strong></td>
+							<td><strong>{{docente.persona.numeroDoc}}</strong></td>
+							<td><strong>{{docente.persona.fechaNac | date:'dd-MM-yyyy'}}</strong></td>
+							<td><strong>{{docente.persona.cuil | cuil}}</strong></td>
+							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(docente)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+							<td><a href="#/{{urlModulo}}" ng-click="confirmarBorrar(docente)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- Panel Footer -->
+			<div class="panel-footer">
+				<h5 class="panel-title">Total de personas: <strong>{{docentes.length}}</strong>.</h5>
+			</div>
+		</div>
+	</div>
+
+</div>

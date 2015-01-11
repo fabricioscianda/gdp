@@ -11,6 +11,10 @@ angular.module('routes', []).config([ '$routeProvider', function($routeProvider)
 				template : 'app/views/carreras.html',
 				controller : "CarreraCtrl"
 			}, {
+				path : '/docentes',
+				template : 'app/views/docentes.html',
+				controller : "DocenteCtrl"
+			}, {
 				path : '/institutos',
 				template : 'app/views/institutos.html',
 				controller : "InstitutoCtrl"
@@ -86,7 +90,7 @@ angular.module('routes', []).config([ '$routeProvider', function($routeProvider)
 				path : '/',
 				template : 'app/views/layout/home.html',
 				controller : null
-			} 
+			}, 
 			];
 
 			// for every route definition in the array, creates an Angular route

@@ -1,14 +1,12 @@
 package mseg.erp.model;
 
-import java.util.List;
+import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,17 +19,19 @@ import mseg.erp.utils.DBUtils;
  */
 @Entity
 @Table(schema = DBUtils.SCHEMA)
-public class Docente extends Persona {
+public class Docente implements Serializable {
 
 	private static final long serialVersionUID = -7585540691720404843L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_DOCEN")
-	@SequenceGenerator(schema = DBUtils.SCHEMA, name = "SEQUENCE_DOCENT", sequenceName = "DOCEN_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_DOCENTE")
+	@SequenceGenerator(schema = DBUtils.SCHEMA, name = "SEQUENCE_DOCENTE", sequenceName = "DOCENTE_SEQ", allocationSize = 1)
 	private Long id;
-	@OneToMany(mappedBy = "docente", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<Desempenio> desempenios;
-
+//	@OneToMany(mappedBy = "docente", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+//	private List<Desempenio> desempenios;
+	@OneToOne
+	private Persona persona;
+	
 	public Docente() {
 	}
 
@@ -55,12 +55,20 @@ public class Docente extends Persona {
 		return serialVersionUID;
 	}
 
-	public List<Desempenio> getDesempenios() {
-		return desempenios;
+//	public List<Desempenio> getDesempenios() {
+//		return desempenios;
+//	}
+//
+//	public void setDesempenios(List<Desempenio> desempenios) {
+//		this.desempenios = desempenios;
+//	}
+
+	public Persona getPersona() {
+		return persona;
 	}
 
-	public void setDesempenios(List<Desempenio> desempenios) {
-		this.desempenios = desempenios;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
 }

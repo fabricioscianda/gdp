@@ -1,23 +1,23 @@
 package mseg.erp.vomodel;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class VOPersona implements Serializable {
 
 	private static final long serialVersionUID = 7697274154353729907L;
 	private Long id;
 	private Long fechaNac;
-	private VOInfoAdministrativa infoAdministrativa;
-	private Integer numeroDoc;
-	private Integer cuil;
+	private String numeroDoc;
+	private String cuil;
 	private String nombre;
 	private String apellido;
 	private VOTipoDocumento tipoDoc;
-	private List<VOContacto> mediosContacto;
-	private List<VODomicilio> domicilios;
-	private List<VOEmpleo> empleos;
-	private List<VOFormacionAcademica> formacionAcadem;
+	
+//	private VOInfoAdministrativa infoAdministrativa;
+//	private List<VOContacto> mediosContacto;
+//	private List<VODomicilio> domicilios;
+//	private List<VOEmpleo> empleos;
+//	private List<VOFormacionAcademica> formacionAcadem;
 
 	public VOPersona() {
 	}
@@ -62,58 +62,6 @@ public class VOPersona implements Serializable {
 		this.tipoDoc = tipoDoc;
 	}
 
-	public Integer getNumeroDoc() {
-		return numeroDoc;
-	}
-
-	public void setNumeroDoc(Integer numeroDoc) {
-		this.numeroDoc = numeroDoc;
-	}
-
-	public VOInfoAdministrativa getInfoAdministrativa() {
-		return infoAdministrativa;
-	}
-
-	public void setInfoAdministrativa(VOInfoAdministrativa infoAdministrativa) {
-		this.infoAdministrativa = infoAdministrativa;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public List<VOContacto> getMediosContacto() {
-		return mediosContacto;
-	}
-
-	public void setMediosContacto(List<VOContacto> mediosContacto) {
-		this.mediosContacto = mediosContacto;
-	}
-
-	public List<VODomicilio> getDomicilios() {
-		return domicilios;
-	}
-
-	public void setDomicilios(List<VODomicilio> domicilios) {
-		this.domicilios = domicilios;
-	}
-
-	public List<VOEmpleo> getEmpleos() {
-		return empleos;
-	}
-
-	public void setEmpleos(List<VOEmpleo> empleos) {
-		this.empleos = empleos;
-	}
-
-	public List<VOFormacionAcademica> getFormacionAcadem() {
-		return formacionAcadem;
-	}
-
-	public void setFormacionAcadem(List<VOFormacionAcademica> formacionAcadem) {
-		this.formacionAcadem = formacionAcadem;
-	}
-
 	public Long getFechaNac() {
 		return fechaNac;
 	}
@@ -122,11 +70,19 @@ public class VOPersona implements Serializable {
 		this.fechaNac = fechaNac;
 	}
 
-	public Integer getCuil() {
+	public String getNumeroDoc() {
+		return numeroDoc;
+	}
+
+	public void setNumeroDoc(String numeroDoc) {
+		this.numeroDoc = numeroDoc;
+	}
+
+	public String getCuil() {
 		return cuil;
 	}
 
-	public void setCuil(Integer cuil) {
+	public void setCuil(String cuil) {
 		this.cuil = cuil;
 	}
 

@@ -13,6 +13,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
+			$scope.obj = {};
 			$scope.nueva = {};
 			$scope.sede = {};
 			$scope.sedes = {};
@@ -23,6 +24,8 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.institutoSel = {};
 			$scope.institutos = {};
 
+			$scope.colapsarFormulario = true;
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.inicializarListados = function() {
@@ -184,13 +187,13 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			}
 			
 			$scope.confirmarBorrar = function(sede) {
-				$scope.sede = sede;
+				$scope.obj = sede;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(sede) {
 				$('#confirm-modal').modal('hide');
-				$scope.sede = {};
+				$scope.obj = {};
 			}
 			
 		} ]);

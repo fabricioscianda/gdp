@@ -5,6 +5,14 @@
 	<meta charset="utf-8">
 	<title>MSEG - ERP</title>
 	<!-- Bootstrap CSS -->
+<!-- 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/themes/simplex/bootstrap.min.css"> -->
+<!-- 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/themes/paper/bootstrap.min.css"> -->
+<!-- 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/themes/redeable/bootstrap.min.css"> -->
+<!-- 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/themes/darkly/bootstrap.min.css"> -->
+<!-- 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/themes/cosmo/bootstrap.min.css"> -->
+<!-- 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/themes/cyborg/bootstrap.min.css"> -->
+<!-- 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/css/bootstrap-glyphicons.css"> -->
+	<link rel="stylesheet" href="resources/bootstrap-3.3.1/css/custom.css">
 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/bootstrap-3.3.1/css/bootstrap-theme.min.css">
 </head>
@@ -12,137 +20,87 @@
 <body>
 	<div class="container-fluid">
 		<!-- Menu -->
-		<div class="row">
-			<nav class="navbar navbar-default" role="navigation">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse"
-							data-target="#bs-example-navbar-collapse-1">
-							<span class="sr-only">Toggle navigation</span> 
-							<span class="icon-bar"></span> 
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="#">Formación</a>
-					</div>
-					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav">
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Personal <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#/personas">Personas</a></li>
-								</ul>
-							</li>
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Planes <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#/asignaturas">Asignaturas</a></li>
-									<li><a href="#/carreras">Carreras</a></li>
-								</ul>
-							</li>
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Instituciones <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#/institutos">Institutos</a></li>
-									<li><a href="#/sedes">Sedes</a></li>
-								</ul>
-							</li>
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Localizacion <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#/localidades">Localidades</a></li>
-									<li><a href="#/partidos">Partidos</a></li>
-									<li><a href="#/provincias">Provincias</a></li>
-								</ul>
-							</li>
-							<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tipos <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#/tiposAdministracion">de Administración</a></li>
-									<li><a href="#/tiposCargo">de Cargos</a></li>
-									<li><a href="#/tiposContacto">de Contacto</a></li>
-									<li><a href="#/tiposDocumento">de Documento</a></li>
-									<li><a href="#/tiposEstadoContractual">de Estado Contractual</a></li>
-									<li><a href="#/tiposEstadoFormacion">de Estado Formacion</a></li>
-									<li><a href="#/tiposFormacion">de Formacion</a></li>
-									<li><a href="#/tiposMotivo">de Motivos Baja</a></li>
-									<li><a href="#/tiposPersonal">de Personal</a></li>
-									<li><a href="#/tiposRelacion">de Relacion Laboral</a></li>
-									<li><a href="#/tiposSituacion">de Situacion Actual</a></li>
-									<li><a href="#/tiposSituacionRevista">de Situacion de Revista</a></li>
-								</ul>
-							</li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</div>
+		<menu></menu>
 		<!-- View -->
 		<div class="container-fluid">
 			<div ng-view></div>
 		</div>
 		<!-- Footer -->
-		<div class="row"></div>
+		<page-footer></page-footer>
 	</div>
 </body>
 
-<!-- JQuery -->
-<script src="resources/jquery-1.11.1/jquery-1.11.1.min.js"></script>
 <!-- Angular -->
 <script src="resources/angular-1.2.27/angular.min.js" type="text/javascript"></script>
 <script src="resources/angular-1.2.27/angular-route.min.js" type="text/javascript"></script>
+<!-- JQuery -->
+<script src="resources/jquery-1.11.1/jquery-1.11.1.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
-<script src="resources/bootstrap-3.3.1/js/bootstrap.min.js"></script>
-<!-- Custom App -->
-<script src="app/angular/routes/routes.js"></script>
+<script src="resources/bootstrap-3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- Angular Localization -->
+<script src="resources/angular-1.2.27/i18n/angular-locale_es-ar.js"></script>
+<!-- Bootstrap UI -->
+<script type="text/javascript" src="resources/ui-bootstrap-custom-build/ui-bootstrap-custom-0.12.0.min.js"></script>
+<script type="text/javascript" src="resources/ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-0.12.0.min.js"></script>
+<!-- Filters -->
+<script src="app/angular/filters/filters.js" type="text/javascript"></script>
+<!-- Routes -->
+<script src="app/angular/routes/routes.js" type="text/javascript"></script>
 <!-- Directives -->
+<script src="app/angular/directives/directives.js" type="text/javascript"></script>
 <!-- Services -->
-<script src="app/angular/services/services.js"></script>
-<script src="app/angular/services/server.js"></script>
-<script src="app/angular/services/domicilioService.js"></script>
-<script src="app/angular/services/contactoService.js"></script>
-<script src="app/angular/services/personaService.js"></script>
-<script src="app/angular/services/asignaturaService.js"></script>
-<script src="app/angular/services/institutoService.js"></script>
-<script src="app/angular/services/carreraService.js"></script>
-<script src="app/angular/services/sedeService.js"></script>
-<script src="app/angular/services/localidadService.js"></script>
-<script src="app/angular/services/partidoService.js"></script>
-<script src="app/angular/services/provinciaService.js"></script>
-<script src="app/angular/services/tipoAdministracionService.js"></script>
-<script src="app/angular/services/tipoCargoService.js"></script>
-<script src="app/angular/services/tipoContactoService.js"></script>
-<script src="app/angular/services/tipoDocumentoService.js"></script>
-<script src="app/angular/services/tipoEstadoContractualService.js"></script>
-<script src="app/angular/services/tipoEstadoFormacionService.js"></script>
-<script src="app/angular/services/tipoFormacionService.js"></script>
-<script src="app/angular/services/tipoMotivoService.js"></script>
-<script src="app/angular/services/tipoPersonalService.js"></script>
-<script src="app/angular/services/tipoRelacionService.js"></script>
-<script src="app/angular/services/tipoSituacionService.js"></script>
-<script src="app/angular/services/tipoSituacionRevistaService.js"></script>
+<script src="app/angular/services/services.js" type="text/javascript"></script>
+<!-- All Services -->
+<script src="app/angular/services/server.js" type="text/javascript"></script>
+<script src="app/angular/services/docenteService.js" type="text/javascript"></script>
+<script src="app/angular/services/domicilioService.js" type="text/javascript"></script>
+<script src="app/angular/services/contactoService.js" type="text/javascript"></script>
+<script src="app/angular/services/personaService.js" type="text/javascript"></script>
+<script src="app/angular/services/asignaturaService.js" type="text/javascript"></script>
+<script src="app/angular/services/institutoService.js" type="text/javascript"></script>
+<script src="app/angular/services/carreraService.js" type="text/javascript"></script>
+<script src="app/angular/services/sedeService.js" type="text/javascript"></script>
+<script src="app/angular/services/localidadService.js" type="text/javascript"></script>
+<script src="app/angular/services/partidoService.js" type="text/javascript"></script>
+<script src="app/angular/services/provinciaService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoAdministracionService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoCargoService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoContactoService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoDocumentoService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoEstadoContractualService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoEstadoFormacionService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoFormacionService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoMotivoService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoPersonalService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoRelacionService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoSituacionService.js" type="text/javascript"></script>
+<script src="app/angular/services/tipoSituacionRevistaService.js" type="text/javascript"></script>
 <!-- Controllers -->
-<script src="app/angular/controllers/controllers.js"></script>
-<script src="app/angular/controllers/contactoCtrl.js"></script>
-<script src="app/angular/controllers/personaCtrl.js"></script>
-<script src="app/angular/controllers/asignaturaCtrl.js"></script>
-<script src="app/angular/controllers/institutoCtrl.js"></script>
-<script src="app/angular/controllers/carreraCtrl.js"></script>
-<script src="app/angular/controllers/sedeCtrl.js"></script>
-<script src="app/angular/controllers/localidadCtrl.js"></script>
-<script src="app/angular/controllers/partidoCtrl.js"></script>
-<script src="app/angular/controllers/provinciaCtrl.js"></script>
-<script src="app/angular/controllers/tipoAdministracionCtrl.js"></script>
-<script src="app/angular/controllers/tipoCargoCtrl.js"></script>
-<script src="app/angular/controllers/tipoContactoCtrl.js"></script>
-<script src="app/angular/controllers/tipoDocumentoCtrl.js"></script>
-<script src="app/angular/controllers/tipoEstadoContractualCtrl.js"></script>
-<script src="app/angular/controllers/tipoEstadoFormacionCtrl.js"></script>
-<script src="app/angular/controllers/tipoFormacionCtrl.js"></script>
-<script src="app/angular/controllers/tipoMotivoCtrl.js"></script>
-<script src="app/angular/controllers/tipoPersonalCtrl.js"></script>
-<script src="app/angular/controllers/tipoRelacionCtrl.js"></script>
-<script src="app/angular/controllers/tipoSituacionCtrl.js"></script>
-<script src="app/angular/controllers/tipoSituacionRevistaCtrl.js"></script>
+<script src="app/angular/controllers/controllers.js" type="text/javascript"></script>
+<!-- All Controllers -->
+<script src="app/angular/controllers/docenteCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/contactoCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/personaCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/asignaturaCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/institutoCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/carreraCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/sedeCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/localidadCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/partidoCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/provinciaCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoAdministracionCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoCargoCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoContactoCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoDocumentoCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoEstadoContractualCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoEstadoFormacionCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoFormacionCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoMotivoCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoPersonalCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoRelacionCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoSituacionCtrl.js" type="text/javascript"></script>
+<script src="app/angular/controllers/tipoSituacionRevistaCtrl.js" type="text/javascript"></script>
 <!-- Main App -->
-<script src="app/angular/app.js"></script>
+<script src="app/angular/app.js" type="text/javascript"></script>
 
 </html>

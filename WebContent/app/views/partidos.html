@@ -1,77 +1,37 @@
 <div class="row">
 	<!-- Page Header -->
-	<div class="page-header col-sm-offset-1">
-		<h2>{{modulo}}</h2>
-	</div>
+	<page-header></page-header>
 	<!-- Alert Modal -->
-	<div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="message-modal" aria-hidden="true">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	    	<div class="modal-header">
-	    		<h4 class="modal-title">Informacion</h4>
-	    	</div>
-	    	<div class="modal-body">
-				<div class="alert alert-success alert-dismissible" role="alert" ng-show="success && success!=null && msgSuccess!=null" >
-				  <h4 class="text-center">{{msgSuccess}}</h4>
-				</div>
-				<div class="alert alert-danger alert-dismissible" role="alert" ng-show="!success && success!=null && msgError!=null">
-				  <h4 class="text-center">{{msgError}}</h4>
-				</div>
-	    	</div>
-	    	<div class="modal-footer">
-	    		<button type="button" class="btn btn-default center-block" data-dismiss="modal">Cerrar</button>
-	    	</div>
-	    </div>
-	  </div>
-	</div>
+	<modal-alert></modal-alert>
 	<!-- Confirmacion Borrar -->
-	<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-modal" aria-hidden="true">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	    	<div class="modal-header alert alert-danger" role="alert">
-	    		<h4 class="modal-title"><strong>Atencion!</strong></h4>
-	    	</div>
-	    	<div class="modal-body">
-	    		<form role="form" name="confirmBorrar">
-	    			<div class="form-group">
-	    				<h4 class="text-center">¿Desea borrar <strong>{{nombreForm}} {{partido.nombre}}</strong>?</h4>
-	    			</div>
-	    		</form>
-	    	</div>
-	    	<div class="modal-footer">
-    			<div class="form-group">
-					<button type="submit" class="btn btn-default pull-left" ng-click="cancelarBorrar()">Cancelar</button>
-    				<button type="submit" class="btn btn-danger pull-right" ng-click="borrar(partido)">Borrar</button>
-    			</div>
-	    	</div>
-	    </div>
-	  </div>
-	</div>
+	<modal-confirm></modal-confirm>
 	<!-- Form Nuevo -->
 	<div class="row col-sm-3 col-sm-offset-1">
 		<!-- Panel -->
 		<div class="panel panel-default">
 			<!-- Panel Header -->
 			<div class="panel-heading">
-				<h4>Nuevo {{nombreForm}}</h4>
+				<h4 class="panel-title">
+					<a href="" ng-click="colapsarFormulario=!colapsarFormulario">Nuevo {{nombreForm}}
+						<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': colapsarFormulario, 'glyphicon-chevron-up': !colapsarFormulario}"></i>
+					</a>
+				</h4>
 			</div>
 			<!-- Panel Body -->
-			<div class="panel-body">
+			<div class="panel-body" collapse="colapsarFormulario">
 				<form role="form" name="formAction" ng-init="listarProvincias()">
 					<div class="form-group">
-<!-- 						<label for="provincia" class="control-label">Provincia</label> -->
 						<select class="form-control" ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel">
 							<option value="">-- Provincia --</option>
 						</select>
 					</div>
 					<div class="form-group">
-<!-- 						<label for="nombre" class="control-label">Nombre</label> -->
 						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Partido">
 					</div>
 				</form>
 			</div>
 			<!-- Panel Footer : Buttons -->
-			<div class="panel-footer">
+			<div class="panel-footer" ng-show="!colapsarFormulario">
 				<button type="submit" class="btn btn-primary" ng-click="guardar(nuevo)">Guardar</button>
 				<button type="submit" class="btn btn-default pull-right" ng-click="limpiar()">Limpiar</button>
 			</div>
@@ -83,11 +43,11 @@
 		<div class="panel panel-default">
 			<!-- Panel Header -->
 			<div class="panel-heading">
-				<h4>{{modulo}} Actuales</h4>
+				<h4 class="panel-title">{{modulo}} Actuales</h4>
 			</div>
 			<!-- Listado -->
 			<div class="tipos" ng-init="listar()">
-				<table class="table table-hover table-bordered table-condensed table-striped" ng-show="partidos.length!=0">
+				<table class="table table-hover table-condensed table-striped" ng-show="partidos.length!=0">
 					<thead>
 						<tr>
 							<td><em>Partido</em></td>
@@ -108,7 +68,7 @@
 			</div>
 			<!-- Panel Footer -->
 			<div class="panel-footer">
-				<h5>Total de partidos: <strong>{{partidos.length}}</strong>.</h5>
+				<h5 class="panel-title">Total de partidos: <strong>{{partidos.length}}</strong>.</h5>
 			</div>
 		</div>
 	</div>
