@@ -13,7 +13,6 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
-			$scope.obj = {};
 			$scope.docente = {};
 			$scope.docentes = {};
 			
@@ -43,6 +42,8 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			$scope.localidadSel = {};
 
 			$scope.colapsarFormulario = true;
+			
+			$scope.obj = {};
 			
 			var orderBy = $filter('orderBy');
 			
@@ -248,7 +249,7 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = docente.persona.nombre + ", Borrado.";
+						$scope.msgSuccess = docente.persona.nombre + " " + docente.persona.apellido + ", Borrado.";
 						$scope.listar();
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
@@ -260,6 +261,12 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				});
 			}
 
+//			$scope.editarDomicilio = function(domicilio) {
+//				$scope.nuevoDomicilio.actual = domicilio.actual;
+//				$scope.nuevoDomicilio.domicilio = domicilio.domicilio;
+//				$scope.localidadSel = domicilio.localidad;
+//			}
+			
 			$scope.editarElemento = function(docente) {
 				$scope.id = docente.id;
 				$scope.nombre = docente.persona.nombre;
@@ -269,29 +276,15 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				$scope.numeroDocCuil = docente.persona.cuil.substring(2,10);
 				var i = $scope.indiceDe($scope.tiposDoc, docente.persona.tipoDoc.id, 'id');
 				if (i!=-1) {
-					$scope.tipoDocSel = $scope.tiposDoc[i];
+					$scope.tipoDocSel = $scope.tiposDoc[i].id;
 				} else {
 					$scope.msgError = 'Error buscando el tipo de documento del docente a editar, en el listado.';
 					$('#message-modal').modal('show');
 					$scope.success = false;
 				}
-				i = $scope.indiceDe($scope.tiposCuil, docente.persona.cuil.substring(0,2), 'id');
-				if (i!=-1) {
-					$scope.cuilTipoSel = $scope.tiposCuil[i];
-				} else {
-					$scope.msgError = 'Error buscando el tipo de cuil del docente a editar, en el listado.';
-					$('#message-modal').modal('show');
-					$scope.success = false;
-				}
-				i = $scope.indiceDe($scope.validadoresCuil, docente.persona.cuil.substring(10,11), 'id');
-				if (i!=-1) {
-					$scope.cuilValidadorSel = $scope.validadoresCuil[i];
-				} else {
-					$scope.msgError = 'Error buscando el validador del cuil del docente a editar, en el listado.';
-					$('#message-modal').modal('show');
-					$scope.success = false;
-				}
-				$scope.colapsarFormulario = true;
+				$scope.cuilTipoSel = parseInt(docente.persona.cuil.substring(0,2));
+				$scope.cuilValidadorSel = parseInt(docente.persona.cuil.substring(10,11));
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function() {
@@ -390,10 +383,6 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				    }
 				 
 				    $scope.cuilValidadorSel = digito;
-					i = $scope.indiceDe($scope.validadoresCuil, String.valueOf(digito), 'value');
-					if (i!=-1) {
-						$scope.cuilValidadorSel = $scope.validadoresCuil[i];
-					}
 				
 				}
 			    

@@ -21,6 +21,8 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 
 			$scope.colapsarFormulario = true;
 			
+			$scope.obj = {};
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.listarProvincias = function() {
@@ -113,6 +115,7 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 					$scope.msgError = 'Error buscando la provincia del partido a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(partido) {
@@ -147,7 +150,7 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 			}
 			
 			$scope.confirmarBorrar = function(partido) {
-				$scope.partido = partido;
+				$scope.obj = partido;
 				$('#confirm-modal').modal('show');
 			}
 

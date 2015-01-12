@@ -19,6 +19,8 @@ msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoS
 
 			$scope.colapsarFormulario = true;
 			
+			$scope.obj = {};
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {
@@ -83,6 +85,7 @@ msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoS
 				$scope.nuevo = {};
 				$scope.nuevo.id = instituto.id;
 				$scope.nuevo.nombre = instituto.nombre;
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(instituto) {
@@ -107,7 +110,7 @@ msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoS
 			}
 			
 			$scope.confirmarBorrar = function(instituto) {
-				$scope.instituto = instituto;
+				$scope.obj = instituto;
 				$('#confirm-modal').modal('show');
 			}
 

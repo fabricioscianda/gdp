@@ -31,6 +31,8 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			$scope.anioSel = {};
 
 			$scope.colapsarFormulario = true;
+
+			$scope.obj = {};
 			
 			var orderBy = $filter('orderBy');
 
@@ -128,6 +130,7 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 					$scope.msgError = 'Error buscando la sede de la carrera a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(carrera) {
@@ -166,7 +169,7 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			}
 			
 			$scope.confirmarBorrar = function(carrera) {
-				$scope.carrera = carrera;
+				$scope.obj = carrera;
 				$('#confirm-modal').modal('show');
 			}
 

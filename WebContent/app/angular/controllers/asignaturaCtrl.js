@@ -23,6 +23,8 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 			
 			$scope.colapsarFormulario = true;
 			
+			$scope.obj = {};
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.listarCarreras = function() {
@@ -120,6 +122,7 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 					$scope.msgError = 'Error buscando la carrera de la asignatura a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(asignatura) {
@@ -154,7 +157,7 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 			}
 			
 			$scope.confirmarBorrar = function(asignatura) {
-				$scope.asignatura = asignatura;
+				$scope.obj = asignatura;
 				$('#confirm-modal').modal('show');
 			}
 

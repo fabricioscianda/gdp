@@ -21,6 +21,8 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 
 			$scope.colapsarFormulario = true;
 			
+			$scope.obj = {};
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.listarPartidos = function() {
@@ -114,6 +116,7 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 					$scope.msgError = 'Error buscando el partido de la localidad a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(localidad) {
@@ -148,7 +151,7 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 			}
 			
 			$scope.confirmarBorrar = function(localidad) {
-				$scope.localidad = localidad;
+				$scope.obj = localidad;
 				$('#confirm-modal').modal('show');
 			}
 

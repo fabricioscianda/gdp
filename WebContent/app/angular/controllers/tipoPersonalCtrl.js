@@ -16,11 +16,12 @@ msegErpControllers.controller('TipoPersonalCtrl', [
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
-			$scope.obj = {};
 			$scope.nuevo = {};
 			$scope.tipos = {};
 
 			$scope.colapsarFormulario = true;
+
+			$scope.obj = {};
 			
 			var orderBy = $filter('orderBy');
 
@@ -86,6 +87,7 @@ msegErpControllers.controller('TipoPersonalCtrl', [
 				$scope.nuevo = {};
 				$scope.nuevo.id = tipo.id;
 				$scope.nuevo.nombre = tipo.nombre;
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(tipo) {

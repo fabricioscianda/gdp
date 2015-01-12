@@ -13,7 +13,6 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
-			$scope.obj = {};
 			$scope.nueva = {};
 			$scope.sede = {};
 			$scope.sedes = {};
@@ -25,6 +24,8 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.institutos = {};
 
 			$scope.colapsarFormulario = true;
+			
+			$scope.obj = {};
 			
 			var orderBy = $filter('orderBy');
 
@@ -151,6 +152,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 					$scope.msgError = 'Error buscando el instituto de la sede a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(sede) {

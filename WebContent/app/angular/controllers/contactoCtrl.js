@@ -21,6 +21,8 @@ msegErpControllers.controller('ContactoCtrl', [
 
 			$scope.colapsarFormulario = true;
 			
+			$scope.obj = {};
+			
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {
@@ -88,6 +90,7 @@ msegErpControllers.controller('ContactoCtrl', [
 				$scope.nuevo.id = contacto.id;
 				$scope.nuevo.tipoContacto = contacto.tipoContacto;
 				$scope.nuevo.valor = contacto.valor;
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(contacto) {
@@ -112,7 +115,7 @@ msegErpControllers.controller('ContactoCtrl', [
 			}
 			
 			$scope.confirmarBorrar = function(contacto) {
-				$scope.contacto = contacto;
+				$scope.obj = contacto;
 				$('#confirm-modal').modal('show');
 			}
 

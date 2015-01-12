@@ -13,12 +13,13 @@ msegErpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaS
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
-			$scope.obj = {};
 			$scope.nuevo = {};
 			$scope.provincia = {};
 			$scope.provincias = {};
 
 			$scope.colapsarFormulario = true;
+			
+			$scope.obj = {};
 			
 			var orderBy = $filter('orderBy');
 
@@ -84,6 +85,7 @@ msegErpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaS
 				$scope.nuevo = {};
 				$scope.nuevo.id = provincia.id;
 				$scope.nuevo.nombre = provincia.nombre;
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(provincia) {

@@ -16,10 +16,11 @@ msegErpControllers.controller('TipoEstadoContractualCtrl', [
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
-			$scope.obj = {};
 			$scope.nuevo = {};
 			$scope.tipos = {};
 
+			$scope.obj = {};
+			
 			$scope.colapsarFormulario = true;
 			
 			var orderBy = $filter('orderBy');
@@ -86,6 +87,7 @@ msegErpControllers.controller('TipoEstadoContractualCtrl', [
 				$scope.nuevo = {};
 				$scope.nuevo.id = tipo.id;
 				$scope.nuevo.nombre = tipo.nombre;
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(tipo) {

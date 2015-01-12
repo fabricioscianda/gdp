@@ -13,7 +13,6 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 
-			$scope.obj = {};
 			$scope.nueva = {};
 			$scope.persona = {};
 			$scope.personas = {};
@@ -39,6 +38,8 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 			$scope.validadoresCuil = [0,1,2,3,4,5,6,7,8,9];
 			
 			$scope.colapsarFormulario = true;
+			
+			$scope.obj = {};
 			
 			var orderBy = $filter('orderBy');
 
@@ -226,6 +227,7 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 					$scope.msgError = 'Error buscando el tipo de documento de la persona a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
+				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(persona) {
