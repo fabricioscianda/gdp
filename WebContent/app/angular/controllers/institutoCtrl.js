@@ -12,6 +12,7 @@ msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoS
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
+			$scope.textoConfirm = null;
 
 			$scope.nuevo = {};
 			$scope.instituto = {};
@@ -74,6 +75,7 @@ msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoS
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -111,11 +113,13 @@ msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoS
 			
 			$scope.confirmarBorrar = function(instituto) {
 				$scope.obj = instituto;
+				$scope.textoConfirm = instituto.nombre;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(instituto) {
 				$('#confirm-modal').modal('hide');
+				$scope.textoConfirm = null;
 				$scope.instituto = {};
 			}
 			

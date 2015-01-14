@@ -12,6 +12,7 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
+			$scope.textoConfirm = null;
 
 			$scope.nueva = {};
 			$scope.persona = {};
@@ -209,6 +210,7 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -263,11 +265,13 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 			
 			$scope.confirmarBorrar = function(persona) {
 				$scope.obj = persona;
+				$scope.textoConfirm = persona.apellido + " " + persona.nombre;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(persona) {
 				$('#confirm-modal').modal('hide');
+				$scope.textoConfirm = null;
 				$scope.obj = {};
 			}
 

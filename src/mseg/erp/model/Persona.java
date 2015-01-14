@@ -1,6 +1,7 @@
 package mseg.erp.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -38,11 +40,11 @@ public class Persona implements Serializable {
 	private String numeroDoc;
 	@Column(unique = true, nullable = true)
 	private String cuil;
-
-//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
-//	private List<Contacto> mediosContacto;
-//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
-//	private List<Domicilio> domicilios;
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
+	private List<Domicilio> domicilios;
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
+	private List<Contacto> mediosContacto;
+	
 //	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
 //	private List<Empleo> empleos;
 //	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
@@ -116,6 +118,22 @@ public class Persona implements Serializable {
 
 	public void setCuil(String cuil) {
 		this.cuil = cuil;
+	}
+
+	public List<Domicilio> getDomicilios() {
+		return domicilios;
+	}
+
+	public void setDomicilios(List<Domicilio> domicilios) {
+		this.domicilios = domicilios;
+	}
+
+	public List<Contacto> getMediosContacto() {
+		return mediosContacto;
+	}
+
+	public void setMediosContacto(List<Contacto> mediosContacto) {
+		this.mediosContacto = mediosContacto;
 	}
 
 }

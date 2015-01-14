@@ -12,6 +12,7 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
+			$scope.textoConfirm = null;
 
 			$scope.nueva = {};
 			$scope.carrera = {};
@@ -110,6 +111,7 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -170,11 +172,13 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			
 			$scope.confirmarBorrar = function(carrera) {
 				$scope.obj = carrera;
+				$scope.textoConfirm = carrera.nombre;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(carrera) {
 				$('#confirm-modal').modal('hide');
+				$scope.textoConfirm = null;
 				$scope.carrera = {};
 			}
 			

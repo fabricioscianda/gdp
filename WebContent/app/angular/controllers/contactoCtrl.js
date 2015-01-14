@@ -15,7 +15,8 @@ msegErpControllers.controller('ContactoCtrl', [
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
-
+			$scope.textoConfirm = null;
+			
 			$scope.nuevo = {};
 			$scope.contactos = {};
 
@@ -26,7 +27,6 @@ msegErpControllers.controller('ContactoCtrl', [
 			var orderBy = $filter('orderBy');
 
 			$scope.guardar = function(nuevo) {
-//				$scope.tipoContactoSel =
 				if (nuevo != null && nuevo.nombre != undefined) {
 					ContactoService.guardar({
 						'nuevo' : nuevo
@@ -78,6 +78,7 @@ msegErpControllers.controller('ContactoCtrl', [
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -116,11 +117,13 @@ msegErpControllers.controller('ContactoCtrl', [
 			
 			$scope.confirmarBorrar = function(contacto) {
 				$scope.obj = contacto;
+				$scope.textoConfirm = contacto.nombre;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(contacto) {
 				$('#confirm-modal').modal('hide');
+				$scope.textoConfirm = null;
 				$scope.contacto = {};
 			}
 			

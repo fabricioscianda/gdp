@@ -31,9 +31,9 @@ public class Domicilio implements Serializable {
 	private String domicilio;
 	private Boolean actual;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Persona persona;
-	@ManyToOne(fetch = FetchType.LAZY)
 	private Localidad localidad;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Persona persona;
 
 	public Domicilio() {
 	}

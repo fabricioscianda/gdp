@@ -1,6 +1,7 @@
 package mseg.erp.vomodel;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class VOPersona implements Serializable {
 
@@ -12,10 +13,10 @@ public class VOPersona implements Serializable {
 	private String nombre;
 	private String apellido;
 	private VOTipoDocumento tipoDoc;
+	private List<VODomicilio> domicilios;
+	private List<VOContacto> mediosContacto;
 	
 //	private VOInfoAdministrativa infoAdministrativa;
-//	private List<VOContacto> mediosContacto;
-//	private List<VODomicilio> domicilios;
 //	private List<VOEmpleo> empleos;
 //	private List<VOFormacionAcademica> formacionAcadem;
 
@@ -84,6 +85,22 @@ public class VOPersona implements Serializable {
 
 	public void setCuil(String cuil) {
 		this.cuil = cuil;
+	}
+
+	public List<VODomicilio> getDomicilios() {
+		return domicilios;
+	}
+
+	public void setDomicilios(List<VODomicilio> domicilios) {
+		this.domicilios = domicilios;
+	}
+
+	public List<VOContacto> getMediosContacto() {
+		return mediosContacto;
+	}
+
+	public void setMediosContacto(List<VOContacto> mediosContacto) {
+		this.mediosContacto = mediosContacto;
 	}
 
 }

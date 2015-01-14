@@ -15,6 +15,7 @@ msegErpControllers.controller('TipoEstadoContractualCtrl', [
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
+			$scope.textoConfirm = null;
 
 			$scope.nuevo = {};
 			$scope.tipos = {};
@@ -76,6 +77,7 @@ msegErpControllers.controller('TipoEstadoContractualCtrl', [
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -114,11 +116,13 @@ msegErpControllers.controller('TipoEstadoContractualCtrl', [
 			
 			$scope.confirmarBorrar = function(tipo) {
 				$scope.obj = tipo;
+				$scope.textoConfirm = tipo.nombre;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(tipo) {
 				$('#confirm-modal').modal('hide');
+				$scope.textoConfirm = null;
 				$scope.obj = {};
 			}
 			

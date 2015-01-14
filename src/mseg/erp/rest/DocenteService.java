@@ -1,5 +1,6 @@
 package mseg.erp.rest;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,7 +10,9 @@ import mseg.erp.dao.docente.IDocenteDAO;
 import mseg.erp.dao.persona.IPersonaDAO;
 import mseg.erp.dao.tipodocumento.ITipoDocumentoDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOContacto;
 import mseg.erp.vomodel.VODocente;
+import mseg.erp.vomodel.VODomicilio;
 import mseg.erp.vomodel.VOPersona;
 import mseg.erp.vomodel.VOResponse;
 import mseg.erp.vomodel.VOTipoDocumento;
@@ -21,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 @RestController
 @RequestMapping(value = "/rest/docenteService")
@@ -77,26 +82,19 @@ public class DocenteService {
 			tipoCuil = gson.fromJson(object.get("tipoCuil"), String.class); 
 			validadorCuil = gson.fromJson(object.get("validadorCuil"), String.class);
 			
-//			List<VOContacto> mediosContactoList = null;
-//			List<VODomicilio> domiciliosList = null;
+			List<VOContacto> mediosContactoList = null;
+			JsonArray mediosContactoJson = object.get("mediosContacto").getAsJsonArray();
+			if (!mediosContactoJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOContacto>>() {}.getType();
+				mediosContactoList = gson.fromJson(mediosContactoJson, listType);
+			}
 			
-//			JsonArray mediosContactoJson = object.get("mediosContacto").getAsJsonArray();
-//			if (!mediosContactoJson.isJsonNull()) {
-//				Type listType = new TypeToken<List<TipoContacto>>() {}.getType();
-//				mediosContactoList = gson.fromJson(mediosContactoJson, listType);
-//				for (int i = 0; i < mediosContactoList.size(); i++) {
-//					mediosContactoList.get(i);
-//				}
-//			}
-			
-//			JsonArray domiciliosJson = object.get("domicilios").getAsJsonArray();
-//			if (!domiciliosJson.isJsonNull()) {
-//				Type listType = new TypeToken<List<Domicilio>>() {}.getType();
-//				domiciliosList = gson.fromJson(domiciliosJson, listType);
-//				for (int i = 0; i < domiciliosList.size(); i++) {
-//					domiciliosList.get(i);
-//				}
-//			}
+			List<VODomicilio> domiciliosList = null;
+			JsonArray domiciliosJson = object.get("domicilios").getAsJsonArray();
+			if (!domiciliosJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VODomicilio>>() {}.getType();
+				domiciliosList = gson.fromJson(domiciliosJson, listType);
+			}
 			
 			id_tipoDoc = Long.valueOf(tipoDoc_id);
 			VOTipoDocumento voTipoDocumento = tipoDocumentoDAO.encontrar(id_tipoDoc, em);
@@ -108,20 +106,21 @@ public class DocenteService {
 			voPersona.setFechaNac(fechaNac);
 			voPersona.setCuil(cuil);
 			voPersona.setTipoDoc(voTipoDocumento);
+
+			for (int i = 0; i < domiciliosList.size(); i++) {
+				domiciliosList.get(i).setPersona(voPersona);
+			}
+			voPersona.setDomicilios(domiciliosList);
 			
-//			voPersona.setMediosContacto(mediosContactoList);
-//			voPersona.setDomicilios(domiciliosList);
+			for (int i = 0; i < mediosContactoList.size(); i++) {
+				mediosContactoList.get(i).setPersona(voPersona);
+			}
+			voPersona.setMediosContacto(mediosContactoList);
 			
 			voDocente = new VODocente();
 			voDocente.setPersona(voPersona);
 			
 			emfh.beginTransaction(em);
-			
-//			if (voPersona.getId() != null && voPersona.getId() != 0) {
-//				personaDAO.modificar(voPersona, em);
-//			} else {
-//				personaDAO.guardar(voPersona, em);
-//			}
 			
 			if (voDocente.getId() != null && voDocente.getId() != 0) {
 				docente = docenteDAO.modificar(voDocente, em);

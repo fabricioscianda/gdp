@@ -2,8 +2,8 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Docente */
-msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteService', 'TipoDocumentoService', 'TipoContactoService', 'DomicilioService', 'LocalidadService', 
-                                              function($scope, $filter, DocenteService, TipoDocumentoService, TipoContactoService, DomicilioService, LocalidadService) {
+msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteService', 'TipoDocumentoService', 'TipoContactoService', 'DomicilioService', 'LocalidadService', 'TipoFormacionService',  
+                                              function($scope, $filter, DocenteService, TipoDocumentoService, TipoContactoService, DomicilioService, LocalidadService, TipoFormacionService) {
 
 			$scope.modulo = 'Docentes';
 			$scope.nombreForm = 'Docente';
@@ -12,6 +12,7 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
+			$scope.textoConfirm = null;
 
 			$scope.docente = {};
 			$scope.docentes = {};
@@ -34,6 +35,11 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			$scope.nuevosMediosContacto = new Array();
 			$scope.mediosContacto = {};
 			$scope.medioSel = {};
+			
+			$scope.nuevaFormacion = {};
+			$scope.nuevasFormacionesAcademicas = new Array();
+			$scope.tiposFormacion = {};
+			$scope.tipoFormacionSel = {};
 			
 			$scope.nuevoDomicilio = {};
 			$scope.nuevosDomicilios = new Array();
@@ -71,19 +77,26 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				$event.stopPropagation();
 				$scope.opened = true;
 			};
+			
+			$scope.openAnio = function($event) {
+				$event.preventDefault();
+				$event.stopPropagation();
+				$scope.openedAnio = true;
+			};
 
 			$scope.dateOptions = {
 				formatYear : 'yy',
 				startingDay : 1
 			};
-
-			$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate' ];
+			
+			$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'yyyy' ];
 			
 			$scope.format = $scope.formats[2];
+			$scope.formatYearOnly = $scope.formats[4];
 			
-			$scope.addMedio = function(nuevoMedio) {
-				$scope.nuevoMedio.medio = $scope.medioSel;
-				$scope.nuevosMediosContacto.push(nuevoMedio);
+			$scope.addMedio = function() {
+				$scope.nuevoMedio.tipoContacto = $scope.medioSel;
+				$scope.nuevosMediosContacto.push($scope.nuevoMedio);
 				$scope.nuevoMedio = {};
 			}
 			
@@ -92,9 +105,9 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				$scope.nuevoMedio = {};
 			}
 			
-			$scope.addDomicilio = function(nuevoDomicilio) {
+			$scope.addDomicilio = function() {
 				$scope.nuevoDomicilio.localidad = $scope.localidadSel;
-				$scope.nuevosDomicilios.push(nuevoDomicilio);
+				$scope.nuevosDomicilios.push($scope.nuevoDomicilio);
 				$scope.nuevoDomicilio = {};
 				$scope.localidadSel = null;
 			}
@@ -104,27 +117,21 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				$scope.nuevoDomicilio = {};
 			}
 			
-			$scope.agregarMedio = function(nuevoMedio) {
-				if (nuevoMedio != undefined && nuevoMedio.docente!=undefined && nuevoMedio.medio != undefined && nuevoMedio.contacto != undefined) {
-					ContactoService.guardar({
-						'nuevo' : nuevoMedio
-					}, function(response) {
-						if (response.ok) {
-							$scope.msgSuccess = nuevoMedio.medio + ' : ' + nuevoMedio.contacto + ', Guardado.';
-							$scope.nuevoMedio = {};
-						} else {
-							$scope.msgError = 'No se pudo guardar el nuevo medio de contacto.';
-						}
-						$('#message-modal').modal('show');
-					}, function(error) {
-						alert(error);
-					});
-				}
-			};
+			$scope.addFormacion = function() {
+				$scope.nuevaFormacion.tipoFormacion = $scope.tipoFormacionSel;
+				$scope.nuevasFormacionesAcademicas.push($scope.nuevaFormacion);
+				$scope.nuevaFormacion = {};
+				$scope.nuevaFormacion.anio = null;
+				$scope.tipoFormacionSel = null;
+			}
+			
+			$scope.removeFormacion = function(formacion) {
+				$scope.nuevasFormacionesAcademicas.splice($scope.nuevasFormacionesAcademicas.indexOf(formacion),1);
+				$scope.nuevaFormacion = {};
+			}
 
 			$scope.listarMediosContacto = function() {
-				TipoContactoService.listar({},
-						function (response){
+				TipoContactoService.listar({}, function (response){
 					$scope.success = response.ok;
 					if (response.ok) {
 						$scope.mediosContacto = angular.fromJson(response.data);
@@ -132,6 +139,23 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 					} else {
 						$scope.msgError = 'No se pudieron obtener los Medios de Contacto';
 						console.log('No se pudieron obtener los Medios de Contacto');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposFormacion = function() {
+				TipoFormacionService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposFormacion = angular.fromJson(response.data);
+						$scope.tiposFormacion = orderBy($scope.tiposFormacion, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Tipos de Formacion';
+						console.log('No se pudieron obtener los Tipos de Formacion');
 						$('#message-modal').modal('show');
 					}
 				},
@@ -156,24 +180,6 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 					function(error) {
 						alert(error);
 					})
-			};
-			
-			$scope.listarDomicilios = function() {
-				DomicilioService.listar({},
-						function (response){
-					$scope.success = response.ok;
-					if (response.ok) {
-						$scope.domicilios = angular.fromJson(response.data);
-						$scope.domicilios = orderBy($scope.domicilios, ['domicilio','localidad.nombre']);
-					} else {
-						$scope.msgError = 'No se pudieron obtener los Medios de Contacto';
-						console.log('No se pudieron obtener los Medios de Contacto');
-						$('#message-modal').modal('show');
-					}
-				},
-				function(error) {
-					alert(error);
-				})
 			};
 			
 			$scope.listarTiposDoc = function() {
@@ -214,6 +220,7 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 							$scope.msgSuccess = $scope.apellido + ' ' + $scope.nombre + ', Guardado.';
 							$scope.limpiar();
 							$scope.listar();
+							$scope.colapsarFormulario = true;
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
 							console.log('No se pudo guardar el elemento.');
@@ -254,6 +261,7 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -261,12 +269,6 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				});
 			}
 
-//			$scope.editarDomicilio = function(domicilio) {
-//				$scope.nuevoDomicilio.actual = domicilio.actual;
-//				$scope.nuevoDomicilio.domicilio = domicilio.domicilio;
-//				$scope.localidadSel = domicilio.localidad;
-//			}
-			
 			$scope.editarElemento = function(docente) {
 				$scope.id = docente.id;
 				$scope.nombre = docente.persona.nombre;
@@ -284,6 +286,8 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				}
 				$scope.cuilTipoSel = parseInt(docente.persona.cuil.substring(0,2));
 				$scope.cuilValidadorSel = parseInt(docente.persona.cuil.substring(10,11));
+				$scope.nuevosDomicilios = docente.persona.domicilios;
+				$scope.nuevosMediosContacto = docente.persona.mediosContacto;
 				$scope.colapsarFormulario = false;
 			}
 
@@ -331,16 +335,22 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				$scope.numeroDocCuil = null;
 				$scope.cuilValidadorSel = null;
 				$scope.tipoDocSel = $scope.tiposDoc[-1];
+				$scope.nuevoDomicilio = null;
+				$scope.nuevoMedio = null;
+				$scope.nuevosDomicilios = new Array();
+				$scope.nuevosMediosContacto = new Array();
 			}
 			
 			$scope.confirmarBorrar = function(docente) {
 				$scope.obj = docente;
+				$scope.textoConfirm = docente.persona.apellido + " " + docente.persona.nombre; 
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(docente) {
 				$('#confirm-modal').modal('hide');
 				$scope.obj = {};
+				$scope.textoConfirm = null;
 			}
 
 			$scope.rellenarDNICuil = function(){

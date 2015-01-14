@@ -12,6 +12,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
+			$scope.textoConfirm = null;
 
 			$scope.nueva = {};
 			$scope.sede = {};
@@ -127,6 +128,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -190,11 +192,13 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			
 			$scope.confirmarBorrar = function(sede) {
 				$scope.obj = sede;
+				$scope.textoConfirm = sede.nombre;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(sede) {
 				$('#confirm-modal').modal('hide');
+				$scope.textoConfirm = null;
 				$scope.obj = {};
 			}
 			

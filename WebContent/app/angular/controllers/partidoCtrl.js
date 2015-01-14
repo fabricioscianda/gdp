@@ -12,6 +12,7 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
+			$scope.textoConfirm = null;
 
 			$scope.nuevo = {};
 			$scope.partido = {};
@@ -97,6 +98,7 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -151,11 +153,13 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 			
 			$scope.confirmarBorrar = function(partido) {
 				$scope.obj = partido;
+				$scope.textoConfirm = partido.nombre;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(partido) {
 				$('#confirm-modal').modal('hide');
+				$scope.textoConfirm = null;
 				$scope.partido = {};
 			}
 			

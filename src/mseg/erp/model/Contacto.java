@@ -28,9 +28,9 @@ public class Contacto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_CONTACTO")
 	@SequenceGenerator(schema = DBUtils.SCHEMA, name = "SEQUENCE_CONTACTO", sequenceName = "CONTACTO_SEQ", allocationSize = 1)
 	private Long id;
+	private String valor;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private TipoContacto tipoContacto;
-	private String valor;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Persona persona;
 

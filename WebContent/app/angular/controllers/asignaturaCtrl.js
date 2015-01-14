@@ -12,6 +12,7 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
+			$scope.textoConfirm = null;
 
 			$scope.nueva = {};
 			$scope.asignatura = {};
@@ -101,6 +102,7 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
 					}
+					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
 					$('#message-modal').modal('show');
 				}, function(error) {
@@ -158,11 +160,13 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 			
 			$scope.confirmarBorrar = function(asignatura) {
 				$scope.obj = asignatura;
+				$scope.textoConfirm = asignatura.nombre;
 				$('#confirm-modal').modal('show');
 			}
 
 			$scope.cancelarBorrar = function(asignatura) {
 				$('#confirm-modal').modal('hide');
+				$scope.textoConfirm = null;
 				$scope.asignatura = {};
 			}
 
