@@ -15,10 +15,10 @@ public class VOPersona implements Serializable {
 	private VOTipoDocumento tipoDoc;
 	private List<VODomicilio> domicilios;
 	private List<VOContacto> mediosContacto;
+	private List<VOFormacionAcademica> formacionAcademica;
+	private List<VOEmpleo> empleos;
 	
 //	private VOInfoAdministrativa infoAdministrativa;
-//	private List<VOEmpleo> empleos;
-//	private List<VOFormacionAcademica> formacionAcadem;
 
 	public VOPersona() {
 	}
@@ -103,4 +103,21 @@ public class VOPersona implements Serializable {
 		this.mediosContacto = mediosContacto;
 	}
 
+	public List<VOFormacionAcademica> getFormacionAcademica() {
+		return formacionAcademica;
+	}
+
+	public void setFormacionAcademica(List<VOFormacionAcademica> formacionAcademica) {
+		this.formacionAcademica = formacionAcademica;
+	}
+
+	public List<VOEmpleo> getEmpleos() {
+		return empleos;
+	}
+
+	public void setEmpleos(List<VOEmpleo> empleos) {
+		this.empleos = empleos;
+	}
+
+	
 }

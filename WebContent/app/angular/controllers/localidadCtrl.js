@@ -147,6 +147,11 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 			    return -1;
 			}
 			
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.partidoSel = $scope.partidos[-1];

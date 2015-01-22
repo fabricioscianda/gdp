@@ -3,6 +3,9 @@ package mseg.erp.spring.factoryBeans;
 import mseg.erp.vomodel.VOCarrera;
 import mseg.erp.vomodel.VOContacto;
 import mseg.erp.vomodel.VODomicilio;
+import mseg.erp.vomodel.VOEmpleo;
+import mseg.erp.vomodel.VOFormacionAcademica;
+import mseg.erp.vomodel.VOInfoAdministrativa;
 import mseg.erp.vomodel.VOInstituto;
 import mseg.erp.vomodel.VOPartido;
 import mseg.erp.vomodel.VOProvincia;
@@ -44,6 +47,9 @@ public class GsonSpringFactoryBean implements FactoryBean<Gson> {
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOCarrera.class, false, "asignaturas"));
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VODomicilio.class, false, "persona"));
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOContacto.class, false, "persona"));
+			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOFormacionAcademica.class, false, "persona"));
+			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOEmpleo.class, false, "persona"));
+			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOInfoAdministrativa.class, false, "persona"));
 
 			// returns the created builder
 			this.singleton = gsb.create();

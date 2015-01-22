@@ -107,6 +107,11 @@ msegErpControllers.controller('ProvinciaCtrl', ['$scope', '$filter', 'ProvinciaS
 				});
 			}
 
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nuevo = {};
 			}

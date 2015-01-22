@@ -258,6 +258,11 @@ msegErpControllers.controller('PersonaCtrl', ['$scope', '$filter', 'PersonaServi
 			    return -1;
 			}
 			
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.tipoDocSel = $scope.tiposDoc[-1];

@@ -13,6 +13,8 @@ import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
 import mseg.erp.vomodel.VOContacto;
 import mseg.erp.vomodel.VODocente;
 import mseg.erp.vomodel.VODomicilio;
+import mseg.erp.vomodel.VOEmpleo;
+import mseg.erp.vomodel.VOFormacionAcademica;
 import mseg.erp.vomodel.VOPersona;
 import mseg.erp.vomodel.VOResponse;
 import mseg.erp.vomodel.VOTipoDocumento;
@@ -55,12 +57,14 @@ public class DocenteService {
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
 		try {
-			VOPersona voPersona = new VOPersona();
+			VOPersona voPersona = new VOPersona(),
+					  persona = null;
 			
 			VODocente voDocente = null,
 					  docente = null;
 			
-			Long id_tipoDoc = null,
+			Long id = null,
+				 id_tipoDoc = null,
 				 fechaNac = null;
 			
 			String nombre = null, 
@@ -72,6 +76,7 @@ public class DocenteService {
 				   tipoDoc_id = null,
 				   cuil = null;
 			
+			id = gson.fromJson(object.get("id"), Long.class);
 			nombre = gson.fromJson(object.get("nombre"), String.class);
 			apellido = gson.fromJson(object.get("apellido"), String.class);
 			numeroDoc = gson.fromJson(object.get("numeroDoc"), String.class);
@@ -96,6 +101,20 @@ public class DocenteService {
 				domiciliosList = gson.fromJson(domiciliosJson, listType);
 			}
 			
+			List<VOFormacionAcademica> formacionAcademicas = null;
+			JsonArray formacionesJson = object.get("formacionAcademica").getAsJsonArray();
+			if (!formacionesJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOFormacionAcademica>>() {}.getType();
+				formacionAcademicas = gson.fromJson(formacionesJson, listType);
+			}
+			
+			List<VOEmpleo> empleos = null;
+			JsonArray empleosJson = object.get("empleos").getAsJsonArray();
+			if (!empleosJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOEmpleo>>() {}.getType();
+				empleos = gson.fromJson(empleosJson, listType);
+			}
+			
 			id_tipoDoc = Long.valueOf(tipoDoc_id);
 			VOTipoDocumento voTipoDocumento = tipoDocumentoDAO.encontrar(id_tipoDoc, em);
 			cuil = tipoCuil + numeroDocCuil + validadorCuil;
@@ -107,6 +126,11 @@ public class DocenteService {
 			voPersona.setCuil(cuil);
 			voPersona.setTipoDoc(voTipoDocumento);
 
+			for (int i = 0; i < formacionAcademicas.size(); i++) {
+				formacionAcademicas.get(i).setPersona(voPersona);
+			}
+			voPersona.setFormacionAcademica(formacionAcademicas);
+			
 			for (int i = 0; i < domiciliosList.size(); i++) {
 				domiciliosList.get(i).setPersona(voPersona);
 			}
@@ -117,13 +141,25 @@ public class DocenteService {
 			}
 			voPersona.setMediosContacto(mediosContactoList);
 			
-			voDocente = new VODocente();
+			for (int i = 0; i < empleos.size(); i++) {
+				empleos.get(i).setPersona(voPersona);
+			}
+			voPersona.setEmpleos(empleos);
+			
+			if (id != null && !id.equals(new Long("0"))) {
+				voDocente = docenteDAO.encontrar(id, em);
+				voPersona.setId(voDocente.getPersona().getId());
+			} else {
+				voDocente = new VODocente();
+			}
 			voDocente.setPersona(voPersona);
 			
 			emfh.beginTransaction(em);
 			
-			if (voDocente.getId() != null && voDocente.getId() != 0) {
-				docente = docenteDAO.modificar(voDocente, em);
+			if (id != null && !id.equals(new Long("0"))) {
+				persona = personaDAO.modificar(voPersona, em);
+				docente = voDocente;
+				docente.setPersona(persona);
 			} else {
 				docente = docenteDAO.guardar(voDocente, em);
 			}

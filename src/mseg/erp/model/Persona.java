@@ -44,11 +44,10 @@ public class Persona implements Serializable {
 	private List<Domicilio> domicilios;
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
 	private List<Contacto> mediosContacto;
-	
-//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
-//	private List<Empleo> empleos;
-//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
-//	private List<FormacionAcademica> formacionAcadem;
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
+	private List<FormacionAcademica> formacionAcademica;
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
+	private List<Empleo> empleos;
 //	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
 //	@JoinColumn(name = "id_infoadmin")
 //	private InfoAdministrativa infoAdministrativa;
@@ -134,6 +133,22 @@ public class Persona implements Serializable {
 
 	public void setMediosContacto(List<Contacto> mediosContacto) {
 		this.mediosContacto = mediosContacto;
+	}
+
+	public List<FormacionAcademica> getFormacionAcademica() {
+		return formacionAcademica;
+	}
+
+	public void setFormacionAcademica(List<FormacionAcademica> formacionAcademica) {
+		this.formacionAcademica = formacionAcademica;
+	}
+
+	public List<Empleo> getEmpleos() {
+		return empleos;
+	}
+
+	public void setEmpleos(List<Empleo> empleos) {
+		this.empleos = empleos;
 	}
 
 }

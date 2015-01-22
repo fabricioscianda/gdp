@@ -27,4 +27,34 @@ angular.module('msegErpDirectives', [ 'ng' ])
 		restrict : 'E',
 		templateUrl : 'app/views/layout/menu.html'
 	};
+}).directive('docenteInfoPersonal', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/partials/docente/partialDocenteInfoPersonal.html'
+	};
+}).directive('docenteDomicilios', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/partials/docente/partialDocenteDomicilios.html'
+	};
+}).directive('docenteMediosContacto', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/partials/docente/partialDocenteMediosContacto.html'
+	};
+}).directive('docenteFormAcademica', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/partials/docente/partialDocenteFormAcademica.html'
+	};
+}).directive('docenteEmpleos', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/partials/docente/partialDocenteEmpleos.html'
+	};
+}).directive('docenteInfoAdministrativa', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/partials/docente/partialDocenteInfoAdministrativa.html'
+	};
 });

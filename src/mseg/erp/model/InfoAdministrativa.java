@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -39,20 +38,20 @@ public class InfoAdministrativa implements Serializable {
 	private String nroExpe;
 	private String nroResol;
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "id_documentacion")
+	// @JoinColumn(name = "id_documentacion")
 	private Documentacion documentacion;
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
 	private Persona persona;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private TipoEstadoContractual estadoContrac;
+	private TipoEstadoContractual tipoEstadoContractual;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private TipoMotivo motivo;
+	private TipoMotivo tipoMotivo;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TipoPersonal tipoPersonal;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private TipoSituacionRevista situRevista;
+	private TipoSituacionRevista tipoSituacionRevista;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private TipoSituacion situActual;
+	private TipoSituacion tipoSituacion;
 
 	public InfoAdministrativa() {
 	}
@@ -73,28 +72,12 @@ public class InfoAdministrativa implements Serializable {
 		this.id = id;
 	}
 
-	public Persona getPersona() {
-		return persona;
-	}
-
-	public void setPersona(Persona persona) {
-		this.persona = persona;
-	}
-
 	public TipoPersonal getTipoPersonal() {
 		return tipoPersonal;
 	}
 
 	public void setTipoPersonal(TipoPersonal tipoPersonal) {
 		this.tipoPersonal = tipoPersonal;
-	}
-
-	public TipoSituacionRevista getSituRevista() {
-		return situRevista;
-	}
-
-	public void setSituRevista(TipoSituacionRevista situRevista) {
-		this.situRevista = situRevista;
 	}
 
 	public Long getFechaAlta() {
@@ -105,30 +88,6 @@ public class InfoAdministrativa implements Serializable {
 		this.fechaAlta = fechaAlta;
 	}
 
-	public String getLegajo() {
-		return legajo;
-	}
-
-	public void setLegajo(String legajo) {
-		this.legajo = legajo;
-	}
-
-	public TipoSituacion getSituActual() {
-		return situActual;
-	}
-
-	public void setSituActual(TipoSituacion situActual) {
-		this.situActual = situActual;
-	}
-
-	public TipoMotivo getMotivo() {
-		return motivo;
-	}
-
-	public void setMotivo(TipoMotivo motivo) {
-		this.motivo = motivo;
-	}
-
 	public Long getFechaMotivo() {
 		return fechaMotivo;
 	}
@@ -137,12 +96,12 @@ public class InfoAdministrativa implements Serializable {
 		this.fechaMotivo = fechaMotivo;
 	}
 
-	public TipoEstadoContractual getEstadoContrac() {
-		return estadoContrac;
+	public String getLegajo() {
+		return legajo;
 	}
 
-	public void setEstadoContrac(TipoEstadoContractual estadoContrac) {
-		this.estadoContrac = estadoContrac;
+	public void setLegajo(String legajo) {
+		this.legajo = legajo;
 	}
 
 	public String getNroExpe() {
@@ -161,16 +120,52 @@ public class InfoAdministrativa implements Serializable {
 		this.nroResol = nroResol;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public Documentacion getDocumentacion() {
 		return documentacion;
 	}
 
 	public void setDocumentacion(Documentacion documentacion) {
 		this.documentacion = documentacion;
+	}
+
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+
+	public TipoEstadoContractual getTipoEstadoContractual() {
+		return tipoEstadoContractual;
+	}
+
+	public void setTipoEstadoContractual(TipoEstadoContractual tipoEstadoContractual) {
+		this.tipoEstadoContractual = tipoEstadoContractual;
+	}
+
+	public TipoMotivo getTipoMotivo() {
+		return tipoMotivo;
+	}
+
+	public void setTipoMotivo(TipoMotivo tipoMotivo) {
+		this.tipoMotivo = tipoMotivo;
+	}
+
+	public TipoSituacionRevista getTipoSituacionRevista() {
+		return tipoSituacionRevista;
+	}
+
+	public void setTipoSituacionRevista(TipoSituacionRevista tipoSituacionRevista) {
+		this.tipoSituacionRevista = tipoSituacionRevista;
+	}
+
+	public TipoSituacion getTipoSituacion() {
+		return tipoSituacion;
+	}
+
+	public void setTipoSituacion(TipoSituacion tipoSituacion) {
+		this.tipoSituacion = tipoSituacion;
 	}
 
 }

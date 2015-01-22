@@ -36,9 +36,9 @@ public class Empleo implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private TipoAdministracion tipoAdmin;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private TipoCargo cargo;
+	private TipoCargo tipoCargo;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private TipoRelacion relacion;
+	private TipoRelacion tipoRelacion;
 
 	public Empleo() {
 	}
@@ -51,28 +51,12 @@ public class Empleo implements Serializable {
 		return false;
 	}
 
-	public Persona getPersona() {
-		return persona;
+	public Long getId() {
+		return id;
 	}
 
-	public void setPersona(Persona persona) {
-		this.persona = persona;
-	}
-
-	public TipoRelacion getRelacion() {
-		return relacion;
-	}
-
-	public void setRelacion(TipoRelacion relacion) {
-		this.relacion = relacion;
-	}
-
-	public TipoAdministracion getTipoAdmin() {
-		return tipoAdmin;
-	}
-
-	public void setTipoAdmin(TipoAdministracion tipoAdmin) {
-		this.tipoAdmin = tipoAdmin;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getRazonSocial() {
@@ -83,14 +67,6 @@ public class Empleo implements Serializable {
 		this.razonSocial = razonSocial;
 	}
 
-	public TipoCargo getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(TipoCargo cargo) {
-		this.cargo = cargo;
-	}
-
 	public String getDetalleCargo() {
 		return detalleCargo;
 	}
@@ -99,16 +75,36 @@ public class Empleo implements Serializable {
 		this.detalleCargo = detalleCargo;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Persona getPersona() {
+		return persona;
 	}
 
-	public Long getId() {
-		return id;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public TipoAdministracion getTipoAdmin() {
+		return tipoAdmin;
+	}
+
+	public void setTipoAdmin(TipoAdministracion tipoAdmin) {
+		this.tipoAdmin = tipoAdmin;
+	}
+
+	public TipoCargo getTipoCargo() {
+		return tipoCargo;
+	}
+
+	public void setTipoCargo(TipoCargo tipoCargo) {
+		this.tipoCargo = tipoCargo;
+	}
+
+	public TipoRelacion getTipoRelacion() {
+		return tipoRelacion;
+	}
+
+	public void setTipoRelacion(TipoRelacion tipoRelacion) {
+		this.tipoRelacion = tipoRelacion;
 	}
 
 }

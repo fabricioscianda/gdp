@@ -153,6 +153,11 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 			    return -1;
 			}
 			
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.carreraSel = $scope.carreras[-1];

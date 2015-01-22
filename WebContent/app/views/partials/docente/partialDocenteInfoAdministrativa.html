@@ -1,0 +1,61 @@
+<div class="panel panel-danger">
+	<div class="panel-heading">
+		<h5 class="panel-title">Información Administrativa</h5>
+	</div>
+	<div class="panel-body bg-danger">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<select class="form-control" ng-options="tipo.nombre for tipo in tiposPersonal" required ng-model="tipoPersonalSel" ng-init="listarTiposPersonal()">
+						<option value="">-- Tipo de Personal --</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group">
+					<select class="form-control" ng-options="tipo.nombre for tipo in tiposSituacionRevista" required ng-model="tipoSituacionRevistaSel" ng-init="listarSituacionesRevista()">
+						<option value="">-- Tipo de Situacion de Revista --</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group form-inline">
+					<div class="form-group">
+						<label for="fechaAlta" class="control-label pull-left">Fecha de Alta</label>
+					</div>
+					<div class="form-group form-inline">
+			            <p class="input-group">
+			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
+			              <span class="input-group-btn">
+			                <button type="button" class="btn btn-default" ng-click="openFechaAlta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+			              </span>
+			            </p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group">
+					<input type="text" class="form-control" id="legajo" name="legajo" ng-model="legajo" maxlength="8" placeholder="Legajo">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<select class="form-control" ng-options="tipo.nombre for tipo in tiposSituacionActual" required ng-model="tipoSituacionActualSel" ng-init="listarTiposSituacionActual()">
+						<option value="">-- Tipo de Situacion Actual --</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group">
+					<select class="form-control" ng-options="tipo.nombre for tipo in tiposMotivo" required ng-model="tipoMotivoSel" ng-init="listarTiposMotivo()">
+						<option value="">-- Tipo de Motivo --</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

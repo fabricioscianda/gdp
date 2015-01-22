@@ -146,6 +146,11 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 			    return -1;
 			}
 			
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nuevo = {};
 				$scope.provinciaSel = $scope.provincias[-1];

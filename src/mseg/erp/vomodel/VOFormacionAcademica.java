@@ -6,9 +6,12 @@ public class VOFormacionAcademica implements Serializable {
 
 	private static final long serialVersionUID = -1306676621245711521L;
 	private Long id;
+	private String titulo;
+	private String expedidoPor;
+	private Long anio;
 	private VOPersona persona;
 	private VOTipoFormacion tipoFormacion;
-	private VOTipoEstadoFormacion estado;
+	private VOTipoEstadoFormacion tipoEstadoFormacion;
 
 	public VOFormacionAcademica() {
 	}
@@ -45,16 +48,40 @@ public class VOFormacionAcademica implements Serializable {
 		this.tipoFormacion = tipoFormacion;
 	}
 
-	public VOTipoEstadoFormacion getEstado() {
-		return estado;
-	}
-
-	public void setEstado(VOTipoEstadoFormacion estado) {
-		this.estado = estado;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getExpedidoPor() {
+		return expedidoPor;
+	}
+
+	public void setExpedidoPor(String expedidoPor) {
+		this.expedidoPor = expedidoPor;
+	}
+
+	public Long getAnio() {
+		return anio;
+	}
+
+	public void setAnio(Long anio) {
+		this.anio = anio;
+	}
+
+	public VOTipoEstadoFormacion getTipoEstadoFormacion() {
+		return tipoEstadoFormacion;
+	}
+
+	public void setTipoEstadoFormacion(VOTipoEstadoFormacion tipoEstadoFormacion) {
+		this.tipoEstadoFormacion = tipoEstadoFormacion;
 	}
 
 }

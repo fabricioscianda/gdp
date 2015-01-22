@@ -107,6 +107,11 @@ msegErpControllers.controller('InstitutoCtrl', ['$scope', '$filter', 'InstitutoS
 				});
 			}
 
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nuevo = {};
 			}

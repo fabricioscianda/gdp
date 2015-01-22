@@ -45,7 +45,7 @@ public class Domicilio implements Serializable {
 		}
 		return false;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

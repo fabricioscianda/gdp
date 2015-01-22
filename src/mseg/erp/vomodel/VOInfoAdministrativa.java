@@ -13,11 +13,11 @@ public class VOInfoAdministrativa implements Serializable {
 	private String nroResol;
 	private VODocumentacion documentacion;
 	private VOPersona persona;
-	private VOTipoEstadoContractual estadoContrac;
-	private VOTipoMotivo motivo;
+	private VOTipoEstadoContractual tipoEstadoContractual;
+	private VOTipoMotivo tipoMotivo;
 	private VOTipoPersonal tipoPersonal;
-	private VOTipoSituacionRevista situRevista;
-	private VOTipoSituacion situActual;
+	private VOTipoSituacionRevista tipoSituacionRevista;
+	private VOTipoSituacion tipoSituacion;
 
 	public VOInfoAdministrativa() {
 	}
@@ -54,44 +54,12 @@ public class VOInfoAdministrativa implements Serializable {
 		this.tipoPersonal = tipoPersonal;
 	}
 
-	public VOTipoSituacionRevista getSituRevista() {
-		return situRevista;
-	}
-
-	public void setSituRevista(VOTipoSituacionRevista situRevista) {
-		this.situRevista = situRevista;
-	}
-
 	public Long getFechaAlta() {
 		return fechaAlta;
 	}
 
 	public void setFechaAlta(Long fechaAlta) {
 		this.fechaAlta = fechaAlta;
-	}
-
-	public String getLegajo() {
-		return legajo;
-	}
-
-	public void setLegajo(String legajo) {
-		this.legajo = legajo;
-	}
-
-	public VOTipoSituacion getSituActual() {
-		return situActual;
-	}
-
-	public void setSituActual(VOTipoSituacion situActual) {
-		this.situActual = situActual;
-	}
-
-	public VOTipoMotivo getMotivo() {
-		return motivo;
-	}
-
-	public void setMotivo(VOTipoMotivo motivo) {
-		this.motivo = motivo;
 	}
 
 	public Long getFechaMotivo() {
@@ -102,12 +70,12 @@ public class VOInfoAdministrativa implements Serializable {
 		this.fechaMotivo = fechaMotivo;
 	}
 
-	public VOTipoEstadoContractual getEstadoContrac() {
-		return estadoContrac;
+	public String getLegajo() {
+		return legajo;
 	}
 
-	public void setEstadoContrac(VOTipoEstadoContractual estadoContrac) {
-		this.estadoContrac = estadoContrac;
+	public void setLegajo(String legajo) {
+		this.legajo = legajo;
 	}
 
 	public String getNroExpe() {
@@ -126,16 +94,44 @@ public class VOInfoAdministrativa implements Serializable {
 		this.nroResol = nroResol;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public VODocumentacion getDocumentacion() {
 		return documentacion;
 	}
 
 	public void setDocumentacion(VODocumentacion documentacion) {
 		this.documentacion = documentacion;
+	}
+
+	public VOTipoEstadoContractual getTipoEstadoContractual() {
+		return tipoEstadoContractual;
+	}
+
+	public void setTipoEstadoContractual(VOTipoEstadoContractual tipoEstadoContractual) {
+		this.tipoEstadoContractual = tipoEstadoContractual;
+	}
+
+	public VOTipoMotivo getTipoMotivo() {
+		return tipoMotivo;
+	}
+
+	public void setTipoMotivo(VOTipoMotivo tipoMotivo) {
+		this.tipoMotivo = tipoMotivo;
+	}
+
+	public VOTipoSituacionRevista getTipoSituacionRevista() {
+		return tipoSituacionRevista;
+	}
+
+	public void setTipoSituacionRevista(VOTipoSituacionRevista tipoSituacionRevista) {
+		this.tipoSituacionRevista = tipoSituacionRevista;
+	}
+
+	public VOTipoSituacion getTipoSituacion() {
+		return tipoSituacion;
+	}
+
+	public void setTipoSituacion(VOTipoSituacion tipoSituacion) {
+		this.tipoSituacion = tipoSituacion;
 	}
 
 }

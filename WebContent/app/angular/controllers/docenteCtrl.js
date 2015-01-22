@@ -2,8 +2,28 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Docente */
-msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteService', 'TipoDocumentoService', 'TipoContactoService', 'DomicilioService', 'LocalidadService', 'TipoFormacionService',  
-                                              function($scope, $filter, DocenteService, TipoDocumentoService, TipoContactoService, DomicilioService, LocalidadService, TipoFormacionService) {
+msegErpControllers
+		.controller(
+				'DocenteCtrl',
+				[
+						'$scope',
+						'$filter',
+						'DocenteService',
+						'TipoDocumentoService',
+						'TipoContactoService',
+						'DomicilioService',
+						'LocalidadService',
+						'TipoFormacionService',
+						'TipoCargoService',
+						'TipoAdministracionService',
+						'TipoRelacionService',
+						'TipoEstadoFormacionService',
+						function($scope, $filter, DocenteService,
+								TipoDocumentoService, TipoContactoService,
+								DomicilioService, LocalidadService,
+								TipoFormacionService, TipoCargoService,
+								TipoAdministracionService, TipoRelacionService,
+								TipoEstadoFormacionService) {
 
 			$scope.modulo = 'Docentes';
 			$scope.nombreForm = 'Docente';
@@ -41,6 +61,18 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			$scope.tiposFormacion = {};
 			$scope.tipoFormacionSel = {};
 			
+			$scope.tipoEstadoFormacionSel = {};
+			$scope.tiposEstadoFormacion = {};
+			
+			$scope.nuevoEmpleo = {};
+			$scope.nuevosEmpleos = new Array();
+			$scope.tiposCargo = {};
+			$scope.tipoCargoSel = {};
+			$scope.tiposAdmin = {};
+			$scope.tipoAdminSel = {};
+			$scope.tiposRelacion = {};
+			$scope.tipoRelacionSel = {};
+			
 			$scope.nuevoDomicilio = {};
 			$scope.nuevosDomicilios = new Array();
 			$scope.domicilios = {};
@@ -53,6 +85,9 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			
 			var orderBy = $filter('orderBy');
 			
+			/*
+			 * datetime picker
+			 */
 			$scope.today = function() {
 				$scope.fechaNac = new Date();
 			};
@@ -83,6 +118,12 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				$event.stopPropagation();
 				$scope.openedAnio = true;
 			};
+			
+			$scope.openFechaAlta = function($event) {
+				$event.preventDefault();
+				$event.stopPropagation();
+				$scope.openedFechaAlta = true;
+			};
 
 			$scope.dateOptions = {
 				formatYear : 'yy',
@@ -94,6 +135,9 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			$scope.format = $scope.formats[2];
 			$scope.formatYearOnly = $scope.formats[4];
 			
+			/*
+			 * acciones sobre sub-forms 
+			 */
 			$scope.addMedio = function() {
 				$scope.nuevoMedio.tipoContacto = $scope.medioSel;
 				$scope.nuevosMediosContacto.push($scope.nuevoMedio);
@@ -107,6 +151,11 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			
 			$scope.addDomicilio = function() {
 				$scope.nuevoDomicilio.localidad = $scope.localidadSel;
+				if ($scope.nuevoDomicilio.actual) {
+					for (var i = 0; i < $scope.nuevosDomicilios.length; i++) {
+						$scope.nuevosDomicilios[i].actual = false;
+					}
+				}
 				$scope.nuevosDomicilios.push($scope.nuevoDomicilio);
 				$scope.nuevoDomicilio = {};
 				$scope.localidadSel = null;
@@ -119,15 +168,34 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			
 			$scope.addFormacion = function() {
 				$scope.nuevaFormacion.tipoFormacion = $scope.tipoFormacionSel;
+				$scope.nuevaFormacion.tipoEstadoFormacion = $scope.tipoEstadoFormacionSel;
+				$scope.nuevaFormacion.anio = $scope.nuevaFormacion.anio.getTime(); 
 				$scope.nuevasFormacionesAcademicas.push($scope.nuevaFormacion);
 				$scope.nuevaFormacion = {};
 				$scope.nuevaFormacion.anio = null;
 				$scope.tipoFormacionSel = null;
+				$scope.tipoEstadoFormacionSel = null;
 			}
 			
 			$scope.removeFormacion = function(formacion) {
 				$scope.nuevasFormacionesAcademicas.splice($scope.nuevasFormacionesAcademicas.indexOf(formacion),1);
 				$scope.nuevaFormacion = {};
+			}
+			
+			$scope.addEmpleo = function() {
+				$scope.nuevoEmpleo.tipoAdmin = $scope.tipoAdminSel;
+				$scope.nuevoEmpleo.tipoCargo = $scope.tipoCargoSel;
+				$scope.nuevoEmpleo.tipoRelacion = $scope.tipoRelacionSel;
+				$scope.nuevosEmpleos.push($scope.nuevoEmpleo);
+				$scope.nuevoEmpleo = {};
+				$scope.tipoAdminSel = null;
+				$scope.tipoCargoSel = null;
+				$scope.tipoRelacionSel = null;
+			}
+			
+			$scope.removeEmpleo = function(empleo) {
+				$scope.nuevosEmpleos.splice($scope.nuevosEmpleos.indexOf(empleo),1);
+				$scope.nuevoEmpleo = {};
 			}
 
 			$scope.listarMediosContacto = function() {
@@ -156,6 +224,74 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 					} else {
 						$scope.msgError = 'No se pudieron obtener los Tipos de Formacion';
 						console.log('No se pudieron obtener los Tipos de Formacion');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposEstadoFormacion = function() {
+				TipoEstadoFormacionService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposEstadoFormacion = angular.fromJson(response.data);
+						$scope.tiposEstadoFormacion = orderBy($scope.tiposEstadoFormacion, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Estados de Formacion';
+						console.log('No se pudieron obtener los Estados de Formacion');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposCargo = function() {
+				TipoCargoService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposCargo = angular.fromJson(response.data);
+						$scope.tiposCargo = orderBy($scope.tiposCargo, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Tipos de Cargo';
+						console.log('No se pudieron obtener los Tipos de Cargo');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposAdmin = function() {
+				TipoAdministracionService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposAdmin = angular.fromJson(response.data);
+						$scope.tiposAdmin = orderBy($scope.tiposAdmin, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Tipos de Administracion';
+						console.log('No se pudieron obtener los Tipos de Administracion');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposRelacion = function() {
+				TipoRelacionService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposRelacion = angular.fromJson(response.data);
+						$scope.tiposRelacion = orderBy($scope.tiposRelacion, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Tipos de Relacion';
+						console.log('No se pudieron obtener los Tipos de Relacion');
 						$('#message-modal').modal('show');
 					}
 				},
@@ -204,6 +340,7 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			$scope.guardar = function() {
 				if ($scope.nombre!=undefined) {
 					DocenteService.guardar({
+						'id' : $scope.id,
 						'nombre' : $scope.nombre,
 						'apellido' : $scope.apellido,
 						'fechaNac' : $scope.fechaNac.getTime(),
@@ -214,6 +351,8 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 						'validadorCuil' : $scope.cuilValidadorSel,
 						'mediosContacto' : $scope.nuevosMediosContacto,
 						'domicilios' : $scope.nuevosDomicilios,
+						'empleos' : $scope.nuevosEmpleos,
+						'formacionAcademica' : $scope.nuevasFormacionesAcademicas
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
@@ -287,7 +426,9 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				$scope.cuilTipoSel = parseInt(docente.persona.cuil.substring(0,2));
 				$scope.cuilValidadorSel = parseInt(docente.persona.cuil.substring(10,11));
 				$scope.nuevosDomicilios = docente.persona.domicilios;
+				$scope.nuevosEmpleos = docente.persona.empleos;
 				$scope.nuevosMediosContacto = docente.persona.mediosContacto;
+				$scope.nuevasFormacionesAcademicas = docente.persona.formacionAcademica;
 				$scope.colapsarFormulario = false;
 			}
 
@@ -323,6 +464,11 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 			    }
 			    return -1;
 			}
+
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
 			
 			$scope.limpiar = function() {
 				$scope.id = null;
@@ -338,7 +484,9 @@ msegErpControllers.controller('DocenteCtrl', ['$scope', '$filter', 'DocenteServi
 				$scope.nuevoDomicilio = null;
 				$scope.nuevoMedio = null;
 				$scope.nuevosDomicilios = new Array();
+				$scope.nuevosEmpleos = new Array();
 				$scope.nuevosMediosContacto = new Array();
+				$scope.nuevasFormacionesAcademicas = new Array();
 			}
 			
 			$scope.confirmarBorrar = function(docente) {

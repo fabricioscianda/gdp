@@ -110,6 +110,11 @@ msegErpControllers.controller('TipoEstadoFormacionCtrl', [
 				});
 			}
 
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nuevo = {};
 			}

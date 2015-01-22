@@ -10,8 +10,8 @@ public class VOEmpleo implements Serializable {
 	private String detalleCargo;
 	private VOPersona persona;
 	private VOTipoAdministracion tipoAdmin;
-	private VOTipoCargo cargo;
-	private VOTipoRelacion relacion;
+	private VOTipoCargo tipoCargo;
+	private VOTipoRelacion tipoRelacion;
 
 	public VOEmpleo() {
 	}
@@ -24,28 +24,12 @@ public class VOEmpleo implements Serializable {
 		return false;
 	}
 
-	public VOPersona getPersona() {
-		return persona;
+	public Long getId() {
+		return id;
 	}
 
-	public void setPersona(VOPersona persona) {
-		this.persona = persona;
-	}
-
-	public VOTipoRelacion getRelacion() {
-		return relacion;
-	}
-
-	public void setRelacion(VOTipoRelacion relacion) {
-		this.relacion = relacion;
-	}
-
-	public VOTipoAdministracion getTipoAdmin() {
-		return tipoAdmin;
-	}
-
-	public void setTipoAdmin(VOTipoAdministracion tipoAdmin) {
-		this.tipoAdmin = tipoAdmin;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getRazonSocial() {
@@ -56,14 +40,6 @@ public class VOEmpleo implements Serializable {
 		this.razonSocial = razonSocial;
 	}
 
-	public VOTipoCargo getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(VOTipoCargo cargo) {
-		this.cargo = cargo;
-	}
-
 	public String getDetalleCargo() {
 		return detalleCargo;
 	}
@@ -72,16 +48,36 @@ public class VOEmpleo implements Serializable {
 		this.detalleCargo = detalleCargo;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public VOPersona getPersona() {
+		return persona;
 	}
 
-	public Long getId() {
-		return id;
+	public void setPersona(VOPersona persona) {
+		this.persona = persona;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public VOTipoAdministracion getTipoAdmin() {
+		return tipoAdmin;
+	}
+
+	public void setTipoAdmin(VOTipoAdministracion tipoAdmin) {
+		this.tipoAdmin = tipoAdmin;
+	}
+
+	public VOTipoCargo getTipoCargo() {
+		return tipoCargo;
+	}
+
+	public void setTipoCargo(VOTipoCargo tipoCargo) {
+		this.tipoCargo = tipoCargo;
+	}
+
+	public VOTipoRelacion getTipoRelacion() {
+		return tipoRelacion;
+	}
+
+	public void setTipoRelacion(VOTipoRelacion tipoRelacion) {
+		this.tipoRelacion = tipoRelacion;
 	}
 
 }

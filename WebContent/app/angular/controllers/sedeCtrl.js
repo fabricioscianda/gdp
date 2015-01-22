@@ -184,6 +184,11 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			    return -1;
 			}
 			
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.localidadSel = $scope.localidades[-1];

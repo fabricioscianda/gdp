@@ -34,6 +34,8 @@ public class Contacto implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Persona persona;
 
+	// private Persona persona;
+
 	public Contacto() {
 	}
 

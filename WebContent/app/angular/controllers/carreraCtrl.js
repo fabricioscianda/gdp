@@ -162,6 +162,11 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			    return -1;
 			}
 			
+			$scope.cerrarForm = function() {
+				$scope.limpiar();
+				$scope.colapsarFormulario = true;
+			}
+			
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.sedeSel = $scope.sedes[-1];

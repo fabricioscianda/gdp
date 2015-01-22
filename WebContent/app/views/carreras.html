@@ -8,7 +8,7 @@
 	<!-- Form Nuevo -->
 	<div class="row col-sm-5">
 		<!-- Panel -->
-		<div class="panel panel-default">
+		<div class="panel panel-primary">
 			<!-- Panel Header -->
 			<div class="panel-heading">
 				<h4 class="panel-title">
@@ -41,19 +41,20 @@
 			<div class="panel-footer" ng-show="!colapsarFormulario">
 				<button type="submit" class="btn btn-primary" ng-click="guardar(nueva)">Guardar</button>
 				<button type="submit" class="btn btn-default pull-right" ng-click="limpiar()">Limpiar</button>
+				<button type="submit" class="btn btn-default pull-right" ng-click="cerrarForm()">Cerrar</button>
 			</div>
 		</div>
 	</div>
 	<!-- Listado Actuales -->
 	<div class="row col-sm-6 col-sm-offset-1">
 		<!-- Panel -->
-		<div class="panel panel-default">
+		<div class="panel panel-primary">
 			<!-- Panel Header -->
 			<div class="panel-heading">
 				<h4 class="panel-title">{{modulo}} Actuales</h4>
 			</div>
 			<!-- Listado -->
-			<div class="tipos" ng-init="listar()">
+			<div class="panel-body" ng-init="listar()">
 				<table class="table table-hover table-condensed table-striped" ng-show="carreras.length!=0">
 					<thead>
 						<tr>
