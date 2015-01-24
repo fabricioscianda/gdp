@@ -15,6 +15,7 @@ import mseg.erp.vomodel.VODocente;
 import mseg.erp.vomodel.VODomicilio;
 import mseg.erp.vomodel.VOEmpleo;
 import mseg.erp.vomodel.VOFormacionAcademica;
+import mseg.erp.vomodel.VOInfoAdministrativa;
 import mseg.erp.vomodel.VOPersona;
 import mseg.erp.vomodel.VOResponse;
 import mseg.erp.vomodel.VOTipoDocumento;
@@ -62,6 +63,8 @@ public class DocenteService {
 			
 			VODocente voDocente = null,
 					  docente = null;
+
+			VOInfoAdministrativa voInfoAdministrativa = null;
 			
 			Long id = null,
 				 id_tipoDoc = null,
@@ -114,6 +117,8 @@ public class DocenteService {
 				Type listType = new TypeToken<List<VOEmpleo>>() {}.getType();
 				empleos = gson.fromJson(empleosJson, listType);
 			}
+
+			voInfoAdministrativa = gson.fromJson(object.get("infoAdministrativa"), VOInfoAdministrativa.class);
 			
 			id_tipoDoc = Long.valueOf(tipoDoc_id);
 			VOTipoDocumento voTipoDocumento = tipoDocumentoDAO.encontrar(id_tipoDoc, em);
@@ -125,7 +130,7 @@ public class DocenteService {
 			voPersona.setFechaNac(fechaNac);
 			voPersona.setCuil(cuil);
 			voPersona.setTipoDoc(voTipoDocumento);
-
+			
 			for (int i = 0; i < formacionAcademicas.size(); i++) {
 				formacionAcademicas.get(i).setPersona(voPersona);
 			}
@@ -152,7 +157,10 @@ public class DocenteService {
 			} else {
 				voDocente = new VODocente();
 			}
+			
 			voDocente.setPersona(voPersona);
+			voInfoAdministrativa.setPersona(voPersona);
+			voPersona.setInfoAdministrativa(voInfoAdministrativa);
 			
 			emfh.beginTransaction(em);
 			

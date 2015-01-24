@@ -34,7 +34,7 @@ public class InfoAdministrativa implements Serializable {
 	private Long fechaAlta;
 	private Long fechaMotivo;
 	@Column(unique = true, nullable = true)
-	private String legajo;
+	private String nroLegajo;
 	private String nroExpe;
 	private String nroResol;
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -94,14 +94,6 @@ public class InfoAdministrativa implements Serializable {
 
 	public void setFechaMotivo(Long fechaMotivo) {
 		this.fechaMotivo = fechaMotivo;
-	}
-
-	public String getLegajo() {
-		return legajo;
-	}
-
-	public void setLegajo(String legajo) {
-		this.legajo = legajo;
 	}
 
 	public String getNroExpe() {
@@ -166,6 +158,14 @@ public class InfoAdministrativa implements Serializable {
 
 	public void setTipoSituacion(TipoSituacion tipoSituacion) {
 		this.tipoSituacion = tipoSituacion;
+	}
+
+	public String getNroLegajo() {
+		return nroLegajo;
+	}
+
+	public void setNroLegajo(String nroLegajo) {
+		this.nroLegajo = nroLegajo;
 	}
 
 }

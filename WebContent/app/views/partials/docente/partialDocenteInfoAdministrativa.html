@@ -3,31 +3,22 @@
 		<h5 class="panel-title">Información Administrativa</h5>
 	</div>
 	<div class="panel-body bg-danger">
+		<!-- Legajo y Fecha Alta -->
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-4">
 				<div class="form-group">
-					<select class="form-control" ng-options="tipo.nombre for tipo in tiposPersonal" required ng-model="tipoPersonalSel" ng-init="listarTiposPersonal()">
-						<option value="">-- Tipo de Personal --</option>
-					</select>
+					<label for="nroLegajo">Legajo</label>
+					<input type="text" class="form-control" id="nroLegajo" name="nroLegajo" ng-model="infoAdministrativa.nroLegajo" maxlength="8" placeholder="Legajo">
 				</div>
 			</div>
-			<div class="col-sm-6">
-				<div class="form-group">
-					<select class="form-control" ng-options="tipo.nombre for tipo in tiposSituacionRevista" required ng-model="tipoSituacionRevistaSel" ng-init="listarSituacionesRevista()">
-						<option value="">-- Tipo de Situacion de Revista --</option>
-					</select>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-5">
 				<div class="form-group form-inline">
-					<div class="form-group">
+					<div class="form-group col-sm-12">
 						<label for="fechaAlta" class="control-label pull-left">Fecha de Alta</label>
 					</div>
-					<div class="form-group form-inline">
+					<div class="form-group form-inline col-sm-12">
 			            <p class="input-group">
-			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
+			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="infoAdministrativa.fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
 			              <span class="input-group-btn">
 			                <button type="button" class="btn btn-default" ng-click="openFechaAlta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 			              </span>
@@ -35,25 +26,83 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
+		</div>
+		<!-- Tipo de Personal y Tipo de Estado Contractual -->
+		<div class="row">
+			<div class="col-sm-4">
 				<div class="form-group">
-					<input type="text" class="form-control" id="legajo" name="legajo" ng-model="legajo" maxlength="8" placeholder="Legajo">
+					<label>Personal</label>
+					<select class="form-control" ng-options="tipo.nombre for tipo in tiposPersonal" required ng-model="tipoPersonalSel" ng-init="listarTiposPersonal()">
+						<option value="">-- Tipo de Personal --</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label>Estado Contractual</label>
+					<select class="form-control" ng-options="tipo.nombre for tipo in tiposEstadoContractual" required ng-model="tipoEstadoContractualSel" ng-init="listarTiposEstadoContractual()">
+						<option value="">-- Tipo de Estado Contractual --</option>
+					</select>
 				</div>
 			</div>
 		</div>
+		<!-- Tipo de Situacion Actual y Tipo Situacion Revista -->
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-4">
 				<div class="form-group">
+					<label>Situacion Actual</label>
 					<select class="form-control" ng-options="tipo.nombre for tipo in tiposSituacionActual" required ng-model="tipoSituacionActualSel" ng-init="listarTiposSituacionActual()">
 						<option value="">-- Tipo de Situacion Actual --</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-5">
 				<div class="form-group">
+					<label>Situacion Revista</label>
+					<select class="form-control" ng-options="tipo.nombre for tipo in tiposSituacionRevista" required ng-model="tipoSituacionRevistaSel" ng-init="listarTiposSituacionRevista()">
+						<option value="">-- Tipo de Situacion de Revista --</option>
+					</select>
+				</div>
+			</div>			
+		</div>
+		<!-- Tipo y Fecha de Motivo -->
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label>Motivo Baja</label>
 					<select class="form-control" ng-options="tipo.nombre for tipo in tiposMotivo" required ng-model="tipoMotivoSel" ng-init="listarTiposMotivo()">
 						<option value="">-- Tipo de Motivo --</option>
 					</select>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="form-group form-inline">
+					<div class="form-group col-sm-12">
+						<label for="fechaMotivo" class="control-label pull-left">Fecha baja</label>
+					</div>
+					<div class="form-group form-inline col-sm-12">
+			            <p class="input-group">
+			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="infoAdministrativa.fechaMotivo" is-open="openedFechaMotivo" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
+			              <span class="input-group-btn">
+			                <button type="button" class="btn btn-default" ng-click="openFechaMotivo($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+			              </span>
+			            </p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- N° Expediente y Resolucion -->
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="nroExpe">Expediente</label>
+					<input type="text" class="form-control" id="nroExpe" name="nroExpe" ng-model="infoAdministrativa.nroExpe" placeholder="N° Expediente">
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="nroResol">Resolucion</label>
+					<input type="text" class="form-control" id="nroResol" name="nroResol" ng-model="infoAdministrativa.nroResol" placeholder="N° Resolucion">
 				</div>
 			</div>
 		</div>

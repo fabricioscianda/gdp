@@ -2,10 +2,7 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Docente */
-msegErpControllers
-		.controller(
-				'DocenteCtrl',
-				[
+msegErpControllers.controller('DocenteCtrl', [
 						'$scope',
 						'$filter',
 						'DocenteService',
@@ -18,12 +15,19 @@ msegErpControllers
 						'TipoAdministracionService',
 						'TipoRelacionService',
 						'TipoEstadoFormacionService',
+						'TipoPersonalService',
+						'TipoEstadoContractualService',
+						'TipoSituacionService',
+						'TipoSituacionRevistaService',
+						'TipoMotivoService',
 						function($scope, $filter, DocenteService,
 								TipoDocumentoService, TipoContactoService,
 								DomicilioService, LocalidadService,
 								TipoFormacionService, TipoCargoService,
 								TipoAdministracionService, TipoRelacionService,
-								TipoEstadoFormacionService) {
+								TipoEstadoFormacionService, TipoPersonalService,
+								TipoEstadoContractualService, TipoSituacionService,
+								TipoSituacionRevistaService, TipoMotivoService) {
 
 			$scope.modulo = 'Docentes';
 			$scope.nombreForm = 'Docente';
@@ -61,8 +65,23 @@ msegErpControllers
 			$scope.tiposFormacion = {};
 			$scope.tipoFormacionSel = {};
 			
+			$scope.tiposPersonal = {};
+			$scope.tipoPersonalSel = {};
+			
+			$scope.tiposMotivo = {};
+			$scope.tipoMotivoSel = {};
+			
+			$scope.tiposSituacionActual = {};
+			$scope.tipoSituacionActualSel = {};
+			
+			$scope.tiposSituacionRevista = {};
+			$scope.tipoSituacionRevistaSel = {};
+			
 			$scope.tipoEstadoFormacionSel = {};
 			$scope.tiposEstadoFormacion = {};
+			
+			$scope.tipoEstadoContractualSel = {};
+			$scope.tiposEstadoContractual = {};
 			
 			$scope.nuevoEmpleo = {};
 			$scope.nuevosEmpleos = new Array();
@@ -123,6 +142,12 @@ msegErpControllers
 				$event.preventDefault();
 				$event.stopPropagation();
 				$scope.openedFechaAlta = true;
+			};
+			
+			$scope.openFechaMotivo = function($event) {
+				$event.preventDefault();
+				$event.stopPropagation();
+				$scope.openedFechaMotivo = true;
 			};
 
 			$scope.dateOptions = {
@@ -215,6 +240,74 @@ msegErpControllers
 				})
 			};
 			
+			$scope.listarTiposPersonal = function() {
+				TipoPersonalService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposPersonal = angular.fromJson(response.data);
+						$scope.tiposPersonal = orderBy($scope.tiposPersonal, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Tipos de Personal';
+						console.log('No se pudieron obtener los Tipos de Personal');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposMotivo = function() {
+				TipoMotivoService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposMotivo = angular.fromJson(response.data);
+						$scope.tiposMotivo = orderBy($scope.tiposMotivo, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Tipos de Motivo';
+						console.log('No se pudieron obtener los Tipos de Motivo');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposSituacionActual = function() {
+				TipoSituacionService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposSituacionActual = angular.fromJson(response.data);
+						$scope.tiposSituacionActual = orderBy($scope.tiposSituacionActual, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Tipos de Situacion';
+						console.log('No se pudieron obtener los Tipos de Situacion');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposSituacionRevista = function() {
+				TipoSituacionRevistaService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposSituacionRevista = angular.fromJson(response.data);
+						$scope.tiposSituacionRevista = orderBy($scope.tiposSituacionRevista, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Tipos de Situacion de Revista';
+						console.log('No se pudieron obtener los Tipos de Situacion de Revista');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
 			$scope.listarTiposFormacion = function() {
 				TipoFormacionService.listar({}, function (response){
 					$scope.success = response.ok;
@@ -241,6 +334,23 @@ msegErpControllers
 					} else {
 						$scope.msgError = 'No se pudieron obtener los Estados de Formacion';
 						console.log('No se pudieron obtener los Estados de Formacion');
+						$('#message-modal').modal('show');
+					}
+				},
+				function(error) {
+					alert(error);
+				})
+			};
+			
+			$scope.listarTiposEstadoContractual = function() {
+				TipoEstadoContractualService.listar({}, function (response){
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.tiposEstadoContractual = angular.fromJson(response.data);
+						$scope.tiposEstadoContractual = orderBy($scope.tiposEstadoContractual, 'nombre');
+					} else {
+						$scope.msgError = 'No se pudieron obtener los Estados Contractuales';
+						console.log('No se pudieron obtener los Estados Contractuales');
 						$('#message-modal').modal('show');
 					}
 				},
@@ -338,6 +448,13 @@ msegErpControllers
 			};
 			
 			$scope.guardar = function() {
+				$scope.infoAdministrativa.fechaAlta = $scope.infoAdministrativa.fechaAlta.getTime(); 
+				$scope.infoAdministrativa.fechaMotivo = $scope.infoAdministrativa.fechaMotivo.getTime(); 
+				$scope.infoAdministrativa.tipoPersonal = $scope.tipoPersonalSel;
+				$scope.infoAdministrativa.tipoEstadoContractual = $scope.tipoEstadoContractualSel;
+				$scope.infoAdministrativa.tipoSituacion = $scope.tipoSituacionActualSel;
+				$scope.infoAdministrativa.tipoSituacionRevista = $scope.tipoSituacionRevistaSel;
+				$scope.infoAdministrativa.tipoMotivo = $scope.tipoMotivoSel;
 				if ($scope.nombre!=undefined) {
 					DocenteService.guardar({
 						'id' : $scope.id,
@@ -352,7 +469,8 @@ msegErpControllers
 						'mediosContacto' : $scope.nuevosMediosContacto,
 						'domicilios' : $scope.nuevosDomicilios,
 						'empleos' : $scope.nuevosEmpleos,
-						'formacionAcademica' : $scope.nuevasFormacionesAcademicas
+						'formacionAcademica' : $scope.nuevasFormacionesAcademicas,
+						'infoAdministrativa' : $scope.infoAdministrativa,
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
@@ -429,6 +547,51 @@ msegErpControllers
 				$scope.nuevosEmpleos = docente.persona.empleos;
 				$scope.nuevosMediosContacto = docente.persona.mediosContacto;
 				$scope.nuevasFormacionesAcademicas = docente.persona.formacionAcademica;
+				$scope.infoAdministrativa = docente.persona.infoAdministrativa;
+				
+				var i = $scope.indiceDe($scope.tiposPersonal, docente.persona.infoAdministrativa.tipoPersonal.id, 'id');
+				if (i!=-1) {
+					$scope.tipoPersonalSel = $scope.tiposPersonal[i];
+				} else {
+					$scope.msgError = 'Error buscando el Tipo de Personal a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
+				$scope.colapsarFormulario = false;
+				
+				var i = $scope.indiceDe($scope.tiposEstadoContractual, docente.persona.infoAdministrativa.tipoEstadoContractual.id, 'id');
+				if (i!=-1) {
+					$scope.tipoEstadoContractualSel = $scope.tiposEstadoContractual[i];
+				} else {
+					$scope.msgError = 'Error buscando Tipo de Estado Contractual a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
+				$scope.colapsarFormulario = false;
+
+				var i = $scope.indiceDe($scope.tiposSituacionActual, docente.persona.infoAdministrativa.tipoSituacion.id, 'id');
+				if (i!=-1) {
+					$scope.tipoSituacionActualSel = $scope.tiposSituacionActual[i];
+				} else {
+					$scope.msgError = 'Error buscando el Tipo de Situacion Actual a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
+				$scope.colapsarFormulario = false;
+
+				var i = $scope.indiceDe($scope.tiposSituacionRevista, docente.persona.infoAdministrativa.tipoSituacionRevista.id, 'id');
+				if (i!=-1) {
+					$scope.tipoSituacionRevistaSel = $scope.tiposSituacionRevista[i];
+				} else {
+					$scope.msgError = 'Error buscando el Tipo de Situacion de Revista a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
+				$scope.colapsarFormulario = false;
+				
+				var i = $scope.indiceDe($scope.tiposMotivo, docente.persona.infoAdministrativa.tipoMotivo.id, 'id');
+				if (i!=-1) {
+					$scope.tipoMotivoSel = $scope.tiposMotivo[i];
+				} else {
+					$scope.msgError = 'Error buscando el Tipo de Motivo a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
 				$scope.colapsarFormulario = false;
 			}
 
@@ -474,13 +637,19 @@ msegErpControllers
 				$scope.id = null;
 				$scope.nombre = null;
 				$scope.apellido = null;
-				$scope.fechaNac = new Date(Date.now());
+				$scope.fechaNac = null;
 				$scope.tipoDocSel = null;
 				$scope.numeroDoc = null;
 				$scope.cuilTipoSel = null;
 				$scope.numeroDocCuil = null;
 				$scope.cuilValidadorSel = null;
+				$scope.infoAdministrativa = null;
 				$scope.tipoDocSel = $scope.tiposDoc[-1];
+				$scope.tipoPersonalSel = null;
+				$scope.tipoEstadoContractualSel = null;
+				$scope.tipoSituacionActualSel = null;
+				$scope.tipoSituacionRevistaSel = null;
+				$scope.tipoMotivoSel = null;
 				$scope.nuevoDomicilio = null;
 				$scope.nuevoMedio = null;
 				$scope.nuevosDomicilios = new Array();

@@ -8,7 +8,7 @@ public class VOInfoAdministrativa implements Serializable {
 	private Long id;
 	private Long fechaAlta;
 	private Long fechaMotivo;
-	private String legajo;
+	private String nroLegajo;
 	private String nroExpe;
 	private String nroResol;
 	private VODocumentacion documentacion;
@@ -70,14 +70,6 @@ public class VOInfoAdministrativa implements Serializable {
 		this.fechaMotivo = fechaMotivo;
 	}
 
-	public String getLegajo() {
-		return legajo;
-	}
-
-	public void setLegajo(String legajo) {
-		this.legajo = legajo;
-	}
-
 	public String getNroExpe() {
 		return nroExpe;
 	}
@@ -132,6 +124,14 @@ public class VOInfoAdministrativa implements Serializable {
 
 	public void setTipoSituacion(VOTipoSituacion tipoSituacion) {
 		this.tipoSituacion = tipoSituacion;
+	}
+
+	public String getNroLegajo() {
+		return nroLegajo;
+	}
+
+	public void setNroLegajo(String nroLegajo) {
+		this.nroLegajo = nroLegajo;
 	}
 
 }

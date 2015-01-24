@@ -17,8 +17,7 @@ public class VOPersona implements Serializable {
 	private List<VOContacto> mediosContacto;
 	private List<VOFormacionAcademica> formacionAcademica;
 	private List<VOEmpleo> empleos;
-	
-//	private VOInfoAdministrativa infoAdministrativa;
+	private VOInfoAdministrativa infoAdministrativa;
 
 	public VOPersona() {
 	}
@@ -117,6 +116,14 @@ public class VOPersona implements Serializable {
 
 	public void setEmpleos(List<VOEmpleo> empleos) {
 		this.empleos = empleos;
+	}
+
+	public VOInfoAdministrativa getInfoAdministrativa() {
+		return infoAdministrativa;
+	}
+
+	public void setInfoAdministrativa(VOInfoAdministrativa infoAdministrativa) {
+		this.infoAdministrativa = infoAdministrativa;
 	}
 
 	

@@ -12,7 +12,6 @@
 					<td>Expedido por</td>
 					<td>Año expedido</td>
 					<td></td>
-<!-- 										<td></td> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -22,13 +21,12 @@
 					<td><strong>{{formacion.tipoEstadoFormacion.nombre}}</strong></td>
 					<td class="text-capitalize"><strong>{{formacion.expedidoPor}}</strong></td>
 					<td><strong>{{formacion.anio | date:'yyyy'}}</strong></td>
-<!-- 										<td><a href="#/{{urlModulo}}" ng-click="editarFormacionAcademica(formacion)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td> -->
 					<td><a href="#/{{urlModulo}}" ng-click="removeFormacion(formacion)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
 				</tr>
 				<tr>
 					<td>
 						<select class="form-control" ng-options="tipo.nombre for tipo in tiposFormacion" required ng-model="tipoFormacionSel" ng-init="listarTiposFormacion()">
-							<option value="">-- Tipo de Formacion --</option>
+							<option value="">-- Formacion --</option>
 						</select>
 					</td>
 					<td>
@@ -38,7 +36,7 @@
 					</td>
 					<td>
 						<select class="form-control" ng-options="tipo.nombre for tipo in tiposEstadoFormacion" required ng-model="tipoEstadoFormacionSel" ng-init="listarTiposEstadoFormacion()">
-							<option value="">-- Estado de Formacion --</option>
+							<option value="">-- Estado --</option>
 						</select>
 					</td>
 					<td>
@@ -46,8 +44,8 @@
 							<input class="form-control text-capitalize" type="text" placeholder="Expedido por" ng-model="nuevaFormacion.expedidoPor">
 						</div>
 					</td>
-					<td>
-						<div class="form-group form-inline col-sm-7">
+					<td class="col-sm-2">
+						<div class="form-group form-inline">
 				            <p class="input-group">
 				              <input type="text" class="form-control" datepicker-popup="{{formatYearOnly}}" ng-model="nuevaFormacion.anio" is-open="openedAnio" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
 				              <span class="input-group-btn">

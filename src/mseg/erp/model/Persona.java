@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -48,9 +49,9 @@ public class Persona implements Serializable {
 	private List<FormacionAcademica> formacionAcademica;
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
 	private List<Empleo> empleos;
-//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "persona")
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
 //	@JoinColumn(name = "id_infoadmin")
-//	private InfoAdministrativa infoAdministrativa;
+	private InfoAdministrativa infoAdministrativa;
 
 	public Persona() {
 	}
@@ -149,6 +150,14 @@ public class Persona implements Serializable {
 
 	public void setEmpleos(List<Empleo> empleos) {
 		this.empleos = empleos;
+	}
+
+	public InfoAdministrativa getInfoAdministrativa() {
+		return infoAdministrativa;
+	}
+
+	public void setInfoAdministrativa(InfoAdministrativa infoAdministrativa) {
+		this.infoAdministrativa = infoAdministrativa;
 	}
 
 }
