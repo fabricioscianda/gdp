@@ -20,7 +20,6 @@
 		<class>mseg.erp.model.Contacto</class>
 		<class>mseg.erp.model.Desempenio</class>
 		<class>mseg.erp.model.Docente</class>
-		<class>mseg.erp.model.Documentacion</class>
 		<class>mseg.erp.model.Domicilio</class>
 		<class>mseg.erp.model.Empleo</class>
 		<class>mseg.erp.model.FormacionAcademica</class>
@@ -55,14 +54,12 @@
 			<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc" />
 			<property name="eclipselink.ddl-generation.output-mode" value="both" />
 			<property name="eclipselink.cache.shared.default" value="false"/>
-			
 			<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
 			<!-- 
 				<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/> 
 				<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/> 
 				<property name="eclipselink.ddl-generation" value="none" /> 
 			-->
-
 			<property name="eclipselink.target-database" value="PostgreSQL" />
 			<property name="eclipselink.jpa.uppercase-column-names" value="true" />
 

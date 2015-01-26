@@ -49,7 +49,6 @@
 		<bean id="contactoDAO" class="mseg.erp.dao.contacto.ContactoDAOImpl" scope="request" />
 		<bean id="desempenioDAO" class="mseg.erp.dao.desempenio.DesempenioDAOImpl" scope="request" />
 		<bean id="docenteDAO" class="mseg.erp.dao.docente.DocenteDAOImpl" scope="request" />
-		<bean id="documentacionDAO" class="mseg.erp.dao.documentacion.DocumentacionDAOImpl" scope="request" />
 		<bean id="domicilioDAO" class="mseg.erp.dao.domicilio.DomicilioDAOImpl" scope="request" />
 		<bean id="empleoDAO" class="mseg.erp.dao.empleo.EmpleoDAOImpl" scope="request" />
 		<bean id="formacionacAdemicaDAO" class="mseg.erp.dao.formacionacademica.FormacionAcademicaDAOImpl" scope="request" />

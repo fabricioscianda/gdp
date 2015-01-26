@@ -51,6 +51,7 @@ msegErpControllers.controller('DocenteCtrl', [
 			$scope.numeroDoc = null;
 			$scope.numeroDocCuil = null;
 			$scope.cuilValidadorSel = {};
+			$scope.infoAdministrativa = {};
 
 			$scope.tiposCuil = [20,23,24,27,30,33];
 			$scope.validadoresCuil = [0,1,2,3,4,5,6,7,8,9];
@@ -549,49 +550,49 @@ msegErpControllers.controller('DocenteCtrl', [
 				$scope.nuevasFormacionesAcademicas = docente.persona.formacionAcademica;
 				$scope.infoAdministrativa = docente.persona.infoAdministrativa;
 				
-				var i = $scope.indiceDe($scope.tiposPersonal, docente.persona.infoAdministrativa.tipoPersonal.id, 'id');
-				if (i!=-1) {
-					$scope.tipoPersonalSel = $scope.tiposPersonal[i];
-				} else {
-					$scope.msgError = 'Error buscando el Tipo de Personal a editar, en el listado.';
-					$('#message-modal').modal('show');
-				}
-				$scope.colapsarFormulario = false;
-				
-				var i = $scope.indiceDe($scope.tiposEstadoContractual, docente.persona.infoAdministrativa.tipoEstadoContractual.id, 'id');
-				if (i!=-1) {
-					$scope.tipoEstadoContractualSel = $scope.tiposEstadoContractual[i];
-				} else {
-					$scope.msgError = 'Error buscando Tipo de Estado Contractual a editar, en el listado.';
-					$('#message-modal').modal('show');
-				}
-				$scope.colapsarFormulario = false;
 
-				var i = $scope.indiceDe($scope.tiposSituacionActual, docente.persona.infoAdministrativa.tipoSituacion.id, 'id');
-				if (i!=-1) {
-					$scope.tipoSituacionActualSel = $scope.tiposSituacionActual[i];
-				} else {
-					$scope.msgError = 'Error buscando el Tipo de Situacion Actual a editar, en el listado.';
-					$('#message-modal').modal('show');
+				if ($scope.infoAdministrativa != undefined && $scope.infoAdministrativa != null) {
+					var i = $scope.indiceDe($scope.tiposPersonal, docente.persona.infoAdministrativa.tipoPersonal.id, 'id');
+					if (i!=-1) {
+						$scope.tipoPersonalSel = $scope.tiposPersonal[i];
+					} else {
+						$scope.msgError = 'Error buscando el Tipo de Personal a editar, en el listado.';
+						$('#message-modal').modal('show');
+					}
+					
+					var i = $scope.indiceDe($scope.tiposEstadoContractual, docente.persona.infoAdministrativa.tipoEstadoContractual.id, 'id');
+					if (i!=-1) {
+						$scope.tipoEstadoContractualSel = $scope.tiposEstadoContractual[i];
+					} else {
+						$scope.msgError = 'Error buscando Tipo de Estado Contractual a editar, en el listado.';
+						$('#message-modal').modal('show');
+					}
+	
+					var i = $scope.indiceDe($scope.tiposSituacionActual, docente.persona.infoAdministrativa.tipoSituacion.id, 'id');
+					if (i!=-1) {
+						$scope.tipoSituacionActualSel = $scope.tiposSituacionActual[i];
+					} else {
+						$scope.msgError = 'Error buscando el Tipo de Situacion Actual a editar, en el listado.';
+						$('#message-modal').modal('show');
+					}
+	
+					var i = $scope.indiceDe($scope.tiposSituacionRevista, docente.persona.infoAdministrativa.tipoSituacionRevista.id, 'id');
+					if (i!=-1) {
+						$scope.tipoSituacionRevistaSel = $scope.tiposSituacionRevista[i];
+					} else {
+						$scope.msgError = 'Error buscando el Tipo de Situacion de Revista a editar, en el listado.';
+						$('#message-modal').modal('show');
+					}
+					
+					var i = $scope.indiceDe($scope.tiposMotivo, docente.persona.infoAdministrativa.tipoMotivo.id, 'id');
+					if (i!=-1) {
+						$scope.tipoMotivoSel = $scope.tiposMotivo[i];
+					} else {
+						$scope.msgError = 'Error buscando el Tipo de Motivo a editar, en el listado.';
+						$('#message-modal').modal('show');
+					}
 				}
-				$scope.colapsarFormulario = false;
-
-				var i = $scope.indiceDe($scope.tiposSituacionRevista, docente.persona.infoAdministrativa.tipoSituacionRevista.id, 'id');
-				if (i!=-1) {
-					$scope.tipoSituacionRevistaSel = $scope.tiposSituacionRevista[i];
-				} else {
-					$scope.msgError = 'Error buscando el Tipo de Situacion de Revista a editar, en el listado.';
-					$('#message-modal').modal('show');
-				}
-				$scope.colapsarFormulario = false;
 				
-				var i = $scope.indiceDe($scope.tiposMotivo, docente.persona.infoAdministrativa.tipoMotivo.id, 'id');
-				if (i!=-1) {
-					$scope.tipoMotivoSel = $scope.tiposMotivo[i];
-				} else {
-					$scope.msgError = 'Error buscando el Tipo de Motivo a editar, en el listado.';
-					$('#message-modal').modal('show');
-				}
 				$scope.colapsarFormulario = false;
 			}
 

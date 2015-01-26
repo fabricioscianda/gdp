@@ -3,6 +3,10 @@
 angular.module('routes', []).config([ '$routeProvider', function($routeProvider) {
 
 			var routes = [ {
+				path : '/desempenios',
+				template : 'app/views/desempenios.html',
+				controller : "DesempenioCtrl"
+			}, {
 				path : '/asignaturas',
 				template : 'app/views/asignaturas.html',
 				controller : "AsignaturaCtrl"

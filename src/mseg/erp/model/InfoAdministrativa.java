@@ -37,9 +37,13 @@ public class InfoAdministrativa implements Serializable {
 	private String nroLegajo;
 	private String nroExpe;
 	private String nroResol;
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	// @JoinColumn(name = "id_documentacion")
-	private Documentacion documentacion;
+	private boolean ddjj; 
+	private boolean fotoDoc;
+	private boolean cuil;
+	private boolean cv;
+	private boolean titulos;
+	private boolean certAntec;
+	private boolean certReinc;
 	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
 	private Persona persona;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -112,14 +116,6 @@ public class InfoAdministrativa implements Serializable {
 		this.nroResol = nroResol;
 	}
 
-	public Documentacion getDocumentacion() {
-		return documentacion;
-	}
-
-	public void setDocumentacion(Documentacion documentacion) {
-		this.documentacion = documentacion;
-	}
-
 	public Persona getPersona() {
 		return persona;
 	}
@@ -166,6 +162,62 @@ public class InfoAdministrativa implements Serializable {
 
 	public void setNroLegajo(String nroLegajo) {
 		this.nroLegajo = nroLegajo;
+	}
+
+	public boolean isDdjj() {
+		return ddjj;
+	}
+
+	public void setDdjj(boolean ddjj) {
+		this.ddjj = ddjj;
+	}
+
+	public boolean isFotoDoc() {
+		return fotoDoc;
+	}
+
+	public void setFotoDoc(boolean fotoDoc) {
+		this.fotoDoc = fotoDoc;
+	}
+
+	public boolean isCuil() {
+		return cuil;
+	}
+
+	public void setCuil(boolean cuil) {
+		this.cuil = cuil;
+	}
+
+	public boolean isCv() {
+		return cv;
+	}
+
+	public void setCv(boolean cv) {
+		this.cv = cv;
+	}
+
+	public boolean isTitulos() {
+		return titulos;
+	}
+
+	public void setTitulos(boolean titulos) {
+		this.titulos = titulos;
+	}
+
+	public boolean isCertAntec() {
+		return certAntec;
+	}
+
+	public void setCertAntec(boolean certAntec) {
+		this.certAntec = certAntec;
+	}
+
+	public boolean isCertReinc() {
+		return certReinc;
+	}
+
+	public void setCertReinc(boolean certReinc) {
+		this.certReinc = certReinc;
 	}
 
 }
