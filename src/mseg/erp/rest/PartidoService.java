@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.partido.IPartidoDAO;
-import mseg.erp.vomodel.VOPartido;
-import mseg.erp.vomodel.VOResponse;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.partido.IPartidoDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOPartido;
+import mseg.erp.vomodel.VOResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +46,7 @@ public class PartidoService {
 		try {
 			VOPartido partido = null;
 			emfh.beginTransaction(em);
+			voPartido.setNombre(StringUtils.capitalize(voPartido.getNombre()));
 			if (voPartido.getId() != null && voPartido.getId() != 0) {
 				partido = partidoDAO.modificar(voPartido, em);
 			} else {
@@ -57,26 +58,6 @@ public class PartidoService {
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
 			voResponse.setErrorMessage("No pudo guardarse el nuevo partido.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/partido/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOPartido voPartido = gson.fromJson(object.get("nuevo"), VOPartido.class);
-		try {
-			emfh.beginTransaction(em);
-			VOPartido partido = partidoDAO.modificar(voPartido, em);
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(partido));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el partido.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);

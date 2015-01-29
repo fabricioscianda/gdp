@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.tipocargo.ITipoCargoDAO;
-import mseg.erp.vomodel.VOResponse;
-import mseg.erp.vomodel.VOTipoCargo;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.tipocargo.ITipoCargoDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOResponse;
+import mseg.erp.vomodel.VOTipoCargo;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,31 +46,12 @@ public class TipoCargoService {
 		try {
 			VOTipoCargo tipoCargo = null;
 			emfh.beginTransaction(em);
+			voTipoCargo.setNombre(StringUtils.capitalize(voTipoCargo.getNombre()));
 			if (voTipoCargo.getId() != null && voTipoCargo.getId() != 0) {
 				tipoCargo = tipoCargoDAO.modificar(voTipoCargo, em);
 			} else {
 				tipoCargo = tipoCargoDAO.guardar(voTipoCargo, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(tipoCargo));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo tipo.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/tipoCargo/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOTipoCargo VOTipoCargo = gson.fromJson(object.get("nuevo"), VOTipoCargo.class);
-		try {
-			emfh.beginTransaction(em);
-			VOTipoCargo tipoCargo = tipoCargoDAO.modificar(VOTipoCargo, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(tipoCargo));
 			voResponse.setOk(true);

@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.localidad.ILocalidadDAO;
-import mseg.erp.vomodel.VOLocalidad;
-import mseg.erp.vomodel.VOResponse;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.localidad.ILocalidadDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOLocalidad;
+import mseg.erp.vomodel.VOResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +46,7 @@ public class LocalidadService {
 		try {
 			VOLocalidad localidad = null;
 			emfh.beginTransaction(em);
+			voLocalidad.setNombre(StringUtils.capitalize(voLocalidad.getNombre()));
 			if (voLocalidad.getId() != null && voLocalidad.getId() != 0) {
 				localidad = localidadDAO.modificar(voLocalidad, em);
 			} else {
@@ -57,26 +58,6 @@ public class LocalidadService {
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
 			voResponse.setErrorMessage("No pudo guardarse la nueva localidad.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/localidad/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOLocalidad voLocalidad = gson.fromJson(object.get("nueva"), VOLocalidad.class);
-		try {
-			emfh.beginTransaction(em);
-			VOLocalidad localidad = localidadDAO.modificar(voLocalidad, em);
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(localidad));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse la localidad.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);

@@ -5,8 +5,8 @@ var msegErpControllers = angular.module('msegErpControllers');
 msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'DesempenioService', 'AsignaturaService', 'DocenteService',  
 		function($scope, $filter, DesempenioService, AsignaturaService, DocenteService) {
 
-			$scope.modulo = 'Desempenios';
-			$scope.nombreForm = 'Desempeñoo';
+			$scope.modulo = 'Desempeños';
+			$scope.nombreForm = 'Desempeño';
 			$scope.urlModulo = 'desempenios';
 
 			$scope.success = null;
@@ -14,16 +14,54 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 			$scope.msgError = null;
 			$scope.textoConfirm = null;
 
-			$scope.nuevo = {};
 			$scope.desempenio = {};
 			$scope.desempenios = {};
-			$scope.asignaturaSel = {};
+			$scope.docentes = {};
 			$scope.asignaturas = {};
-			$scope.anios = {};
-			$scope.anioSel = null;
-			$scope.meses = {};
-			$scope.mesSel = null;
 			
+			$scope.docenteSel = {};
+			$scope.asignaturaSel = {};
+			$scope.anioSel = null;
+			$scope.mesSel = null;
+			$scope.hcs = null;
+			$scope.meses = [ {
+				'value' : 1,
+				'nombre' : 'Enero'
+			}, {
+				'value' : 2,
+				'nombre' : 'Febrero'
+			}, {
+				'value' : 3,
+				'nombre' : 'Marzo'
+			}, {
+				'value' : 4,
+				'nombre' : 'Abril'
+			}, {
+				'value' : 5,
+				'nombre' : 'Mayo'
+			}, {
+				'value' : 6,
+				'nombre' : 'Junio'
+			}, {
+				'value' : 7,
+				'nombre' : 'Julio'
+			}, {
+				'value' : 8,
+				'nombre' : 'Agosto'
+			}, {
+				'value' : 9,
+				'nombre' : 'Septiembre'
+			}, {
+				'value' : 10,
+				'nombre' : 'Octubre'
+			}, {
+				'value' : 11,
+				'nombre' : 'Noviembre'
+			}, {
+				'value' : 12,
+				'nombre' : 'Diciembre'
+			} ];
+
 			$scope.colapsarFormulario = true;
 			
 			$scope.obj = {};
@@ -110,23 +148,25 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 				})
 			};
 			
-			$scope.guardar = function(nuevo) {
-				nuevo.docente = $scope.docenteSel;
-				nuevo.asignatura = $scope.asignaturaSel; 
-				nuevo.anio = $scope.anioSel;
-				nuevo.mes = $scope.mesSel;
-				if (nuevo != null && nuevo.nombre!=undefined && nuevo.anio!=undefined && nuevo.asignatura!=null) {
+			$scope.guardar = function(desempenio) {
+//				if (desempenio != undefined && desempenio != null) {
+					$scope.id_desempenio = ((desempenio != undefined && desempenio != null) ? desempenio.id : null);
 					DesempenioService.guardar({
-						'nuevo' : nuevo
+						'id_desempenio' : $scope.id_desempenio,
+						'id_docente' : $scope.docenteSel.id,
+						'id_asignatura' : $scope.asignaturaSel.id,
+						'anio' : $scope.anioSel.getFullYear(),
+						'mes' : $scope.mesSel.value,
+						'hcs' : $scope.hcs
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = 'Desempeño, Guardado.';
 							$scope.asignaturaSel = $scope.asignaturas[-1];
 							$scope.docenteSel = $scope.docentes[-1];
-							$scope.anioSel = {};
-							$scope.mesSel = {};
-							$scope.nuevo = {};
+							$scope.anioSel = null;
+							$scope.mesSel = null;
+							$scope.hcs = null;
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
@@ -136,11 +176,11 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 					}, function(error) {
 						alert(error);
 					})
-				} else {
-					$scope.success = false;
-					$scope.msgError = 'El nombre y/o el año no pueden ser vacios.';
-					$('#message-modal').modal('show');
-				}
+//				} else {
+//					$scope.success = false;
+//					$scope.msgError = 'El nombre y/o el año no pueden ser vacios.';
+//					$('#message-modal').modal('show');
+//				}
 			};
 
 			$scope.listar = function() {
@@ -178,11 +218,16 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 			}
 
 			$scope.editarElemento = function(desempenio) {
-				$scope.nuevo = {};
-				$scope.nuevo.id = desempenio.id;
-				$scope.nuevo.nombre = desempenio.nombre;
-				$scope.nuevo.anio = desempenio.anio;
-				$scope.nuevo.mes = desempenio.mes;
+				$scope.desempenio = desempenio;
+				$scope.anioSel = (new Date()).setFullYear(desempenio.anio);
+				var i = $scope.indiceDe($scope.meses, desempenio.mes, 'value');
+				if (i!=-1) {
+					$scope.mesSel = $scope.meses[i];
+				} else {
+					$scope.msgError = 'Error buscando el mes del desempeño a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
+				$scope.hcs = desempenio.hcs;
 				var i = $scope.indiceDe($scope.asignaturas, desempenio.asignatura.id, 'id');
 				if (i!=-1) {
 					$scope.asignaturaSel = $scope.asignaturas[i];
@@ -200,26 +245,26 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 				$scope.colapsarFormulario = false;
 			}
 
-			$scope.editar = function(desempenio) {
-				$nuevo.asignatura = $scope.asignaturaSel;
-				$nuevo.docente = $scope.docenteSel;
-				$nuevo.anio = $scope.anioSel;
-				$nuevo.mes = $scope.mesSel;
-				DesempenioService.editar({
-					'nuevo' : nuevo
-				}, function(response) {
-					$scope.success = response.ok;
-					if (response.ok) {
-						$scope.msgSuccess = "Desempeño, Guardado.";
-						$scope.listar();
-					} else {
-						$scope.msgError = "No se pudo editar el elemento, " + desempenio.nombre;
-					}
-					$('#message-modal').modal('show');
-				}, function(error) {
-					alert(error);
-				});
-			}
+//			$scope.editar = function(desempenio) {
+//				$nuevo.asignatura = $scope.asignaturaSel;
+//				$nuevo.docente = $scope.docenteSel;
+//				$nuevo.anio = $scope.anioSel;
+//				$nuevo.mes = $scope.mesSel;
+//				DesempenioService.editar({
+//					'nuevo' : nuevo
+//				}, function(response) {
+//					$scope.success = response.ok;
+//					if (response.ok) {
+//						$scope.msgSuccess = "Desempeño, Guardado.";
+//						$scope.listar();
+//					} else {
+//						$scope.msgError = "No se pudo editar el elemento, " + desempenio.nombre;
+//					}
+//					$('#message-modal').modal('show');
+//				}, function(error) {
+//					alert(error);
+//				});
+//			}
 
 			$scope.indiceDe = function (array, cadena, propiedad) {
 			    for(var i = 0, len = array.length; i < len; i++) {
@@ -235,7 +280,10 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 			}
 			
 			$scope.limpiar = function() {
-				$scope.nuevo = {};
+				$scope.desempenio = null;
+				$scope.anioSel = null;
+				$scope.mesSel = null;
+				$scope.hcs = null;
 				$scope.asignaturaSel = $scope.asignaturas[-1];
 				$scope.docenteSel = $scope.docentes[-1];
 			}

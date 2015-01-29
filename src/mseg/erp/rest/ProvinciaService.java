@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.provincia.IProvinciaDAO;
-import mseg.erp.vomodel.VOProvincia;
-import mseg.erp.vomodel.VOResponse;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.provincia.IProvinciaDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOProvincia;
+import mseg.erp.vomodel.VOResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +46,7 @@ public class ProvinciaService {
 		try {
 			VOProvincia provincia = null;
 			emfh.beginTransaction(em);
+			voProvincia.setNombre(StringUtils.capitalize(voProvincia.getNombre()));
 			if (voProvincia.getId() != null && voProvincia.getId() != 0) {
 				provincia = provinciaDAO.modificar(voProvincia, em);
 			} else {
@@ -53,26 +54,6 @@ public class ProvinciaService {
 			}
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(provincia));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse la nueva provincia.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/provincia/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOProvincia VOProvincia = gson.fromJson(object.get("nuevo"), VOProvincia.class);
-		try {
-			emfh.beginTransaction(em);
-			VOProvincia provincias = provinciaDAO.modificar(VOProvincia, em);
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(provincias));
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);

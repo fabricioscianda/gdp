@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,31 +47,12 @@ public class TipoSituacionService {
 		try {
 			VOTipoSituacion tipoSituacion = null;
 			emfh.beginTransaction(em);
+			voTipoSituacion.setNombre(StringUtils.capitalize(voTipoSituacion.getNombre()));
 			if (voTipoSituacion.getId() != null && voTipoSituacion.getId() != 0) {
 				tipoSituacion = tipoSituacionDAO.modificar(voTipoSituacion, em);
 			} else {
 				tipoSituacion = tipoSituacionDAO.guardar(voTipoSituacion, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(tipoSituacion));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo tipo.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/tipoSituacion/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOTipoSituacion voTipoSituacion = gson.fromJson(object.get("nuevo"), VOTipoSituacion.class);
-		try {
-			emfh.beginTransaction(em);
-			VOTipoSituacion tipoSituacion = tipoSituacionDAO.modificar(voTipoSituacion, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(tipoSituacion));
 			voResponse.setOk(true);

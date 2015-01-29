@@ -10,6 +10,7 @@ import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
 import mseg.erp.vomodel.VOContacto;
 import mseg.erp.vomodel.VOResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,31 +46,12 @@ public class ContactoService {
 		try {
 			VOContacto contacto = null;
 			emfh.beginTransaction(em);
+			voContacto.setValor(StringUtils.capitalize(voContacto.getValor()));
 			if (voContacto.getId() != null && voContacto.getId() != 0) {
 				contacto = contactoDAO.modificar(voContacto, em);
 			} else {
 				contacto = contactoDAO.guardar(voContacto, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(contacto));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo contacto.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/contacto/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOContacto voContacto = gson.fromJson(object.get("nuevo"), VOContacto.class);
-		try {
-			emfh.beginTransaction(em);
-			VOContacto contacto = contactoDAO.modificar(voContacto, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(contacto));
 			voResponse.setOk(true);

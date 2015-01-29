@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.sede.ISedeDAO;
-import mseg.erp.vomodel.VOResponse;
-import mseg.erp.vomodel.VOSede;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.sede.ISedeDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOResponse;
+import mseg.erp.vomodel.VOSede;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +46,7 @@ public class SedeService {
 		try {
 			VOSede sede = null;
 			emfh.beginTransaction(em);
+			voSede.setNombre(StringUtils.capitalize(voSede.getNombre()));
 			if (voSede.getId() != null && voSede.getId() != 0) {
 				sede = sedeDAO.modificar(voSede, em);
 			} else {
@@ -57,26 +58,6 @@ public class SedeService {
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
 			voResponse.setErrorMessage("No pudo guardarse la nueva sede.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/sede/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOSede voSede = gson.fromJson(object.get("nueva"), VOSede.class);
-		try {
-			emfh.beginTransaction(em);
-			VOSede sede = sedeDAO.modificar(voSede, em);
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(sede));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse la sede.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);

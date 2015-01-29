@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.tipomotivo.ITipoMotivoDAO;
-import mseg.erp.vomodel.VOResponse;
-import mseg.erp.vomodel.VOTipoMotivo;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.tipomotivo.ITipoMotivoDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOResponse;
+import mseg.erp.vomodel.VOTipoMotivo;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,31 +46,12 @@ public class TipoMotivoService {
 		try {
 			VOTipoMotivo tipoMotivo = null;
 			emfh.beginTransaction(em);
+			voTipoMotivo.setNombre(StringUtils.capitalize(voTipoMotivo.getNombre()));
 			if (voTipoMotivo.getId() != null && voTipoMotivo.getId() != 0) {
 				tipoMotivo = tipoMotivoDAO.modificar(voTipoMotivo, em);
 			} else {
 				tipoMotivo = tipoMotivoDAO.guardar(voTipoMotivo, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(tipoMotivo));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo tipo.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/tipoMotivo/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOTipoMotivo voTipoMotivo = gson.fromJson(object.get("nuevo"), VOTipoMotivo.class);
-		try {
-			emfh.beginTransaction(em);
-			VOTipoMotivo tipoMotivo = tipoMotivoDAO.modificar(voTipoMotivo, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(tipoMotivo));
 			voResponse.setOk(true);

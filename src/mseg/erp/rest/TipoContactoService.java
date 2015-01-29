@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.tipocontacto.ITipoContactoDAO;
-import mseg.erp.vomodel.VOResponse;
-import mseg.erp.vomodel.VOTipoContacto;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.tipocontacto.ITipoContactoDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOResponse;
+import mseg.erp.vomodel.VOTipoContacto;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,31 +46,12 @@ public class TipoContactoService {
 		try {
 			VOTipoContacto tipoContacto = null;
 			emfh.beginTransaction(em);
+			voTipoContacto.setNombre(StringUtils.capitalize(voTipoContacto.getNombre()));
 			if (voTipoContacto.getId() != null && voTipoContacto.getId() != 0) {
 				tipoContacto = tipoContactoDAO.modificar(voTipoContacto, em);
 			} else {
 				tipoContacto = tipoContactoDAO.guardar(voTipoContacto, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(tipoContacto));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo tipo.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/tipoContacto/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOTipoContacto voTipoContacto = gson.fromJson(object.get("nuevo"), VOTipoContacto.class);
-		try {
-			emfh.beginTransaction(em);
-			VOTipoContacto tipoContacto = tipoContactoDAO.modificar(voTipoContacto, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(tipoContacto));
 			voResponse.setOk(true);

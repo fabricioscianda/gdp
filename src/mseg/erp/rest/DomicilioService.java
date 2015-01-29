@@ -10,6 +10,7 @@ import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
 import mseg.erp.vomodel.VODomicilio;
 import mseg.erp.vomodel.VOResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,31 +46,12 @@ public class DomicilioService {
 		try {
 			VODomicilio domicilio = null;
 			emfh.beginTransaction(em);
+			voDomicilio.setDomicilio(StringUtils.capitalize(voDomicilio.getDomicilio()));
 			if (voDomicilio.getId() != null && voDomicilio.getId() != 0) {
 				domicilio = domicilioDAO.modificar(voDomicilio, em);
 			} else {
 				domicilio = domicilioDAO.guardar(voDomicilio, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(domicilio));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo domicilio.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/domicilio/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VODomicilio voDomicilio = gson.fromJson(object.get("nuevo"), VODomicilio.class);
-		try {
-			emfh.beginTransaction(em);
-			VODomicilio domicilio = domicilioDAO.modificar(voDomicilio, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(domicilio));
 			voResponse.setOk(true);

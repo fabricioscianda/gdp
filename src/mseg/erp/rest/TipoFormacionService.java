@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.tipoformacion.ITipoFormacionDAO;
-import mseg.erp.vomodel.VOResponse;
-import mseg.erp.vomodel.VOTipoFormacion;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.tipoformacion.ITipoFormacionDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOResponse;
+import mseg.erp.vomodel.VOTipoFormacion;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,31 +46,12 @@ public class TipoFormacionService {
 		try {
 			VOTipoFormacion tipoFormacion = null;
 			emfh.beginTransaction(em);
+			voTipoFormacion.setNombre(StringUtils.capitalize(voTipoFormacion.getNombre()));
 			if (voTipoFormacion.getId() != null && voTipoFormacion.getId() != 0) {
 				tipoFormacion = tipoFormacionDAO.modificar(voTipoFormacion, em);
 			} else {
 				tipoFormacion = tipoFormacionDAO.guardar(voTipoFormacion, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(tipoFormacion));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo tipo.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/tipoFormacion/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOTipoFormacion voTipoFormacion = gson.fromJson(object.get("nuevo"), VOTipoFormacion.class);
-		try {
-			emfh.beginTransaction(em);
-			VOTipoFormacion tipoFormacion = tipoFormacionDAO.modificar(voTipoFormacion, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(tipoFormacion));
 			voResponse.setOk(true);

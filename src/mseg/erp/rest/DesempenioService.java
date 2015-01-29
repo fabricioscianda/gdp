@@ -1,13 +1,19 @@
 package mseg.erp.rest;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.asignatura.IAsignaturaDAO;
 import mseg.erp.dao.desempenio.IDesempenioDAO;
+import mseg.erp.dao.docente.DocenteDAOImpl;
+import mseg.erp.dao.docente.IDocenteDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOAsignatura;
 import mseg.erp.vomodel.VODesempenio;
+import mseg.erp.vomodel.VODocente;
 import mseg.erp.vomodel.VOResponse;
 
 import org.springframework.context.annotation.Scope;
@@ -29,6 +35,10 @@ public class DesempenioService {
 
 	@Inject
 	private IDesempenioDAO desempenioDAO;
+	@Inject
+	private IDocenteDAO docenteDAO;
+	@Inject
+	private IAsignaturaDAO asignaturaDAO;
 	
 	@Inject
 	private Gson gson;
@@ -41,9 +51,29 @@ public class DesempenioService {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VODesempenio voDesempenio = gson.fromJson(object.get("nuevo"), VODesempenio.class);
+		VODesempenio voDesempenio = null; //gson.fromJson(object.get("nuevo"), VODesempenio.class);
+		VODesempenio desempenio = null;
+		VODocente docente = null;
+		VOAsignatura asignatura = null;
+		Integer anio = 0, mes = 0, hcs = 0;
+		Long id_desempenio = null;
+		
 		try {
-			VODesempenio desempenio = null;
+			id_desempenio = gson.fromJson(object.get("id_desempenio"), Long.class);
+			docente = docenteDAO.encontrar(gson.fromJson(object.get("id_docente"), Long.class), em);
+			asignatura = asignaturaDAO.encontrar(gson.fromJson(object.get("id_asignatura"), Long.class), em);
+			anio = gson.fromJson(object.get("anio"), Integer.class);
+			mes = gson.fromJson(object.get("mes"), Integer.class);
+			hcs = gson.fromJson(object.get("hcs"), Integer.class);
+			
+			voDesempenio = new VODesempenio();
+			voDesempenio.setId(id_desempenio);
+			voDesempenio.setDocente(docente);
+			voDesempenio.setAsignatura(asignatura);
+			voDesempenio.setAnio(anio);
+			voDesempenio.setMes(mes);
+			voDesempenio.setHcs(hcs);
+			
 			emfh.beginTransaction(em);
 			if (voDesempenio.getId() != null && voDesempenio.getId() != 0) {
 				desempenio = desempenioDAO.modificar(voDesempenio, em);
@@ -56,26 +86,6 @@ public class DesempenioService {
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
 			voResponse.setErrorMessage("No pudo guardarse el nuevo desempeño.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/desempenio/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VODesempenio voDesempenio = gson.fromJson(object.get("nuevo"), VODesempenio.class);
-		try {
-			emfh.beginTransaction(em);
-			VODesempenio desempenio = desempenioDAO.modificar(voDesempenio, em);
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(desempenio));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el desempeño.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);

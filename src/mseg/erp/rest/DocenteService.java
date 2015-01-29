@@ -20,6 +20,7 @@ import mseg.erp.vomodel.VOPersona;
 import mseg.erp.vomodel.VOResponse;
 import mseg.erp.vomodel.VOTipoDocumento;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -124,8 +125,8 @@ public class DocenteService {
 			VOTipoDocumento voTipoDocumento = tipoDocumentoDAO.encontrar(id_tipoDoc, em);
 			cuil = tipoCuil + numeroDocCuil + validadorCuil;
 			
-			voPersona.setNombre(nombre);
-			voPersona.setApellido(apellido);
+			voPersona.setNombre(StringUtils.capitalize(nombre));
+			voPersona.setApellido(StringUtils.capitalize(apellido));
 			voPersona.setNumeroDoc(numeroDoc);
 			voPersona.setFechaNac(fechaNac);
 			voPersona.setCuil(cuil);
@@ -179,26 +180,6 @@ public class DocenteService {
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
 			voResponse.setErrorMessage("No pudo guardarse el nuevo docente.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/docente/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VODocente voDocente = gson.fromJson(object.get("nueva"), VODocente.class);
-		try {
-			emfh.beginTransaction(em);
-			VODocente docente = docenteDAO.modificar(voDocente, em);
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(docente));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el docente.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);

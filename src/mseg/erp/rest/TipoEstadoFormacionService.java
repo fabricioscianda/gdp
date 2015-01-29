@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.tipoestadoformacion.ITipoEstadoFormacionDAO;
-import mseg.erp.vomodel.VOResponse;
-import mseg.erp.vomodel.VOTipoEstadoFormacion;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.tipoestadoformacion.ITipoEstadoFormacionDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOResponse;
+import mseg.erp.vomodel.VOTipoEstadoFormacion;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,31 +46,12 @@ public class TipoEstadoFormacionService {
 		try {
 			VOTipoEstadoFormacion tipoEstadoFormacion = null;
 			emfh.beginTransaction(em);
+			voTipoEstadoFormacion.setNombre(StringUtils.capitalize(voTipoEstadoFormacion.getNombre()));
 			if (voTipoEstadoFormacion.getId() != null && voTipoEstadoFormacion.getId() != 0) {
 				tipoEstadoFormacion = tipoEstadoFormacionDAO.modificar(voTipoEstadoFormacion, em);
 			} else {
 				tipoEstadoFormacion = tipoEstadoFormacionDAO.guardar(voTipoEstadoFormacion, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(tipoEstadoFormacion));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo tipo.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/tipoEstadoFormacion/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOTipoEstadoFormacion voTipoEstadoFormacion = gson.fromJson(object.get("nuevo"), VOTipoEstadoFormacion.class);
-		try {
-			emfh.beginTransaction(em);
-			VOTipoEstadoFormacion tipoEstadoFormacion = tipoEstadoFormacionDAO.modificar(voTipoEstadoFormacion, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(tipoEstadoFormacion));
 			voResponse.setOk(true);

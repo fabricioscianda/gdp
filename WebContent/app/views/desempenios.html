@@ -21,16 +21,21 @@
 			<div class="panel-body" collapse="colapsarFormulario">
 				<form role="form" name="formAction" ng-init="initListados()">
 					<div class="form-group" ng-class="{'has-error':docenteSel==null, 'has-success':docenteSel!=null}">
-						<select class="form-control" ng-options="(docente.nombre + ' ' + docente.apellido) for docente in docentes" required ng-model="docenteSel">
+						<select class="form-control" ng-options="(docente.persona.nombre + ' ' + docente.persona.apellido) for docente in docentes" required ng-model="docenteSel">
 							<option value="">-- Docente --</option>
 						</select>
 					</div>
 					<div class="form-group" ng-class="{'has-error':asignaturaSel==null, 'has-success':asignaturaSel!=null}">
-						<select class="form-control" ng-options="asignatura.nombre for asignatura in asignaturas" required ng-model="asignaturaSel">
+						<select class="form-control" ng-options="(asignatura.nombre + ', ' + asignatura.anio + '°, ' + asignatura.carrera.nombre) for asignatura in asignaturas" required ng-model="asignaturaSel">
 							<option value="">-- Asignatura --</option>
 						</select>
 					</div>
-					<div class="form-group form-inline">
+					<div class="form-group col-sm-4">
+						<select class="form-control" ng-options="mes.nombre for mes in meses" required ng-model="mesSel">
+							<option value="">-- Mes --</option>
+						</select>
+					</div>
+					<div class="form-group form-inline col-sm-4">
 			            <p class="input-group">
 			              <input type="text" class="form-control" datepicker-popup="{{formatYearOnly}}" ng-model="anioSel" is-open="openedAnio" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
 			              <span class="input-group-btn">
@@ -38,18 +43,15 @@
 			              </span>
 			            </p>
 					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="mesSel" name="mesSel" ng-model="mesSel" placeholder="M">
-					</div>
-					<div class="form-group" ng-show="(carreraSel.cantAnios!=undefined && carreraSel.cantAnios>0)">
-						<label for="hcs" class="control-label">HCS</label>
-						<input type="number" id="hcs" name="hcs" ng-model="nuevo.hcs"> 
-					</div>
+					<div class="form-group input-group">
+				      <input type="number" class="form-control" id="hcs" placeholder="HCS" ng-model="hcs" max="22" min="0">
+				      <div class="input-group-addon">HCS</div>
+				    </div>
 				</form>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer" ng-show="!colapsarFormulario">
-				<button type="submit" class="btn btn-primary" ng-click="guardar(nuevo)">Guardar</button>
+				<button type="submit" class="btn btn-primary" ng-click="guardar(desempenio)">Guardar</button>
 				<button type="submit" class="btn btn-default pull-right" ng-click="limpiar()">Limpiar</button>
 				<button type="submit" class="btn btn-default pull-right" ng-click="cerrarForm()">Cerrar</button>
 			</div>
@@ -65,30 +67,34 @@
 			</div>
 			<!-- Listado -->
 			<div class="panel-body" ng-init="listar()">
-				<table class="table table-hover table-condensed table-striped" ng-show="asignaturas.length!=0">
+				<table class="table table-hover table-condensed table-striped" ng-show="desempenios.length!=0">
 					<thead>
 						<tr>
-							<td><em>Año</em></td>
+							<td><em>Docente</em></td>
 							<td><em>Asignatura</em></td>
-							<td><em>Carrera</em></td>
+							<td><em>Año</em></td>
+							<td><em>Mes</em></td>
+							<td><em>HCS</em></td>
 							<td></td>
 							<td></td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="asignatura in asignaturas | orderBy:['carrera.nombre', 'nombre']">
-							<td><strong>{{asignatura.anio}} °</strong></td>
-							<td><strong>{{asignatura.nombre}}</strong></td>
-							<td>{{asignatura.carrera.nombre + ', ' + asignatura.carrera.sede.instituto.nombre + ', ' + asignatura.carrera.sede.nombre + ', ' + asignatura.carrera.sede.localidad.nombre + ', ' + asignatura.carrera.sede.localidad.partido.nombre}}</td>
-							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(asignatura)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-							<td><a href="#/{{urlModulo}}" ng-click="confirmarBorrar(asignatura)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+						<tr ng-repeat="desempenio in desempenios | orderBy:['desempenio.docente.nombre', 'desempenio.asignatura.nombre']" class="text-capitalize">
+							<td><strong>{{desempenio.docente.persona.apellido + ', ' + desempenio.docente.persona.nombre}}</strong></td>
+							<td><strong>{{desempenio.asignatura.nombre + ', ' + desempenio.asignatura.anio + '°'}}</strong></td>
+							<td><strong>{{desempenio.anio}}</strong></td>
+							<td><strong>{{meses[indiceDe(meses, desempenio.mes, 'value')].nombre}}</strong></td>
+							<td><strong>{{desempenio.hcs}}</strong></td>
+							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(desempenio)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+							<td><a href="#/{{urlModulo}}" ng-click="confirmarBorrar(desempenio)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<!-- Panel Footer -->
 			<div class="panel-footer">
-				<h5 class="panel-title">Total de asignaturas: <strong>{{asignaturas.length}}</strong>.</h5>
+				<h5 class="panel-title">Total de registros: <strong>{{desempenios.length}}</strong>.</h5>
 			</div>
 		</div>
 	</div>

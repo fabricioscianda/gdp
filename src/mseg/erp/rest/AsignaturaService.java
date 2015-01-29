@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.asignatura.IAsignaturaDAO;
-import mseg.erp.vomodel.VOResponse;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.asignatura.IAsignaturaDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
 import mseg.erp.vomodel.VOAsignatura;
+import mseg.erp.vomodel.VOResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +46,7 @@ public class AsignaturaService {
 		try {
 			VOAsignatura asignatura = null;
 			emfh.beginTransaction(em);
+			voAsignatura.setNombre(StringUtils.capitalize(voAsignatura.getNombre()));
 			if (voAsignatura.getId() != null && voAsignatura.getId() != 0) {
 				asignatura = asignaturaDAO.modificar(voAsignatura, em);
 			} else {
@@ -57,26 +58,6 @@ public class AsignaturaService {
 		} catch (Exception e) {
 			emfh.rollbackTransaction(em);
 			voResponse.setErrorMessage("No pudo guardarse la nueva asignatura.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/asignatura/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOAsignatura voAsignatura = gson.fromJson(object.get("nueva"), VOAsignatura.class);
-		try {
-			emfh.beginTransaction(em);
-			VOAsignatura asignatura = asignaturaDAO.modificar(voAsignatura, em);
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(asignatura));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse la asignatura.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);

@@ -1,16 +1,16 @@
 package mseg.erp.rest;
 
-import mseg.erp.dao.instituto.IInstitutoDAO;
-import mseg.erp.vomodel.VOInstituto;
-import mseg.erp.vomodel.VOResponse;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import mseg.erp.dao.instituto.IInstitutoDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOInstituto;
+import mseg.erp.vomodel.VOResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,31 +46,12 @@ public class InstitutoService {
 		try {
 			VOInstituto instituto = null;
 			emfh.beginTransaction(em);
+			voInstituto.setNombre(StringUtils.capitalize(voInstituto.getNombre()));
 			if (voInstituto.getId() != null && voInstituto.getId() != 0) {
 				instituto = institutoDAO.modificar(voInstituto, em);
 			} else {
 				instituto = institutoDAO.guardar(voInstituto, em);
 			}
-			emfh.commitTransaction(em);
-			voResponse.setData(gson.toJson(instituto));
-			voResponse.setOk(true);
-		} catch (Exception e) {
-			emfh.rollbackTransaction(em);
-			voResponse.setErrorMessage("No pudo guardarse el nuevo instituto.");
-			voResponse.setOk(false);
-		}
-		return gson.toJson(voResponse);
-	}
-
-	@RequestMapping(value = "/instituto/editar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String editar(@RequestBody String data) {
-		VOResponse voResponse = new VOResponse();
-		EntityManager em = emfh.getEntityManager();
-		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VOInstituto voInstituto = gson.fromJson(object.get("nuevo"), VOInstituto.class);
-		try {
-			emfh.beginTransaction(em);
-			VOInstituto instituto = institutoDAO.modificar(voInstituto, em);
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(instituto));
 			voResponse.setOk(true);
