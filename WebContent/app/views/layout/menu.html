@@ -1,86 +1,87 @@
-<div class="row">
-	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<!-- Titulo -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Formación</a>
+<div ng-controller="LoginCtrl">
+	<div class="row" ng-show="logueado">
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<!-- Titulo -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Formación</a>
+				</div>
+				<!-- Menu -->
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="dropdown"><a href="" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">Personal
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#/docentes">Docentes</a></li>
+								<li><a href="#/desempenios">Desempeño</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">Planes
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#/asignaturas">Asignaturas</a></li>
+								<li><a href="#/carreras">Carreras</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">Instituciones
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#/institutos">Institutos</a></li>
+								<li><a href="#/sedes">Sedes</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">Localizacion
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#/localidades">Localidades</a></li>
+								<li><a href="#/partidos">Partidos</a></li>
+								<li><a href="#/provincias">Provincias</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">Tipos
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#/tiposAdministracion">de Administración</a></li>
+								<li><a href="#/tiposCargo">de Cargos</a></li>
+								<li><a href="#/tiposContacto">de Contacto</a></li>
+								<li><a href="#/tiposDocumento">de Documento</a></li>
+								<li><a href="#/tiposEstadoContractual">de Estado Contractual</a></li>
+								<li><a href="#/tiposEstadoFormacion">de Estado Formacion</a></li>
+								<li><a href="#/tiposFormacion">de Formacion</a></li>
+								<li><a href="#/tiposMotivo">de Motivos Baja</a></li>
+								<li><a href="#/tiposPersonal">de Personal</a></li>
+								<li><a href="#/tiposRelacion">de Relacion Laboral</a></li>
+								<li><a href="#/tiposSituacion">de Situacion Actual</a></li>
+								<li><a href="#/tiposSituacionRevista">de Situacion de Revista</a></li>
+							</ul></li>
+					</ul>
+					<!-- Bienvenido / Logout -->
+					<ul class="nav navbar-nav navbar-right">
+						<li><p class="navbar-text">
+								Bienvenido <strong>Fabricio Scianda</strong>!
+							</p></li>
+						<li>
+							<p class="navbar-text">
+								<a href="" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesion" ng-click="confirmarLogout()">Salir <span class="glyphicon glyphicon-log-out"></span></a>
+							</p>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<!-- Menu -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Personal
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#/docentes">Docentes</a></li>
-							<li><a href="#/desempenios">Desempeño</a></li>
-						</ul></li>
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Planes
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#/asignaturas">Asignaturas</a></li>
-							<li><a href="#/carreras">Carreras</a></li>
-						</ul></li>
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Instituciones
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#/institutos">Institutos</a></li>
-							<li><a href="#/sedes">Sedes</a></li>
-						</ul></li>
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Localizacion
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#/localidades">Localidades</a></li>
-							<li><a href="#/partidos">Partidos</a></li>
-							<li><a href="#/provincias">Provincias</a></li>
-						</ul></li>
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Tipos
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#/tiposAdministracion">de Administración</a></li>
-							<li><a href="#/tiposCargo">de Cargos</a></li>
-							<li><a href="#/tiposContacto">de Contacto</a></li>
-							<li><a href="#/tiposDocumento">de Documento</a></li>
-							<li><a href="#/tiposEstadoContractual">de Estado
-									Contractual</a></li>
-							<li><a href="#/tiposEstadoFormacion">de Estado Formacion</a></li>
-							<li><a href="#/tiposFormacion">de Formacion</a></li>
-							<li><a href="#/tiposMotivo">de Motivos Baja</a></li>
-							<li><a href="#/tiposPersonal">de Personal</a></li>
-							<li><a href="#/tiposRelacion">de Relacion Laboral</a></li>
-							<li><a href="#/tiposSituacion">de Situacion Actual</a></li>
-							<li><a href="#/tiposSituacionRevista">de Situacion de
-									Revista</a></li>
-						</ul></li>
-				</ul>
-				<!-- Bienvenido / Logout -->
-				<ul class="nav navbar-nav navbar-right">
-					<li><p class="navbar-text">
-							Bienvenido <strong>Fabricio Scianda</strong>!
-						</p></li>
-					<li><p class="navbar-text">
-							<a href="#" data-toggle="tooltip" data-placement="bottom"
-								title="Cerrar sesion"><span
-								class="glyphicon glyphicon-log-out"></span></a>
-						</p></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+		</nav>
+	</div>
+	<modal-logout></modal-logout>
 </div>

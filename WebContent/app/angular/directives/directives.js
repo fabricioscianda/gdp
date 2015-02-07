@@ -6,11 +6,15 @@ angular.module('msegErpDirectives', [ 'ng' ])
 		restrict : 'E',
 		templateUrl : 'app/views/layout/modal-alert.html'
 	};
-})
-.directive('modalConfirm', function() {
+}).directive('modalConfirm', function() {
 	return {
 		restrict : 'E',
 		templateUrl : 'app/views/layout/modal-confirm.html'
+	};
+}).directive('modalLogout', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/layout/modal-logout.html'
 	};
 }).directive('pageHeader', function() {
 	return {

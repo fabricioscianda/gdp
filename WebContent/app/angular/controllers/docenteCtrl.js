@@ -231,7 +231,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.mediosContacto = angular.fromJson(response.data);
 						$scope.mediosContacto = orderBy($scope.mediosContacto, 'tipoContacto');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Medios de Contacto';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Medios de Contacto';
 						console.log('No se pudieron obtener los Medios de Contacto');
 						$('#message-modal').modal('show');
 					}
@@ -248,7 +249,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposPersonal = angular.fromJson(response.data);
 						$scope.tiposPersonal = orderBy($scope.tiposPersonal, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Tipos de Personal';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Tipos de Personal';
 						console.log('No se pudieron obtener los Tipos de Personal');
 						$('#message-modal').modal('show');
 					}
@@ -265,7 +267,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposMotivo = angular.fromJson(response.data);
 						$scope.tiposMotivo = orderBy($scope.tiposMotivo, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Tipos de Motivo';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Tipos de Motivo';
 						console.log('No se pudieron obtener los Tipos de Motivo');
 						$('#message-modal').modal('show');
 					}
@@ -282,7 +285,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposSituacionActual = angular.fromJson(response.data);
 						$scope.tiposSituacionActual = orderBy($scope.tiposSituacionActual, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Tipos de Situacion';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Tipos de Situacion';
 						console.log('No se pudieron obtener los Tipos de Situacion');
 						$('#message-modal').modal('show');
 					}
@@ -299,7 +303,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposSituacionRevista = angular.fromJson(response.data);
 						$scope.tiposSituacionRevista = orderBy($scope.tiposSituacionRevista, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Tipos de Situacion de Revista';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Tipos de Situacion de Revista';
 						console.log('No se pudieron obtener los Tipos de Situacion de Revista');
 						$('#message-modal').modal('show');
 					}
@@ -316,7 +321,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposFormacion = angular.fromJson(response.data);
 						$scope.tiposFormacion = orderBy($scope.tiposFormacion, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Tipos de Formacion';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Tipos de Formacion';
 						console.log('No se pudieron obtener los Tipos de Formacion');
 						$('#message-modal').modal('show');
 					}
@@ -333,7 +339,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposEstadoFormacion = angular.fromJson(response.data);
 						$scope.tiposEstadoFormacion = orderBy($scope.tiposEstadoFormacion, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Estados de Formacion';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Estados de Formacion';
 						console.log('No se pudieron obtener los Estados de Formacion');
 						$('#message-modal').modal('show');
 					}
@@ -350,7 +357,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposEstadoContractual = angular.fromJson(response.data);
 						$scope.tiposEstadoContractual = orderBy($scope.tiposEstadoContractual, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Estados Contractuales';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Estados Contractuales';
 						console.log('No se pudieron obtener los Estados Contractuales');
 						$('#message-modal').modal('show');
 					}
@@ -367,7 +375,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposCargo = angular.fromJson(response.data);
 						$scope.tiposCargo = orderBy($scope.tiposCargo, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Tipos de Cargo';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Tipos de Cargo';
 						console.log('No se pudieron obtener los Tipos de Cargo');
 						$('#message-modal').modal('show');
 					}
@@ -384,7 +393,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposAdmin = angular.fromJson(response.data);
 						$scope.tiposAdmin = orderBy($scope.tiposAdmin, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Tipos de Administracion';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Tipos de Administracion';
 						console.log('No se pudieron obtener los Tipos de Administracion');
 						$('#message-modal').modal('show');
 					}
@@ -401,7 +411,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.tiposRelacion = angular.fromJson(response.data);
 						$scope.tiposRelacion = orderBy($scope.tiposRelacion, 'nombre');
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Tipos de Relacion';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Tipos de Relacion';
 						console.log('No se pudieron obtener los Tipos de Relacion');
 						$('#message-modal').modal('show');
 					}
@@ -419,7 +430,8 @@ msegErpControllers.controller('DocenteCtrl', [
 							$scope.localidades = angular.fromJson(response.data);
 							$scope.localidades = orderBy($scope.localidades, ['nombre']);
 						} else {
-							$scope.msgError = 'No se pudieron obtener las Localidades';
+							$scope.msgError = response.errorMessage;
+//							$scope.msgError = 'No se pudieron obtener las Localidades';
 							console.log('No se pudieron obtener las Localidades');
 							$('#message-modal').modal('show');
 						}
@@ -438,7 +450,8 @@ msegErpControllers.controller('DocenteCtrl', [
 							 $scope.tipoDocSel = $scope.tiposDoc[-1];
 							 $scope.tiposDoc = orderBy($scope.tiposDoc, 'nombre');
 						} else {
-							$scope.msgError = 'No se pudieron obtener los Tipos de Documento';
+							$scope.msgError = response.errorMessage;
+//							$scope.msgError = 'No se pudieron obtener los Tipos de Documento';
 							console.log('No se pudieron obtener los Tipos de Documento');
 							$('#message-modal').modal('show');
 						}
@@ -480,7 +493,8 @@ msegErpControllers.controller('DocenteCtrl', [
 							$scope.listar();
 							$scope.colapsarFormulario = true;
 						} else {
-							$scope.msgError = 'No se pudo guardar.';
+							$scope.msgError = response.errorMessage;
+//							$scope.msgError = 'No se pudo guardar.';
 							console.log('No se pudo guardar el elemento.');
 						}
 						$('#message-modal').modal('show');
@@ -495,17 +509,19 @@ msegErpControllers.controller('DocenteCtrl', [
 			};
 
 			$scope.listar = function() {
-				DocenteService.listar({}, function(response) {
-					$scope.success = response.ok;
-					if (response.ok) {
-						$scope.docentes = angular.fromJson(response.data);
-					} else {
-						$scope.msgError = 'No se pudieron obtener los docentes.';
-						$('#message-modal').modal('show');
-					};
-				}, function(error) {
-					alert(error);
-				});
+				DocenteService.listar({}, 
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.docentes = angular.fromJson(response.data);
+						} else {
+							$scope.msgError = response.errorMessage;
+//							$scope.msgError = 'No se pudieron obtener los docentes.';
+							$('#message-modal').modal('show');
+						};
+					}, function(error) {
+						alert(error);
+					});
 			};
 
 			$scope.borrar = function(docente) {
@@ -517,7 +533,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.msgSuccess = docente.persona.nombre + " " + docente.persona.apellido + ", Borrado.";
 						$scope.listar();
 					} else {
-						$scope.msgError = "No se pudo borrar el elemento.";
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = "No se pudo borrar el elemento.";
 					}
 					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
@@ -613,7 +630,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						$scope.msgSuccess = docente.persona.nombre + ", Guardada.";
 						$scope.listar();
 					} else {
-						$scope.msgError = "No se pudo editar el elemento, " + docente.persona.nombre;
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = "No se pudo editar el elemento, " + docente.persona.nombre;
 					}
 					$('#message-modal').modal('show');
 				}, function(error) {

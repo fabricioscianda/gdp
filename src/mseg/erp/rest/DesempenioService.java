@@ -1,6 +1,5 @@
 package mseg.erp.rest;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +7,6 @@ import javax.persistence.EntityManager;
 
 import mseg.erp.dao.asignatura.IAsignaturaDAO;
 import mseg.erp.dao.desempenio.IDesempenioDAO;
-import mseg.erp.dao.docente.DocenteDAOImpl;
 import mseg.erp.dao.docente.IDocenteDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
 import mseg.erp.vomodel.VOAsignatura;
@@ -51,7 +49,7 @@ public class DesempenioService {
 		VOResponse voResponse = new VOResponse();
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
-		VODesempenio voDesempenio = null; //gson.fromJson(object.get("nuevo"), VODesempenio.class);
+		VODesempenio voDesempenio = null;
 		VODesempenio desempenio = null;
 		VODocente docente = null;
 		VOAsignatura asignatura = null;

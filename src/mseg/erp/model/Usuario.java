@@ -17,55 +17,23 @@ import mseg.erp.utils.DBUtils;
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = -3282769552834421454L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_USUARIO")
 	@SequenceGenerator(schema = DBUtils.SCHEMA, name = "SEQUENCE_USUARIO", sequenceName = "USUARIO_SEQ", allocationSize = 1)
 	private Long id;
 	private String apellido;
 	private String nombre;
-	private boolean logueable;
 	@Column(unique = true)
-	private String nombreUsuario;
+	private String username;
+	private String password;
 
-	private String clave;
-	@Column(unique = true)
-	private String email;
-
-	// @ManyToOne
-	// private Rol rol;
-
-	// @ManyToMany
-	// @JoinTable(schema = DBUtils.SCHEMA, name = "USUARIO_OFICINA", joinColumns
-	// = @JoinColumn(name = "USUARIO_ID"), inverseJoinColumns = @JoinColumn(name
-	// = "OFICINA_ID"))
-	// private List<Oficina> oficinas = new ArrayList<Oficina>();
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getClave() {
-		return clave;
-	}
-
-	public void setClave(String clave) {
-		this.clave = clave;
-	}
-
-	public String getNombreUsuario() {
-		return nombreUsuario;
-	}
-
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
-
-	public Usuario() {
+	@Override
+	public boolean equals(Object obj) {
+		if (((Usuario) obj).getId().equals(this.getId())) {
+			return true;
+		}
+		return false;
 	}
 
 	public Long getId() {
@@ -84,28 +52,28 @@ public class Usuario implements Serializable {
 		this.apellido = apellido;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public boolean isLogueable() {
-		return logueable;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLogueable(boolean logueable) {
-		this.logueable = logueable;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (((Usuario) obj).getId().equals(this.getId())) {
-			return true;
-		}
-		return false;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

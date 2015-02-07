@@ -5,23 +5,23 @@ var msegErpServices = angular.module('msegErpServices');
 msegErpServices.factory('TipoContactoService', function(srvHttp) {
 	return {
 		guardar : function(data, success, error) {
-			return srvHttp.post('tipoContactoService/tipoContacto/guardar',
+			return srvHttp.authPost('tipoContactoService/tipoContacto/guardar',
 					data, success, error);
 		},
 		listar : function(data, success, error) {
-			return srvHttp.post('tipoContactoService/tipoContacto/listar',
+			return srvHttp.authPost('tipoContactoService/tipoContacto/listar',
 					data, success, error);
 		},
 		encontrar : function(data, success, error) {
-			return srvHttp.post('tipoContactoService/tipoContacto/encontrar',
+			return srvHttp.authPost('tipoContactoService/tipoContacto/encontrar',
 					data, success, error);
 		},
 		modificar : function(data, success, error) {
-			return srvHttp.post('tipoContactoService/tipoContacto/editar',
+			return srvHttp.authPost('tipoContactoService/tipoContacto/editar',
 					data, success, error);
 		},
 		borrar : function(data, success, error) {
-			return srvHttp.post('tipoContactoService/tipoContacto/borrar',
+			return srvHttp.authPost('tipoContactoService/tipoContacto/borrar',
 					data, success, error);
 		}
 	};

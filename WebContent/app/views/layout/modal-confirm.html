@@ -1,5 +1,4 @@
-<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog"
-	aria-labelledby="confirm-modal" aria-hidden="true">
+<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-modal" aria-hidden="true" ng-show="logueado">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-header alert alert-danger" role="alert">
@@ -18,10 +17,8 @@
 			</div>
 			<div class="modal-footer">
 				<div class="form-group">
-					<button type="submit" class="btn btn-default pull-left"
-						ng-click="cancelarBorrar()">Cancelar</button>
-					<button type="submit" class="btn btn-danger pull-right"
-						ng-click="borrar(obj)">Borrar</button>
+					<button type="submit" class="btn btn-default pull-left" ng-click="cancelarBorrar()">Cancelar</button>
+					<button type="submit" class="btn btn-danger pull-right" ng-click="borrar(obj)">Borrar</button>
 				</div>
 			</div>
 		</div>

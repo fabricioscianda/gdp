@@ -1,0 +1,24 @@
+<!--login modal-->
+<div id="loginModal" class="modal show center-block" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="text-center">Bienvenido!</h1>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<input type="text" class="form-control input-lg" placeholder="Usuario" ng-model="usuario.username">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control input-lg" placeholder="Password" ng-model="usuario.password">
+				</div>
+				<div class="form-group">
+					<button class="btn btn-primary btn-lg btn-block" ng-click="login()">Acceder</button>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="alert alert-danger text-center" role="alert" ng-show="error">{{errorMessage}}</div>
+			</div>
+		</div>
+	</div>
+</div>

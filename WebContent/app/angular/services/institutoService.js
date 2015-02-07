@@ -5,23 +5,23 @@ var msegErpServices = angular.module('msegErpServices');
 msegErpServices.factory('InstitutoService', function(srvHttp) {
 	return {
 		guardar : function(data, success, error) {
-			return srvHttp.post('institutoService/instituto/guardar', data,
+			return srvHttp.authPost('institutoService/instituto/guardar', data,
 					success, error);
 		},
 		listar : function(data, success, error) {
-			return srvHttp.post('institutoService/instituto/listar', data,
+			return srvHttp.authPost('institutoService/instituto/listar', data,
 					success, error);
 		},
 		encontrar : function(data, success, error) {
-			return srvHttp.post('institutoService/instituto/encontrar', data,
+			return srvHttp.authPost('institutoService/instituto/encontrar', data,
 					success, error);
 		},
 		modificar : function(data, success, error) {
-			return srvHttp.post('institutoService/instituto/editar', data,
+			return srvHttp.authPost('institutoService/instituto/editar', data,
 					success, error);
 		},
 		borrar : function(data, success, error) {
-			return srvHttp.post('institutoService/instituto/borrar', data,
+			return srvHttp.authPost('institutoService/instituto/borrar', data,
 					success, error);
 		}
 	};

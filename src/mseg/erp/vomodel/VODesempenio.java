@@ -9,6 +9,7 @@ public class VODesempenio implements Serializable {
 	private Integer anio;
 	private Integer mes;
 	private Integer hcs;
+	private Integer faltas;
 	private VODocente docente;
 	private VOAsignatura asignatura;
 
@@ -73,6 +74,14 @@ public class VODesempenio implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Integer getFaltas() {
+		return faltas;
+	}
+
+	public void setFaltas(Integer faltas) {
+		this.faltas = faltas;
 	}
 
 }

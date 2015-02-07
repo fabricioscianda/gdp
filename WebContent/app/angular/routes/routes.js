@@ -1,8 +1,13 @@
 'use strict';
 
-angular.module('routes', []).config([ '$routeProvider', function($routeProvider) {
+angular.module('routes', []).config(
+		[ '$routeProvider', function($routeProvider) {
 
 			var routes = [ {
+				path : '/',
+				template : 'app/views/layout/home.html',
+				controller : "LoginCtrl"
+			}, {
 				path : '/desempenios',
 				template : 'app/views/desempenios.html',
 				controller : "DesempenioCtrl"
@@ -26,6 +31,14 @@ angular.module('routes', []).config([ '$routeProvider', function($routeProvider)
 				path : '/localidades',
 				template : 'app/views/localidades.html',
 				controller : "LocalidadCtrl"
+			}, {
+				path : '/login',
+				template : 'app/views/login.html',
+				controller : "LoginCtrl"
+			}, {
+				path : '/logout',
+				template : 'app/views/login.html',
+				controller : "LoginCtrl"
 			}, {
 				path : '/partidos',
 				template : 'app/views/partidos.html',
@@ -90,12 +103,7 @@ angular.module('routes', []).config([ '$routeProvider', function($routeProvider)
 				path : '/tiposSituacionRevista',
 				template : 'app/views/formTipos.html',
 				controller : "TipoSituacionRevistaCtrl"
-			}, {
-				path : '/',
-				template : 'app/views/layout/home.html',
-				controller : null
-			}, 
-			];
+			}];
 
 			// for every route definition in the array, creates an Angular route
 			// definition

@@ -25,8 +25,7 @@ public class GsonUtils {
 	 */
 	public static Gson gson() {
 		if ( gson == null ) {
-			gson = new GsonBuilder().serializeNulls().setDateFormat("dd/MM/yyyy HH:mm:ss")
-			.create();	
+			gson = new GsonBuilder().serializeNulls().setDateFormat("dd/MM/yyyy HH:mm:ss").create();	
 		}
 		return gson;
 	}

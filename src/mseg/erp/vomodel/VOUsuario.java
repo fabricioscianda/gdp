@@ -8,12 +8,18 @@ public class VOUsuario implements Serializable {
 	private Long id;
 	private String apellido;
 	private String nombre;
-	private String nombreUsuario;
-	private String clave;
-
-	private boolean logueable;
+	private String username;
+	private String password;
 
 	public VOUsuario() {
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (((VOUsuario) obj).getId().equals(this.getId())) {
+			return true;
+		}
+		return false;
 	}
 
 	public Long getId() {
@@ -22,22 +28,6 @@ public class VOUsuario implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getClave() {
-		return clave;
-	}
-
-	public void setClave(String clave) {
-		this.clave = clave;
-	}
-
-	public String getNombreUsuario() {
-		return nombreUsuario;
-	}
-
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
 	}
 
 	public String getApellido() {
@@ -56,20 +46,20 @@ public class VOUsuario implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public boolean isLogueable() {
-		return logueable;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLogueable(boolean logueable) {
-		this.logueable = logueable;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (((VOUsuario) obj).getId().equals(this.getId())) {
-			return true;
-		}
-		return false;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

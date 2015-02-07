@@ -5,23 +5,23 @@ var msegErpServices = angular.module('msegErpServices');
 msegErpServices.factory('TipoRelacionService', function(srvHttp) {
 	return {
 		guardar : function(data, success, error) {
-			return srvHttp.post('tipoRelacionService/tipoRelacion/guardar',
+			return srvHttp.authPost('tipoRelacionService/tipoRelacion/guardar',
 					data, success, error);
 		},
 		listar : function(data, success, error) {
-			return srvHttp.post('tipoRelacionService/tipoRelacion/listar',
+			return srvHttp.authPost('tipoRelacionService/tipoRelacion/listar',
 					data, success, error);
 		},
 		encontrar : function(data, success, error) {
-			return srvHttp.post('tipoRelacionService/tipoRelacion/encontrar',
+			return srvHttp.authPost('tipoRelacionService/tipoRelacion/encontrar',
 					data, success, error);
 		},
 		modificar : function(data, success, error) {
-			return srvHttp.post('tipoRelacionService/tipoRelacion/editar',
+			return srvHttp.authPost('tipoRelacionService/tipoRelacion/editar',
 					data, success, error);
 		},
 		borrar : function(data, success, error) {
-			return srvHttp.post('tipoRelacionService/tipoRelacion/borrar',
+			return srvHttp.authPost('tipoRelacionService/tipoRelacion/borrar',
 					data, success, error);
 		}
 	};

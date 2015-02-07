@@ -24,6 +24,8 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 			$scope.anioSel = null;
 			$scope.mesSel = null;
 			$scope.hcs = null;
+			$scope.faltas = null;
+			
 			$scope.meses = [ {
 				'value' : 1,
 				'nombre' : 'Enero'
@@ -119,7 +121,8 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 							 $scope.asignaturaSel = $scope.asignaturas[-1];
 							 $scope.asignaturas = orderBy($scope.asignaturas, 'nombre');
 						} else {
-							$scope.msgError = 'No se pudieron obtener las Asignaturas';
+							$scope.msgError = response.errorMessage;
+//							$scope.msgError = 'No se pudieron obtener las Asignaturas';
 							console.log('No se pudieron obtener las Asignaturas');
 							$('#message-modal').modal('show');
 						}
@@ -138,7 +141,8 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 						$scope.docenteSel = $scope.docentes[-1];
 						$scope.docentes = orderBy($scope.docentes, ['nombre','apellido']);
 					} else {
-						$scope.msgError = 'No se pudieron obtener los Docentes';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener los Docentes';
 						console.log('No se pudieron obtener los Docentes');
 						$('#message-modal').modal('show');
 					}
@@ -149,38 +153,35 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 			};
 			
 			$scope.guardar = function(desempenio) {
-//				if (desempenio != undefined && desempenio != null) {
-					$scope.id_desempenio = ((desempenio != undefined && desempenio != null) ? desempenio.id : null);
-					DesempenioService.guardar({
-						'id_desempenio' : $scope.id_desempenio,
-						'id_docente' : $scope.docenteSel.id,
-						'id_asignatura' : $scope.asignaturaSel.id,
-						'anio' : $scope.anioSel.getFullYear(),
-						'mes' : $scope.mesSel.value,
-						'hcs' : $scope.hcs
-					}, function(response) {
-						$scope.success = response.ok;
-						if (response.ok) {
-							$scope.msgSuccess = 'Desempeño, Guardado.';
-							$scope.asignaturaSel = $scope.asignaturas[-1];
-							$scope.docenteSel = $scope.docentes[-1];
-							$scope.anioSel = null;
-							$scope.mesSel = null;
-							$scope.hcs = null;
-							$scope.listar();
-						} else {
-							$scope.msgError = 'No se pudo guardar.';
-							console.log('No se pudo guardar el elemento.');
-						}
-						$('#message-modal').modal('show');
-					}, function(error) {
-						alert(error);
-					})
-//				} else {
-//					$scope.success = false;
-//					$scope.msgError = 'El nombre y/o el año no pueden ser vacios.';
-//					$('#message-modal').modal('show');
-//				}
+				$scope.id_desempenio = ((desempenio != undefined && desempenio != null) ? desempenio.id : null);
+				DesempenioService.guardar({
+					'id_desempenio' : $scope.id_desempenio,
+					'id_docente' : $scope.docenteSel.id,
+					'id_asignatura' : $scope.asignaturaSel.id,
+					'anio' : $scope.anioSel.getFullYear(),
+					'mes' : $scope.mesSel.value,
+					'hcs' : $scope.hcs,
+					'faltas' : $scope.faltas
+				}, function(response) {
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.msgSuccess = 'Desempeño, Guardado.';
+						$scope.asignaturaSel = $scope.asignaturas[-1];
+						$scope.docenteSel = $scope.docentes[-1];
+						$scope.anioSel = null;
+						$scope.mesSel = null;
+						$scope.hcs = null;
+						$scope.faltas = null;
+						$scope.listar();
+					} else {
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudo guardar.';
+						console.log('No se pudo guardar el elemento.');
+					}
+					$('#message-modal').modal('show');
+				}, function(error) {
+					alert(error);
+				})
 			};
 
 			$scope.listar = function() {
@@ -189,7 +190,8 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 					if (response.ok) {
 						$scope.desempenios = angular.fromJson(response.data);
 					} else {
-						$scope.msgError = 'No se pudieron obtener las desempenios.';
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = 'No se pudieron obtener las desempenios.';
 						$('#message-modal').modal('show');
 					}
 					;
@@ -207,7 +209,8 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 						$scope.msgSuccess = desempenio.nombre + ", Borrado.";
 						$scope.listar();
 					} else {
-						$scope.msgError = "No se pudo borrar el elemento.";
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = "No se pudo borrar el elemento.";
 					}
 					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
@@ -228,6 +231,7 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 					$('#message-modal').modal('show');
 				}
 				$scope.hcs = desempenio.hcs;
+				$scope.faltas = desempenio.faltas;
 				var i = $scope.indiceDe($scope.asignaturas, desempenio.asignatura.id, 'id');
 				if (i!=-1) {
 					$scope.asignaturaSel = $scope.asignaturas[i];
@@ -244,27 +248,6 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 				}
 				$scope.colapsarFormulario = false;
 			}
-
-//			$scope.editar = function(desempenio) {
-//				$nuevo.asignatura = $scope.asignaturaSel;
-//				$nuevo.docente = $scope.docenteSel;
-//				$nuevo.anio = $scope.anioSel;
-//				$nuevo.mes = $scope.mesSel;
-//				DesempenioService.editar({
-//					'nuevo' : nuevo
-//				}, function(response) {
-//					$scope.success = response.ok;
-//					if (response.ok) {
-//						$scope.msgSuccess = "Desempeño, Guardado.";
-//						$scope.listar();
-//					} else {
-//						$scope.msgError = "No se pudo editar el elemento, " + desempenio.nombre;
-//					}
-//					$('#message-modal').modal('show');
-//				}, function(error) {
-//					alert(error);
-//				});
-//			}
 
 			$scope.indiceDe = function (array, cadena, propiedad) {
 			    for(var i = 0, len = array.length; i < len; i++) {
@@ -284,6 +267,7 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 				$scope.anioSel = null;
 				$scope.mesSel = null;
 				$scope.hcs = null;
+				$scope.faltas = null;
 				$scope.asignaturaSel = $scope.asignaturas[-1];
 				$scope.docenteSel = $scope.docentes[-1];
 			}

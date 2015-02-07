@@ -11,8 +11,6 @@
 
 		<!-- Tomcat DS -->
 		<non-jta-data-source>java:/comp/env/jdbc/msegErpDS</non-jta-data-source>
-		<!-- JBoss -->
-<!--    		<non-jta-data-source>java:/msegErpDS</non-jta-data-source> -->
 
 		<!-- Clases -->
 		<class>mseg.erp.model.Asignatura</class>
@@ -42,6 +40,7 @@
 		<class>mseg.erp.model.TipoRelacion</class>
 		<class>mseg.erp.model.TipoSituacion</class>
 		<class>mseg.erp.model.TipoSituacionRevista</class>
+		<class>mseg.erp.model.Usuario</class>
 
 		<properties>
 			<property name="eclipselink.session.customizer" value="eclipselink.session.customizer.JPAEclipseLinkSessionCustomizer" />

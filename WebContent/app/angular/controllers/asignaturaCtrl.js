@@ -37,7 +37,8 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 							 $scope.carreraSel = $scope.carreras[-1];
 							 $scope.carreras = orderBy($scope.carreras, 'nombre');
 						} else {
-							$scope.msgError = 'No se pudieron obtener las Carreras';
+							$scope.msgError = response.errorMessage;
+//							$scope.msgError = 'No se pudieron obtener las Carreras';
 							console.log('No se pudieron obtener los Carreras');
 							$('#message-modal').modal('show');
 						}
@@ -62,7 +63,8 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 							$scope.nueva = {};
 							$scope.listar();
 						} else {
-							$scope.msgError = 'No se pudo guardar.';
+							$scope.msgError = response.errorMessage;
+//							$scope.msgError = 'No se pudo guardar.';
 							console.log('No se pudo guardar el elemento.');
 						}
 						$('#message-modal').modal('show');
@@ -100,7 +102,8 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 						$scope.msgSuccess = asignatura.nombre + ", Borrado.";
 						$scope.listar();
 					} else {
-						$scope.msgError = "No se pudo borrar el elemento.";
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = "No se pudo borrar el elemento.";
 					}
 					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
@@ -137,7 +140,8 @@ msegErpControllers.controller('AsignaturaCtrl', ['$scope', '$filter', 'Asignatur
 						$scope.msgSuccess = asignatura.nombre + ", Guardada.";
 						$scope.listar();
 					} else {
-						$scope.msgError = "No se pudo editar el elemento, " + asignatura.nombre;
+						$scope.msgError = response.errorMessage;
+//						$scope.msgError = "No se pudo editar el elemento, " + asignatura.nombre;
 					}
 					$('#message-modal').modal('show');
 				}, function(error) {
