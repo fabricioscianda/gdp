@@ -10,7 +10,8 @@ public class VOUsuario implements Serializable {
 	private String nombre;
 	private String username;
 	private String password;
-
+	private boolean esAdmin;
+	
 	public VOUsuario() {
 	}
 
@@ -60,6 +61,14 @@ public class VOUsuario implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isEsAdmin() {
+		return esAdmin;
+	}
+
+	public void setEsAdmin(boolean esAdmin) {
+		this.esAdmin = esAdmin;
 	}
 
 }

@@ -3,12 +3,10 @@ package mseg.erp.dao.generic;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import mseg.erp.exceptions.DAOException;
-import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
 import mseg.erp.utils.MapperUtils;
 
 import org.slf4j.Logger;
@@ -21,9 +19,6 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 
 	protected Class<T> persistentClass;
 	protected Class<U> VOClass;
-
-	@Inject
-	private EntityManagerFactoryHolder emfh;
 
 	private Logger _logger = LoggerFactory.getLogger(GenericDAOImpl.class);
 
@@ -109,7 +104,6 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 		try {
 			_logger.info("Intentando encontrar " + getPersistentClass().getSimpleName());
 
-			em = emfh.getEntityManager();
 			T objeto = em.find(persistentClass, idObjeto);
 
 			if (objeto != null) {
@@ -120,8 +114,6 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 		} catch (Exception ex) {
 			_logger.error("Error buscando " + getPersistentClass().getSimpleName(), ex);
 			throw new DAOException(ex);
-		} finally {
-			em.close();
 		}
 		return objetoVO;
 	}
@@ -135,7 +127,6 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 		try {
 			_logger.info("Intentando listar " + persistentClass.getSimpleName());
 
-			em = emfh.getEntityManager();
 			Query consulta = em.createQuery("SELECT o FROM " + getPersistentClass().getSimpleName() + " as o");
 			lista = consulta.getResultList();
 
@@ -144,8 +135,6 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 		} catch (Exception ex) {
 			_logger.error("Error listando " + persistentClass.getSimpleName(), ex);
 			throw new DAOException(ex);
-		} finally {
-			em.close();
 		}
 		return objetos;
 	}
@@ -153,14 +142,6 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 	@Override
 	public Long getId(U objetoVO) {
 		return null;
-	}
-
-	public EntityManagerFactoryHolder getEmfh() {
-		return emfh;
-	}
-
-	public void setEmfh(EntityManagerFactoryHolder emfh) {
-		this.emfh = emfh;
 	}
 
 }

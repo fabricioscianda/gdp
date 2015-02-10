@@ -13,6 +13,8 @@ public class VOPersona implements Serializable {
 	private String nombre;
 	private String apellido;
 	private VOTipoDocumento tipoDoc;
+	private VOLocalidad localidad;
+	private String cp;
 	private List<VODomicilio> domicilios;
 	private List<VOContacto> mediosContacto;
 	private List<VOFormacionAcademica> formacionAcademica;
@@ -124,6 +126,22 @@ public class VOPersona implements Serializable {
 
 	public void setInfoAdministrativa(VOInfoAdministrativa infoAdministrativa) {
 		this.infoAdministrativa = infoAdministrativa;
+	}
+
+	public VOLocalidad getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(VOLocalidad localidad) {
+		this.localidad = localidad;
+	}
+
+	public String getCp() {
+		return cp;
+	}
+
+	public void setCp(String cp) {
+		this.cp = cp;
 	}
 
 	

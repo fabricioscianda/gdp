@@ -1,24 +1,24 @@
 'use strict';
 var msegErpControllers = angular.module('msegErpControllers');
 
-/* Tipos Contacto */
-msegErpControllers.controller('TipoContactoCtrl', [
+/* Usuario */
+msegErpControllers.controller('UsuarioCtrl', [
 		'$scope',
 		'$filter',
-		'TipoContactoService',
-		function($scope, $filter, TipoContactoService) {
+		'UsuarioService',
+		function($scope, $filter, UsuarioService) {
 
-			$scope.modulo = 'Contactos';
-			$scope.nombreForm = 'Tipo de Contacto';
-			$scope.urlModulo = 'tiposContacto';
+			$scope.modulo = 'Usuarios';
+			$scope.nombreForm = 'Usuario';
+			$scope.urlModulo = 'usuarios';
 
 			$scope.success = null;
 			$scope.msgSuccess = null;
 			$scope.msgError = null;
 			$scope.textoConfirm = null;
 
-			$scope.nuevo = {};
-			$scope.tipos = {};
+			$scope.usuario = {};
+			$scope.usuarios = {};
 
 			$scope.colapsarFormulario = true;
 			
@@ -26,14 +26,15 @@ msegErpControllers.controller('TipoContactoCtrl', [
 			
 			var orderBy = $filter('orderBy');
 
-			$scope.guardar = function(nuevo) {
-				if (nuevo != null && nuevo.nombre != undefined) {
-					TipoContactoService.guardar({
-						'nuevo' : nuevo
+			$scope.guardar = function(usuario) {
+				if (usuario != null && usuario.nombre != undefined && usuario.apellido != undefined && usuario.username != undefined && usuario.password != undefined) {
+					UsuarioService.guardar({
+						'usuario' : usuario
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
-							$scope.msgSuccess = nuevo.nombre + ', Guardado.';
+							$scope.msgSuccess = usuario.nombre + ' ' + usuario.apellido + ', Guardado.';
+							$scope.usuario = {};
 							$scope.cerrarForm();
 							$scope.listar();
 						} else {
@@ -46,18 +47,18 @@ msegErpControllers.controller('TipoContactoCtrl', [
 					})
 				} else {
 					$scope.success = false;
-					$scope.msgError = 'El nombre no puede ser vacio.';
+					$scope.msgError = 'Todos los campos son obligatorios.';
 					$('#message-modal').modal('show');
 				}
 			};
 
 			$scope.listar = function() {
-				TipoContactoService.listar({}, function(response) {
+				UsuarioService.listar({}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.tipos = angular.fromJson(response.data);
+						$scope.usuarios = angular.fromJson(response.data);
 					} else {
-						$scope.msgError = 'No se pudieron obtener los tipos.';
+						$scope.msgError = 'No se pudieron obtener los usuarios.';
 						$('#message-modal').modal('show');
 					}
 					;
@@ -66,13 +67,13 @@ msegErpControllers.controller('TipoContactoCtrl', [
 				});
 			};
 
-			$scope.borrar = function(tipo) {
-				TipoContactoService.borrar({
-					'id' : tipo.id
+			$scope.borrar = function(usuario) {
+				UsuarioService.borrar({
+					'id' : usuario.id
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = tipo.nombre + ", Borrado.";
+						$scope.msgSuccess = usuario.nombre + ' ' + usuario.apellido + ", Borrado.";
 						$scope.listar();
 					} else {
 						$scope.msgError = "No se pudo borrar el elemento.";
@@ -85,10 +86,14 @@ msegErpControllers.controller('TipoContactoCtrl', [
 				});
 			}
 
-			$scope.editarElemento = function(tipo) {
-				$scope.nuevo = {};
-				$scope.nuevo.id = tipo.id;
-				$scope.nuevo.nombre = tipo.nombre;
+			$scope.editarElemento = function(usuario) {
+				$scope.usuario = {};
+				$scope.usuario.id = usuario.id;
+				$scope.usuario.nombre = usuario.nombre;
+				$scope.usuario.apellido = usuario.apellido;
+				$scope.usuario.username = usuario.username;
+				$scope.usuario.password = usuario.password;
+				$scope.usuario.esAdmin = usuario.esAdmin;
 				$scope.colapsarFormulario = false;
 			}
 
@@ -98,16 +103,16 @@ msegErpControllers.controller('TipoContactoCtrl', [
 			}
 			
 			$scope.limpiar = function() {
-				$scope.nuevo = {};
+				$scope.usuario = {};
 			}
 			
-			$scope.confirmarBorrar = function(tipo) {
-				$scope.obj = tipo;
-				$scope.textoConfirm = tipo.nombre;
+			$scope.confirmarBorrar = function(usuario) {
+				$scope.obj = usuario;
+				$scope.textoConfirm = (usuario.nombre + ' ' + usuario.apellido);
 				$('#confirm-modal').modal('show');
 			}
 
-			$scope.cancelarBorrar = function(tipo) {
+			$scope.cancelarBorrar = function(usuario) {
 				$('#confirm-modal').modal('hide');
 				$scope.textoConfirm = null;
 				$scope.obj = {};

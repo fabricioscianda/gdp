@@ -40,7 +40,6 @@ public class UsuarioDAOImpl extends GenericDAOImpl<VOUsuario, Usuario> implement
 		VOUsuario usuarioVO = null;
 
 		try {
-			em = getEmfh().getEntityManager();
 
 			CriteriaBuilder qb = em.getCriteriaBuilder();
 			CriteriaQuery<Usuario> usuarioQ = qb.createQuery(Usuario.class);

@@ -26,6 +26,7 @@
 		<class>mseg.erp.model.Localidad</class>
 		<class>mseg.erp.model.Partido</class>
 		<class>mseg.erp.model.Persona</class>
+		<class>mseg.erp.model.PlanEstudio</class>
 		<class>mseg.erp.model.Provincia</class>
 		<class>mseg.erp.model.Sede</class>
 		<class>mseg.erp.model.TipoAdministracion</class>

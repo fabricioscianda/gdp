@@ -34,7 +34,7 @@ msegErpControllers.controller('TipoSituacionCtrl', [
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = nuevo.nombre + ', Guardado.';
-							$scope.nuevo = {};
+							$scope.cerrarForm();
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
@@ -92,24 +92,6 @@ msegErpControllers.controller('TipoSituacionCtrl', [
 				$scope.colapsarFormulario = false;
 			}
 
-			$scope.editar = function(tipo) {
-				TipoSituacionService.editar({
-					'tipo' : tipo
-				}, function(response) {
-					$scope.success = response.ok;
-					if (response.ok) {
-						$scope.msgSuccess = tipo.nombre + ", Guardado.";
-						$scope.listar();
-					} else {
-						$scope.msgError = "No se pudo editar el elemento, "
-								+ tipo.nombre;
-					}
-					$('#message-modal').modal('show');
-				}, function(error) {
-					alert(error);
-				});
-			}
-			
 			$scope.cerrarForm = function() {
 				$scope.limpiar();
 				$scope.colapsarFormulario = true;

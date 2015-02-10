@@ -31,7 +31,7 @@ public class Asignatura implements Serializable {
 	private Integer anio;
 	@ManyToOne
 	private Carrera carrera;
-
+	
 	public Asignatura() {
 	}
 

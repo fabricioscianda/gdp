@@ -57,6 +57,7 @@
 		<bean id="localidadDAO" class="mseg.erp.dao.localidad.LocalidadDAOImpl" scope="request" />
 		<bean id="partidoDAO" class="mseg.erp.dao.partido.PartidoDAOImpl" scope="request" />
 		<bean id="personaDAO" class="mseg.erp.dao.persona.PersonaDAOImpl" scope="request" />
+		<bean id="planEstudioDAO" class="mseg.erp.dao.planEstudio.PlanEstudioDAOImpl" scope="request" />
 		<bean id="provinciaDAO" class="mseg.erp.dao.provincia.ProvinciaDAOImpl" scope="request" />
 		<bean id="sedeDAO" class="mseg.erp.dao.sede.SedeDAOImpl" scope="request" />
 		<bean id="tipoAdministracionDAO" class="mseg.erp.dao.tipoadministracion.TipoAdministracionDAOImpl" scope="request" />

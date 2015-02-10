@@ -40,6 +40,7 @@ public class GsonSpringFactoryBean implements FactoryBean<Gson> {
 			GsonBuilder gsb = new GsonBuilder();
 
 			gsb.setDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
+			
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOProvincia.class, false, "partidos"));
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOPartido.class, false, "localidades"));
 			gsb.addSerializationExclusionStrategy(new CustomExclusionStrategy(VOSede.class, false, "carreras"));

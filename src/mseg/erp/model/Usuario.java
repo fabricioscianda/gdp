@@ -27,6 +27,7 @@ public class Usuario implements Serializable {
 	@Column(unique = true)
 	private String username;
 	private String password;
+	private boolean esAdmin;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -74,6 +75,14 @@ public class Usuario implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isEsAdmin() {
+		return esAdmin;
+	}
+
+	public void setEsAdmin(boolean esAdmin) {
+		this.esAdmin = esAdmin;
 	}
 
 }

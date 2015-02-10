@@ -122,7 +122,6 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 							 $scope.asignaturas = orderBy($scope.asignaturas, 'nombre');
 						} else {
 							$scope.msgError = response.errorMessage;
-//							$scope.msgError = 'No se pudieron obtener las Asignaturas';
 							console.log('No se pudieron obtener las Asignaturas');
 							$('#message-modal').modal('show');
 						}
@@ -142,7 +141,6 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 						$scope.docentes = orderBy($scope.docentes, ['nombre','apellido']);
 					} else {
 						$scope.msgError = response.errorMessage;
-//						$scope.msgError = 'No se pudieron obtener los Docentes';
 						console.log('No se pudieron obtener los Docentes');
 						$('#message-modal').modal('show');
 					}
@@ -158,7 +156,7 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 					'id_desempenio' : $scope.id_desempenio,
 					'id_docente' : $scope.docenteSel.id,
 					'id_asignatura' : $scope.asignaturaSel.id,
-					'anio' : $scope.anioSel.getFullYear(),
+					'anio' : $scope.anioSel,
 					'mes' : $scope.mesSel.value,
 					'hcs' : $scope.hcs,
 					'faltas' : $scope.faltas
@@ -175,7 +173,6 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 						$scope.listar();
 					} else {
 						$scope.msgError = response.errorMessage;
-//						$scope.msgError = 'No se pudo guardar.';
 						console.log('No se pudo guardar el elemento.');
 					}
 					$('#message-modal').modal('show');
@@ -191,7 +188,6 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 						$scope.desempenios = angular.fromJson(response.data);
 					} else {
 						$scope.msgError = response.errorMessage;
-//						$scope.msgError = 'No se pudieron obtener las desempenios.';
 						$('#message-modal').modal('show');
 					}
 					;
@@ -206,11 +202,10 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = desempenio.nombre + ", Borrado.";
+						$scope.msgSuccess = desempenio.docente.persona.nombre + " " desempenio.docente.persona.apellido + ", Borrado.";
 						$scope.listar();
 					} else {
 						$scope.msgError = response.errorMessage;
-//						$scope.msgError = "No se pudo borrar el elemento.";
 					}
 					$scope.textoConfirm = null;
 					$('#confirm-modal').modal('hide');
@@ -237,14 +232,18 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 					$scope.asignaturaSel = $scope.asignaturas[i];
 				} else {
 					$scope.msgError = 'Error buscando la asignatura de la desempenio a editar, en el listado.';
+					$scope.success = false;
 					$('#message-modal').modal('show');
+					return;
 				}
 				var i = $scope.indiceDe($scope.docentes, desempenio.docente.id, 'id');
 				if (i!=-1) {
 					$scope.docenteSel = $scope.docentes[i];
 				} else {
 					$scope.msgError = 'Error buscando al docente del desempeño a editar, en el listado.';
+					$scope.success = false;
 					$('#message-modal').modal('show');
+					return;
 				}
 				$scope.colapsarFormulario = false;
 			}

@@ -48,6 +48,10 @@ angular.module('routes', []).config(
 				template : 'app/views/personas.html',
 				controller : "PersonaCtrl"
 			}, {
+				path : '/planesEstudio',
+				template : 'app/views/planesEstudio.html',
+				controller : "PlanEstudioCtrl"
+			}, {
 				path : '/provincias',
 				template : 'app/views/provincias.html',
 				controller : "ProvinciaCtrl"
@@ -103,6 +107,10 @@ angular.module('routes', []).config(
 				path : '/tiposSituacionRevista',
 				template : 'app/views/formTipos.html',
 				controller : "TipoSituacionRevistaCtrl"
+			}, {
+				path : '/usuarios',
+				template : 'app/views/usuarios.html',
+				controller : "UsuarioCtrl"
 			}];
 
 			// for every route definition in the array, creates an Angular route

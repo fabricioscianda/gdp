@@ -34,7 +34,7 @@ msegErpControllers.controller('TipoMotivoCtrl', [
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = nuevo.nombre + ', Guardado.';
-							$scope.nuevo = {};
+							$scope.cerrarForm();
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
@@ -90,24 +90,6 @@ msegErpControllers.controller('TipoMotivoCtrl', [
 				$scope.nuevo.id = tipo.id;
 				$scope.nuevo.nombre = tipo.nombre;
 				$scope.colapsarFormulario = false;
-			}
-
-			$scope.editar = function(tipo) {
-				TipoMotivoService.editar({
-					'tipo' : tipo
-				}, function(response) {
-					$scope.success = response.ok;
-					if (response.ok) {
-						$scope.msgSuccess = tipo.nombre + ", Guardado.";
-						$scope.listar();
-					} else {
-						$scope.msgError = "No se pudo editar el elemento, "
-								+ tipo.nombre;
-					}
-					$('#message-modal').modal('show');
-				}, function(error) {
-					alert(error);
-				});
 			}
 
 			$scope.cerrarForm = function() {

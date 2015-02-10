@@ -64,7 +64,7 @@ public class LoginService {
 				request.getSession().setAttribute("credentials", credentialvo);
 				JsonObject t = new JsonObject();
 				t.addProperty("token", token);
-				t.addProperty("esAdmin", false);
+				t.addProperty("esAdmin", usuarioVO.isEsAdmin());
 				responsevo.setOk(true);
 				responsevo.setData(t.toString());
 			} else {

@@ -7,8 +7,8 @@
 		<div class="row">
 			<div class="col-sm-5">
 				<div class="form-group">
-					<label for="nombre">Nombre</label>
-					<input type="text" class="form-control text-capitalize" id="nombre" name="nombre" ng-model="nombre" placeholder="Nombre">
+					<label for="nombre">Nombre/s</label>
+					<input type="text" class="form-control text-capitalize" id="nombre" name="nombre" ng-model="nombre" placeholder="Nombre/s">
 				</div>
 			</div>
 			<div class="col-sm-5">
@@ -65,6 +65,20 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		<!-- Localidad y CP -->
+		<div class="row">
+			<div class="col-sm-4">
+				<select class="form-control text-capitalize" ng-options="local.nombre for local in localidades" required ng-model="localSel" ng-init="listarLocalidades()">
+					<option value="">-- Localidad --</option>
+				</select>
+			</div>
+			<div class="col-sm-2">
+				<div class="input-group">
+			      	<input type="text" class="form-control" id="cp" placeholder="CP" ng-model="cp" maxlength="9">
+			      	<div class="input-group-addon">CP</div>
+			    </div>
 			</div>
 		</div>
 	</div>

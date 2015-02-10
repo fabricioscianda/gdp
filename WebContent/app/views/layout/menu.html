@@ -13,8 +13,7 @@
 					<a class="navbar-brand" href="#">Formación</a>
 				</div>
 				<!-- Menu -->
-				<div class="collapse navbar-collapse"
-					id="bs-example-navbar-collapse-1">
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="dropdown"><a href="" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false">Personal
@@ -31,6 +30,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="#/asignaturas">Asignaturas</a></li>
 								<li><a href="#/carreras">Carreras</a></li>
+								<li><a href="#/planesEstudio">Planes de Estudio</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false">Instituciones
@@ -61,21 +61,24 @@
 								<li><a href="#/tiposEstadoContractual">de Estado Contractual</a></li>
 								<li><a href="#/tiposEstadoFormacion">de Estado Formacion</a></li>
 								<li><a href="#/tiposFormacion">de Formacion</a></li>
-								<li><a href="#/tiposMotivo">de Motivos Baja</a></li>
+								<li><a href="#/tiposMotivo">de Motivo</a></li>
 								<li><a href="#/tiposPersonal">de Personal</a></li>
 								<li><a href="#/tiposRelacion">de Relacion Laboral</a></li>
 								<li><a href="#/tiposSituacion">de Situacion Actual</a></li>
 								<li><a href="#/tiposSituacionRevista">de Situacion de Revista</a></li>
 							</ul></li>
+						<li class="dropdown">
+							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Usuarios<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#/usuarios">Usuarios</a></li>
+							</ul>
+						</li>
 					</ul>
 					<!-- Bienvenido / Logout -->
 					<ul class="nav navbar-nav navbar-right">
-						<li><p class="navbar-text">
-								Bienvenido <strong>Fabricio Scianda</strong>!
-							</p></li>
 						<li>
 							<p class="navbar-text">
-								<a href="" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesion" ng-click="confirmarLogout()">Salir <span class="glyphicon glyphicon-log-out"></span></a>
+								<a href="" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesion" ng-click="confirmarLogout()">Cerrar Sesion <span class="glyphicon glyphicon-log-out"></span></a>
 							</p>
 						</li>
 					</ul>

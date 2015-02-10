@@ -41,6 +41,9 @@ public class Persona implements Serializable {
 	private String numeroDoc;
 	@Column(unique = true, nullable = true)
 	private String cuil;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Localidad localidad;
+	private String cp;
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
 	private List<Domicilio> domicilios;
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
@@ -50,7 +53,6 @@ public class Persona implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
 	private List<Empleo> empleos;
 	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
-//	@JoinColumn(name = "id_infoadmin")
 	private InfoAdministrativa infoAdministrativa;
 
 	public Persona() {
@@ -158,6 +160,22 @@ public class Persona implements Serializable {
 
 	public void setInfoAdministrativa(InfoAdministrativa infoAdministrativa) {
 		this.infoAdministrativa = infoAdministrativa;
+	}
+
+	public Localidad getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(Localidad localidad) {
+		this.localidad = localidad;
+	}
+
+	public String getCp() {
+		return cp;
+	}
+
+	public void setCp(String cp) {
+		this.cp = cp;
 	}
 
 }

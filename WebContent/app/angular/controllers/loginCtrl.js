@@ -9,19 +9,6 @@ msegErpControllers.controller( 'LoginCtrl', [ '$route', '$location', '$scope', '
 		$scope.usuario = {};
 		$rootScope.logoutMessage = "Usuario no autenticado";
 
-		$scope.cargarDatos = function() { 
-			LoginService.buscarDatos( {}, function(response) {
-				if (response.ok) {
-					var data = angular.fromJson(response.data);
-					$scope.usuario = data.usuario;
-					$rootScope.usuario = $scope.usuario;
-					$rootScope.esAdmin = data.esAdmin;
-				}
-			}, function(error) {
-				alert(error);
-			});
-		};
-
 		$scope.login = function() {
 			if ($scope.usuario.username != undefined 
 			&& $scope.usuario.username != null

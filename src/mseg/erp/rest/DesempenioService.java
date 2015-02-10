@@ -1,5 +1,6 @@
 package mseg.erp.rest;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,24 +54,29 @@ public class DesempenioService {
 		VODesempenio desempenio = null;
 		VODocente docente = null;
 		VOAsignatura asignatura = null;
-		Integer anio = 0, mes = 0, hcs = 0;
-		Long id_desempenio = null;
+		Integer mes = 0, hcs = 0, faltas = 0;
+		Long anio = null, id_desempenio = null;
 		
 		try {
 			id_desempenio = gson.fromJson(object.get("id_desempenio"), Long.class);
 			docente = docenteDAO.encontrar(gson.fromJson(object.get("id_docente"), Long.class), em);
 			asignatura = asignaturaDAO.encontrar(gson.fromJson(object.get("id_asignatura"), Long.class), em);
-			anio = gson.fromJson(object.get("anio"), Integer.class);
+			anio = gson.fromJson(object.get("anio"), Long.class);
 			mes = gson.fromJson(object.get("mes"), Integer.class);
 			hcs = gson.fromJson(object.get("hcs"), Integer.class);
+			faltas = gson.fromJson(object.get("faltas"), Integer.class);
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(anio);
 			
 			voDesempenio = new VODesempenio();
 			voDesempenio.setId(id_desempenio);
 			voDesempenio.setDocente(docente);
 			voDesempenio.setAsignatura(asignatura);
-			voDesempenio.setAnio(anio);
+			voDesempenio.setAnio(calendar.get(Calendar.YEAR));
 			voDesempenio.setMes(mes);
 			voDesempenio.setHcs(hcs);
+			voDesempenio.setFaltas(faltas);
 			
 			emfh.beginTransaction(em);
 			if (voDesempenio.getId() != null && voDesempenio.getId() != 0) {

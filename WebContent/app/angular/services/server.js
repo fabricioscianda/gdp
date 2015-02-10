@@ -1,7 +1,7 @@
 'use strict';
 var msegErpServices = angular.module('msegErpServices');
 
-msegErpServices.factory('srvHttp', function($http, $rootScope, $location) {
+msegErpServices.factory('srvHttp', function($http, $rootScope, $location, $cookieStore) {
 
 	var s = window.location.protocol + "//" + window.location.host;
 	var serviceUrl = s + "/msegErp/rest/";

@@ -16,6 +16,7 @@ import mseg.erp.vomodel.VODomicilio;
 import mseg.erp.vomodel.VOEmpleo;
 import mseg.erp.vomodel.VOFormacionAcademica;
 import mseg.erp.vomodel.VOInfoAdministrativa;
+import mseg.erp.vomodel.VOLocalidad;
 import mseg.erp.vomodel.VOPersona;
 import mseg.erp.vomodel.VOResponse;
 import mseg.erp.vomodel.VOTipoDocumento;
@@ -78,7 +79,10 @@ public class DocenteService {
 				   tipoCuil = null, 
 				   validadorCuil = null,
 				   tipoDoc_id = null,
-				   cuil = null;
+				   cuil = null,
+				   cp = null;
+			
+			VOLocalidad localidad = null;
 			
 			id = gson.fromJson(object.get("id"), Long.class);
 			nombre = gson.fromJson(object.get("nombre"), String.class);
@@ -86,6 +90,8 @@ public class DocenteService {
 			numeroDoc = gson.fromJson(object.get("numeroDoc"), String.class);
 			tipoDoc_id = gson.fromJson(object.get("id_tipoDoc"), String.class);
 			fechaNac = gson.fromJson(object.get("fechaNac"), Long.class);
+			cp = gson.fromJson(object.get("cp"), String.class);
+			localidad = gson.fromJson(object.get("localidad"), VOLocalidad.class);
 			
 			numeroDocCuil = gson.fromJson(object.get("numeroDocCuil"), String.class);
 			tipoCuil = gson.fromJson(object.get("tipoCuil"), String.class); 
@@ -131,6 +137,8 @@ public class DocenteService {
 			voPersona.setFechaNac(fechaNac);
 			voPersona.setCuil(cuil);
 			voPersona.setTipoDoc(voTipoDocumento);
+			voPersona.setLocalidad(localidad);
+			voPersona.setCp(cp);
 			
 			for (int i = 0; i < formacionAcademicas.size(); i++) {
 				formacionAcademicas.get(i).setPersona(voPersona);
@@ -218,7 +226,7 @@ public class DocenteService {
 			}
 			voResponse.setOk(true);
 		} catch (Exception e) {
-			voResponse.setErrorMessage("No se pudo borrar el docente.");
+			voResponse.setErrorMessage("No se pudo borrar el docente. Verifique que no tenga vinculos.");
 			voResponse.setOk(false);
 			emfh.rollbackTransaction(em);
 		}
