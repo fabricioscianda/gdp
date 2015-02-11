@@ -202,7 +202,7 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 				}, function(response) {
 					$scope.success = response.ok;
 					if (response.ok) {
-						$scope.msgSuccess = desempenio.docente.persona.nombre + " " desempenio.docente.persona.apellido + ", Borrado.";
+						$scope.msgSuccess = desempenio.docente.persona.nombre + " " + desempenio.docente.persona.apellido + ", Borrado.";
 						$scope.listar();
 					} else {
 						$scope.msgError = response.errorMessage;

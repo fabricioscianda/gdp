@@ -68,13 +68,15 @@ msegErpControllers.controller('DocenteCtrl', [
 			$scope.tipoFormacionSel = {};
 			
 			$scope.tiposPersonal = {};
-			$scope.tipoPersonalSel = {};
+			$scope.tipoPersonalSel = null;
+//			$scope.tipoPersonalSel = {};
 			
 			$scope.tiposMotivo = {};
 			$scope.tipoMotivoSel = {};
 			
 			$scope.tiposSituacionActual = {};
-			$scope.tipoSituacionActualSel = {};
+			$scope.tipoSituacionActualSel = null;
+//			$scope.tipoSituacionActualSel = {};
 			
 			$scope.tiposSituacionRevista = {};
 			$scope.tipoSituacionRevistaSel = {};
@@ -99,6 +101,14 @@ msegErpControllers.controller('DocenteCtrl', [
 			$scope.domicilios = {};
 			$scope.localidades = {};
 			$scope.localidadSel = {};
+
+			$scope.motivoActivo = false;
+			$scope.situacionRevistaActivo = false;
+			$scope.nroExpedienteActivo = false;
+			$scope.documentacionActivo = false;
+			$scope.nroResolucionActivo = false;
+			
+			$scope.antiguedad = null;
 			
 			$scope.colapsarFormulario = true;
 			
@@ -157,9 +167,9 @@ msegErpControllers.controller('DocenteCtrl', [
 				startingDay : 1
 			};
 			
-			$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'yyyy' ];
+			$scope.formats = [ 'dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate', 'yyyy' ];
 			
-			$scope.format = $scope.formats[2];
+			$scope.format = $scope.formats[1];
 			$scope.formatYearOnly = $scope.formats[4];
 			
 			/*
@@ -448,6 +458,37 @@ msegErpControllers.controller('DocenteCtrl', [
 						alert(error);
 					})
 			};
+			
+			$scope.activarSituacionRevista = function(personal) {
+				$scope.situacionRevistaActivo = (personal != null) ? (personal.nombre.search(/policial/i) != -1) : false;
+			};
+			
+			$scope.activarMotivo = function(situacion) {
+				$scope.motivoActivo = (situacion != null) ? (situacion.nombre.search(/(sin|asignación|asignacion|horaria)/i) != -1) : false;
+			};
+
+			$scope.activarExpedienteResolucion = function(estado) {
+				$scope.activarNroExpediente(estado);
+				$scope.activarNroResolucion(estado);
+				$scope.activarDocumentacion(estado);
+			};
+			
+			$scope.activarDocumentacion = function(estado) {
+				$scope.documentacionActivo = (estado != null) ? (estado.nombre.search(/contratar/i) != -1) : false;
+			};
+			
+			$scope.activarNroExpediente = function(estado) {
+				$scope.nroExpedienteActivo = (estado != null) ? (estado.nombre.search(/(trámite|tramite)/i) != -1) : false;
+			};
+			
+			$scope.activarNroResolucion = function(estado) {
+				$scope.nroResolucionActivo = (estado != null) ? (estado.nombre.search(/contratado/i) != -1) : false;
+			};
+			
+			$scope.actualizarAntiguedad = function(fechaAlta) {
+				var fechaActual = new Date();
+				$scope.antiguedad = fechaActual.getFullYear() - fechaAlta.getFullYear(); 
+			}
 			
 			$scope.guardar = function() {
 				$scope.infoAdministrativa.fechaAlta = $scope.infoAdministrativa.fechaAlta.getTime(); 

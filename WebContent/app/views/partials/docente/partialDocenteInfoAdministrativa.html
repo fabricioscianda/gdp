@@ -3,7 +3,7 @@
 		<h5 class="panel-title">Información Administrativa</h5>
 	</div>
 	<div class="panel-body bg-danger">
-		<!-- Legajo y Fecha Alta -->
+		<!-- Legajo -->
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group">
@@ -11,72 +11,74 @@
 					<input type="text" class="form-control" id="nroLegajo" name="nroLegajo" ng-model="infoAdministrativa.nroLegajo" maxlength="8" placeholder="Legajo">
 				</div>
 			</div>
-			<div class="col-sm-5">
+		</div>
+		<!-- Fecha Alta y Antiguedad -->
+		<div class="row">
+			<div class="col-sm-4">
 				<div class="form-group form-inline">
-					<div class="form-group col-sm-12">
+					<div class="form-group">
 						<label for="fechaAlta" class="control-label pull-left">Fecha de Alta</label>
 					</div>
-					<div class="form-group form-inline col-sm-12">
+					<div class="form-group form-inline">
 			            <p class="input-group">
-			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="infoAdministrativa.fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
+			              <input ng-change="actualizarAntiguedad(infoAdministrativa.fechaAlta)" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="infoAdministrativa.fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
 			              <span class="input-group-btn">
-			                <button type="button" class="btn btn-default" ng-click="openFechaAlta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+			              	<button type="button" class="btn btn-default" ng-click="openFechaAlta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 			              </span>
 			            </p>
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label></label>
+					<div class="input-group">
+				      	<div class="input-group-addon">Antigüedad: </div>
+				      	<input type="text" class="form-control text-right" id="antiguedad" value="{{antiguedad}}" disabled>
+				      	<div class="input-group-addon">Años</div>
+				    </div>
+				</div>
+			</div>
 		</div>
-		<!-- Tipo de Personal y Tipo de Estado Contractual -->
+		<!-- Tipo de Personal y Tipo Situacion Revista -->
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label>Personal</label>
-					<select class="form-control" ng-options="tipo.nombre for tipo in tiposPersonal" required ng-model="tipoPersonalSel" ng-init="listarTiposPersonal()">
+					<select class="form-control" ng-change="activarSituacionRevista(tipoPersonalSel)" ng-options="tipo.nombre for tipo in tiposPersonal" required ng-model="tipoPersonalSel" ng-init="listarTiposPersonal()">
 						<option value="">-- Tipo de Personal --</option>
 					</select>
 				</div>
 			</div>
 			<div class="col-sm-5">
-				<div class="form-group">
-					<label>Estado Contractual</label>
-					<select class="form-control" ng-options="tipo.nombre for tipo in tiposEstadoContractual" required ng-model="tipoEstadoContractualSel" ng-init="listarTiposEstadoContractual()">
-						<option value="">-- Tipo de Estado Contractual --</option>
-					</select>
-				</div>
-			</div>
-		</div>
-		<!-- Tipo de Situacion Actual y Tipo Situacion Revista -->
-		<div class="row">
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label>Situacion Actual</label>
-					<select class="form-control" ng-options="tipo.nombre for tipo in tiposSituacionActual" required ng-model="tipoSituacionActualSel" ng-init="listarTiposSituacionActual()">
-						<option value="">-- Tipo de Situacion Actual --</option>
-					</select>
-				</div>
-			</div>
-			<div class="col-sm-5">
-				<div class="form-group">
+				<div class="form-group" ng-show="situacionRevistaActivo">
 					<label>Situacion Revista</label>
 					<select class="form-control" ng-options="tipo.nombre for tipo in tiposSituacionRevista" required ng-model="tipoSituacionRevistaSel" ng-init="listarTiposSituacionRevista()">
 						<option value="">-- Tipo de Situacion de Revista --</option>
 					</select>
 				</div>
-			</div>			
+			</div>
 		</div>
-		<!-- Tipo y Fecha de Motivo -->
+		<!-- Tipo de Situacion Actual, Motivo y Fecha de Motivo -->
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label>Motivo Baja</label>
+					<label>Situacion Actual</label>
+					<select class="form-control" ng-change="activarMotivo(tipoSituacionActualSel)" ng-options="tipo.nombre for tipo in tiposSituacionActual" required ng-model="tipoSituacionActualSel" ng-init="listarTiposSituacionActual()">
+						<option value="">-- Tipo de Situacion Actual --</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group" ng-show="motivoActivo">
+					<label>Motivo</label>
 					<select class="form-control" ng-options="tipo.nombre for tipo in tiposMotivo" required ng-model="tipoMotivoSel" ng-init="listarTiposMotivo()">
 						<option value="">-- Tipo de Motivo --</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-sm-5">
-				<div class="form-group form-inline">
+			<div class="col-sm-4">
+				<div class="form-group form-inline" ng-show="motivoActivo">
 					<div class="form-group col-sm-12">
 						<label for="fechaMotivo" class="control-label pull-left">Fecha baja</label>
 					</div>
@@ -89,19 +91,27 @@
 			            </p>
 					</div>
 				</div>
-			</div>
+			</div>		
 		</div>
-		<!-- N° Expediente y Resolucion -->
+		<!-- Tipo de Estado Contractual, N° Expediente y Resolucion -->
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="nroExpe">Expediente</label>
+					<label>Estado Contractual</label>
+					<select class="form-control" ng-change="activarExpedienteResolucion(tipoEstadoContractualSel)" ng-options="tipo.nombre for tipo in tiposEstadoContractual" required ng-model="tipoEstadoContractualSel" ng-init="listarTiposEstadoContractual()">
+						<option value="">-- Tipo de Estado Contractual --</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group" ng-show="nroExpedienteActivo">
+					<label for="nroExpe">N° Expediente</label>
 					<input type="text" class="form-control" id="nroExpe" name="nroExpe" ng-model="infoAdministrativa.nroExpe" placeholder="N° Expediente">
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="nroResol">Resolucion</label>
+				<div class="form-group" ng-show="nroResolucionActivo">
+					<label for="nroResol">N° Resolucion</label>
 					<input type="text" class="form-control" id="nroResol" name="nroResol" ng-model="infoAdministrativa.nroResol" placeholder="N° Resolucion">
 				</div>
 			</div>
@@ -109,7 +119,7 @@
 		<!-- Documentacion Entregada -->
 		<div class="row col-sm-4">
 			<!-- Panel -->
-			<div class="panel panel-danger">
+			<div class="panel panel-default" ng-show="documentacionActivo">
 				<!-- Panel Header -->
 				<div class="panel-heading">
 					<h4 class="panel-title">Documentacion Entregada</h4>
