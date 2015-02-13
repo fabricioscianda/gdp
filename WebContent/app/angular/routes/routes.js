@@ -44,10 +44,6 @@ angular.module('routes', []).config(
 				template : 'app/views/partidos.html',
 				controller : "PartidoCtrl"
 			}, {
-				path : '/personas',
-				template : 'app/views/personas.html',
-				controller : "PersonaCtrl"
-			}, {
 				path : '/planesEstudio',
 				template : 'app/views/planesEstudio.html',
 				controller : "PlanEstudioCtrl"

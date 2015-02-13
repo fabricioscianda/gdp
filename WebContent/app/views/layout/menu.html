@@ -67,7 +67,7 @@
 								<li><a href="#/tiposSituacion">de Situacion Actual</a></li>
 								<li><a href="#/tiposSituacionRevista">de Situacion de Revista</a></li>
 							</ul></li>
-						<li class="dropdown">
+						<li class="dropdown" ng-if="esAdmin">
 							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Usuarios<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="#/usuarios">Usuarios</a></li>
@@ -78,7 +78,7 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<p class="navbar-text">
-								<a href="" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesion" ng-click="confirmarLogout()">Cerrar Sesion <span class="glyphicon glyphicon-log-out"></span></a>
+								<a href="" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesion" ng-click="confirmarLogout()">Hola, <span class="text-capitalize">{{loginName}}</span> <span class="glyphicon glyphicon-log-out"></span></a>
 							</p>
 						</li>
 					</ul>

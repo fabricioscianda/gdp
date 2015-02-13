@@ -23,8 +23,13 @@ msegErpControllers.controller( 'LoginCtrl', [ '$route', '$location', '$scope', '
 						var jsonData = angular.fromJson(response.data);
 						$rootScope.esAdmin = jsonData.esAdmin;
 						delete jsonData.esAdmin;
+						$rootScope.loginName = jsonData.loginName;
+						delete jsonData.loginName;
 						$rootScope.loggedUser = jsonData;
-						$cookieStore.put("loggedUser", jsonData);
+						jsonData = null;
+						$cookieStore.put("loggedUser", $rootScope.loggedUser);
+						$cookieStore.put("loginName", $rootScope.loginName);
+						$cookieStore.put("esAdmin", $rootScope.esAdmin);
 						$rootScope.logueado = true;
 						$rootScope.logInfo = false;
 						$location.path("/");
@@ -49,6 +54,8 @@ msegErpControllers.controller( 'LoginCtrl', [ '$route', '$location', '$scope', '
 			LoginService.logout({}, function(response) {
 				if (response.ok) {
 					$cookieStore.remove("loggedUser");
+					$cookieStore.remove("esAdmin");
+					$cookieStore.remove("loginName");
 					$rootScope.logueado = false;
 					$rootScope.loggedUser = null;
 					$scope.usuario = {};

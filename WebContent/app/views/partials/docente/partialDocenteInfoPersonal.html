@@ -70,7 +70,7 @@
 		<!-- Localidad y CP -->
 		<div class="row">
 			<div class="col-sm-4">
-				<select class="form-control text-capitalize" ng-options="local.nombre for local in localidades" required ng-model="localSel" ng-init="listarLocalidades()">
+				<select class="form-control text-capitalize" ng-options="(local.nombre + ' > ' + local.partido.nombre + ' > ' + local.partido.provincia.nombre) for local in localidades" required ng-model="localSel" ng-init="listarLocalidades()">
 					<option value="">-- Localidad --</option>
 				</select>
 			</div>

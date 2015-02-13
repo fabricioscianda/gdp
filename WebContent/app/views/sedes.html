@@ -44,6 +44,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<!-- Listado Actuales -->
 	<div class="row col-sm-5 col-sm-offset-1">
 		<!-- Panel -->
@@ -57,17 +58,17 @@
 				<table class="table table-hover table-condensed table-striped" ng-show="sedes.length!=0">
 					<thead>
 						<tr>
-							<td><em>Sede</em></td>
-							<td><em>Instituto</em></td>
-							<td><em>Localidad, Partido, Provincia</em></td>
-							<td></td>
-							<td></td>
+							<th><em>Sede</em></th>
+							<th><em>Instituto</em></th>
+							<th><em>Localidad, Partido, Provincia</em></th>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="sede in sedes | orderBy:['instituto.nombre', 'localidad.nombre', 'nombre']">
-							<td><strong>{{sede.nombre}}</strong></td>
-							<td><strong>{{sede.instituto.nombre}}</strong></td>
+							<td>{{sede.nombre}}</td>
+							<td>{{sede.instituto.nombre}}</td>
 							<td>{{sede.localidad.nombre}}, {{sede.localidad.partido.nombre}}, {{sede.localidad.partido.provincia.nombre}}</td>
 							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(sede)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
 							<td><a href="#/{{urlModulo}}" ng-click="confirmarBorrar(sede)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
@@ -77,7 +78,7 @@
 			</div>
 			<!-- Panel Footer -->
 			<div class="panel-footer">
-				<h5 class="panel-title">Total de sedes: <strong>{{sedes.length}}</strong>.</h5>
+				<h5 class="panel-title">Total de sedes: {{sedes.length}}.</h5>
 			</div>
 		</div>
 	</div>

@@ -6,6 +6,12 @@ msegErpApp.config([ '$routeProvider', function($routeProvider) {} ]);
 msegErpApp.run(function($rootScope, $location, $cookieStore) {
 	
 	$rootScope.sysVersion = "1.0";
+	$rootScope.sysName = "GeDo";
+	$rootScope.sysModule = "Formación";
+	$rootScope.contactMail = "fabricio.scianda@gmail.com";
+	$rootScope.contactName = "Fabricio Scianda";
+	$rootScope.loginName = $cookieStore.get("loginName");
+	$rootScope.esAdmin = $cookieStore.get("esAdmin");
 	
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
 		var loggedUser = $cookieStore.get("loggedUser");

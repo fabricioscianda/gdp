@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 
 import mseg.erp.dao.usuario.IUsuarioDAO;
 import mseg.erp.exceptions.DAOException;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOCredential;
 import mseg.erp.vomodel.VOResponse;
 import mseg.erp.vomodel.VOUsuario;
 
@@ -31,14 +33,12 @@ public class UsuarioService {
 
 	@Inject
 	private EntityManagerFactoryHolder emfh;
-	
 	@Inject
 	private IUsuarioDAO usuarioDAO;
-
 	@Inject
 	private Gson gson;
-
-	private EntityManager em = null;
+	@Inject
+	private VOCredential credentials;
 	
 	public UsuarioService() {
 	}
@@ -50,10 +50,17 @@ public class UsuarioService {
 	 * 
 	 */
 	@RequestMapping(value = "/usuario/guardar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
-	public String guardarUsuario(@RequestBody String data) {
+	public String guardarUsuario(@RequestBody String data, HttpServletRequest request) {
+		EntityManager em = null;
 		VOResponse responsevo = new VOResponse();
+		
+		if (!credentials.isEsAdmin()) {
+			responsevo.setOk(false);
+			responsevo.setErrorMessage("No tiene autorización para la acción seleccionada.");
+			return gson.toJson(responsevo);
+		}
+		
 		JsonObject obj = gson.fromJson(data, JsonObject.class);
-
 		VOUsuario vousuario = gson.fromJson(obj.get("usuario"), VOUsuario.class),
 				  usuario = null;
 		vousuario.setUsername(vousuario.getUsername());
@@ -86,7 +93,12 @@ public class UsuarioService {
 	@RequestMapping(value = "/usuario/listar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String listar() {
 		VOResponse responsevo = new VOResponse();
-
+		if (!credentials.isEsAdmin()) {
+			responsevo.setOk(false);
+			responsevo.setErrorMessage("No tiene autorización para la acción seleccionada.");
+			return gson.toJson(responsevo);
+		}
+		EntityManager em = null;
 		try {
 			em = emfh.getEntityManager();
 			List<VOUsuario> usuarios = usuarioDAO.listar(em);
@@ -108,8 +120,15 @@ public class UsuarioService {
 	@RequestMapping(value = "/usuario/encontrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String buscarUsuario(@RequestBody String data) {
 		VOResponse responsevo = new VOResponse();
+		
+		if (!credentials.isEsAdmin()) {
+			responsevo.setOk(false);
+			responsevo.setErrorMessage("No tiene autorización para la acción seleccionada.");
+			return gson.toJson(responsevo);
+		}
+		
 		JsonObject obj = gson.fromJson(data, JsonObject.class);
-
+		EntityManager em = null;
 		Long idUsuario = obj.get("idUsuario").getAsLong();
 
 		try {
@@ -134,10 +153,14 @@ public class UsuarioService {
 	@RequestMapping(value = "/usuario/borrar", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String eliminar(@RequestBody String data) {
 		VOResponse responsevo = new VOResponse();
-
+		if (!credentials.isEsAdmin()) {
+			responsevo.setOk(false);
+			responsevo.setErrorMessage("No tiene autorización para la acción seleccionada.");
+			return gson.toJson(responsevo);
+		}
 		JsonObject usuario = gson.fromJson(data, JsonObject.class);
 		Long id = usuario.get("id").getAsLong();
-
+		EntityManager em = null;
 		try {
 			em = emfh.getEntityManager();
 			emfh.beginTransaction(em);

@@ -150,13 +150,13 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 				})
 			};
 			
-			$scope.guardar = function(desempenio) {
-				$scope.id_desempenio = ((desempenio != undefined && desempenio != null) ? desempenio.id : null);
+			$scope.guardar = function(id_desempenio) {
+				$scope.id_desempenio = ((id_desempenio != undefined && id_desempenio != null) ? id_desempenio : null);
 				DesempenioService.guardar({
 					'id_desempenio' : $scope.id_desempenio,
 					'id_docente' : $scope.docenteSel.id,
 					'id_asignatura' : $scope.asignaturaSel.id,
-					'anio' : $scope.anioSel,
+					'anio' : $scope.anioSel.getTime(),
 					'mes' : $scope.mesSel.value,
 					'hcs' : $scope.hcs,
 					'faltas' : $scope.faltas
@@ -170,6 +170,7 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 						$scope.mesSel = null;
 						$scope.hcs = null;
 						$scope.faltas = null;
+						$scope.colapsarFormulario = true;
 						$scope.listar();
 					} else {
 						$scope.msgError = response.errorMessage;
@@ -280,7 +281,7 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 			$scope.cancelarBorrar = function(desempenio) {
 				$('#confirm-modal').modal('hide');
 				$scope.textoConfirm = null;
-				$scope.desempenio = {};
+				$scope.desempenio = null;
 			}
 
 		} ]);

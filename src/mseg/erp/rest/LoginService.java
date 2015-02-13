@@ -46,10 +46,8 @@ public class LoginService {
 		VOResponse responsevo = new VOResponse();
 		VOCredential credentialvo = new VOCredential();
 		VOUsuario usuarioVO = null;
-
 		JsonParser parser = new JsonParser();
 		JsonObject usuario = parser.parse(data).getAsJsonObject();
-
 		String username = usuario.get("username").getAsString();
 		String password = usuario.get("password").getAsString();
 
@@ -60,11 +58,12 @@ public class LoginService {
 				String token = String.valueOf(new Date().getTime());
 				credentialvo.setToken(token);
 				credentialvo.setUsuario(usuarioVO);
-				credentialvo.setEsAdmin(false);
+				credentialvo.setEsAdmin(usuarioVO.isEsAdmin());
 				request.getSession().setAttribute("credentials", credentialvo);
 				JsonObject t = new JsonObject();
 				t.addProperty("token", token);
 				t.addProperty("esAdmin", usuarioVO.isEsAdmin());
+				t.addProperty("loginName", (usuarioVO.getNombre() + " " + usuarioVO.getApellido()));
 				responsevo.setOk(true);
 				responsevo.setData(t.toString());
 			} else {
