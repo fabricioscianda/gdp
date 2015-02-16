@@ -18,39 +18,22 @@
 				</div>
 			</div>
 		</div>
-		<!-- Fecha Nacimiento -->
-		<div class="row">
-			<div class="col-sm-5">
-				<div class="form-group form-inline">
-					<div class="form-group">
-						<label for="fechaNac" class="control-label pull-left">Fecha de Nacimiento</label>
-					</div>
-					<div class="form-group form-inline">
-			            <p class="input-group">
-			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="fechaNac" is-open="opened" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
-			              <span class="input-group-btn">
-			                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-			              </span>
-			            </p>
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- Tipo Documento y CUIL -->
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-7">
 				<div class="form-group form-inline">
+					<div class="form-group">
+						<label for="numeroDoc" class="control-label pull-left">Documento</label>
+					</div>
 					<div class="form-group" ng-init="listarTiposDoc()">
 						<label class="radio-inline" ng-repeat="tipoDoc in tiposDoc"> 
 							<input type="radio" id="tipoDocSel" name="tipoDocSel" value="{{tipoDoc.id}}" ng-blur="rellenarDNICuil()" ng-model="$parent.tipoDocSel"> {{tipoDoc.nombre}}
 						</label>
-					</div>
-					<div class="form-group">
 						<input type="text" class="form-control" id="numeroDoc" name="numeroDoc" ng-model="numeroDoc" maxlength="8" placeholder="Número" ng-blur="rellenarDNICuil()">
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-5">
 				<div class="form-group form-inline">
 					<div class="form-group">
 						<label for="cuil" class="control-label pull-left">CUIL</label>
@@ -67,17 +50,76 @@
 				</div>
 			</div>
 		</div>
+		<!-- Fecha Nacimiento y Edad -->
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<div class="form-group">
+						<label for="fechaNac" class="control-label pull-left">Fecha de Nacimiento</label>
+					</div>
+					<div class="form-group form-inline">
+			            <p id="fechaNac" class="input-group">
+			              <input type="text" ng-change="actualizarEdad(fechaNac)" class="form-control" datepicker-popup="{{format}}" ng-model="fechaNac" is-open="opened" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
+			              <span class="input-group-btn">
+			                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+			              </span>
+			            </p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<div class="form-group">
+						<label for="edad">Edad</label>
+					</div>
+					<div class="form-group form-inline">
+						<input type="text" class="form-control text-capitalize" id="edad" ng-model="edad" disabled>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Provincia y Partido -->
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group" ng-init="listarProvincias()">
+					<label for="provincia">Provincia</label> 
+					<select id="provincia" class="form-control text-capitalize"
+						ng-options="provincia.nombre for provincia in provincias" required
+						ng-model="provinciaSel">
+						<option value="">-- Provincia --</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group" ng-init="listarPartidos()">
+					<label for="partido">Partido</label> 
+					<select id="partido" class="form-control text-capitalize"
+						ng-options="partido.nombre for partido in partidos | includeFromProvincia:provinciaSel.nombre"
+						required ng-model="partidoSel">
+						<option value="">-- Partido --</option>
+					</select>
+				</div>
+			</div>
+		</div>
 		<!-- Localidad y CP -->
 		<div class="row">
 			<div class="col-sm-4">
-				<select class="form-control text-capitalize" ng-options="(local.nombre + ' > ' + local.partido.nombre + ' > ' + local.partido.provincia.nombre) for local in localidades" required ng-model="localSel" ng-init="listarLocalidades()">
-					<option value="">-- Localidad --</option>
-				</select>
+				<div class="form-group" ng-init="listarLocalidades()">
+					<label for="localidad">Localidad</label> 
+					<select id="localidad" class="form-control text-capitalize"
+						ng-options="local.nombre for local in localidades | includeFromPartido:partidoSel.nombre"
+						required ng-model="localSel">
+						<option value="">-- Localidad --</option>
+					</select>
+				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="input-group">
-			      	<input type="text" class="form-control" id="cp" placeholder="CP" ng-model="cp" maxlength="9">
-			      	<div class="input-group-addon">CP</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="cp">Código Postal</label>
+					<div class="input-group">
+				      	<input type="text" class="form-control" id="cp" placeholder="CP" ng-model="cp" maxlength="9">
+				      	<div class="input-group-addon">CP</div>
+				    </div>
 			    </div>
 			</div>
 		</div>

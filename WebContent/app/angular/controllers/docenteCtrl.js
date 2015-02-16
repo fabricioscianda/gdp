@@ -10,6 +10,8 @@ msegErpControllers.controller('DocenteCtrl', [
 						'TipoContactoService',
 						'DomicilioService',
 						'LocalidadService',
+						'PartidoService',
+						'ProvinciaService',
 						'TipoFormacionService',
 						'TipoCargoService',
 						'TipoAdministracionService',
@@ -23,96 +25,86 @@ msegErpControllers.controller('DocenteCtrl', [
 						function($scope, $filter, DocenteService,
 								TipoDocumentoService, TipoContactoService,
 								DomicilioService, LocalidadService,
+								PartidoService, ProvinciaService,
 								TipoFormacionService, TipoCargoService,
 								TipoAdministracionService, TipoRelacionService,
-								TipoEstadoFormacionService, TipoPersonalService,
-								TipoEstadoContractualService, TipoSituacionService,
+								TipoEstadoFormacionService,
+								TipoPersonalService,
+								TipoEstadoContractualService,
+								TipoSituacionService,
 								TipoSituacionRevistaService, TipoMotivoService) {
 
 			$scope.modulo = 'Docentes';
 			$scope.nombreForm = 'Docente';
 			$scope.urlModulo = 'docentes';
 
-			$scope.success = null;
-			$scope.msgSuccess = null;
-			$scope.msgError = null;
-			$scope.textoConfirm = null;
-
+			$scope.antiguedad = null;
+			$scope.apellido = null;
+			$scope.colapsarFormulario = true;
+			$scope.cuilTipoSel = {};
+			$scope.cuilValidadorSel = {};
 			$scope.docente = {};
 			$scope.docentes = {};
-			
-			$scope.id = null;
-			$scope.nombre = null;
-			$scope.apellido = null;
-			$scope.tiposDoc = {};
-			$scope.tipoDocSel = {};
+			$scope.documentacionActivo = false;
+			$scope.domicilios = {};
+			$scope.edad = null;
 			$scope.fechaNac = null;
-			$scope.cuilTipoSel = {};
-			$scope.numeroDoc = null;
-			$scope.numeroDocCuil = null;
-			$scope.cuilValidadorSel = {};
+			$scope.id = null;
 			$scope.infoAdministrativa = {};
-			$scope.localSel = {};
-
-			$scope.tiposCuil = [20,23,24,27,30,33];
-			$scope.validadoresCuil = [0,1,2,3,4,5,6,7,8,9];
-			
-			$scope.nuevoMedio = {};
-			$scope.nuevosMediosContacto = new Array();
+			$scope.isCollapsed = true;
+			$scope.localidades = null;
+			$scope.localidadSel = null;
+			$scope.localSel = null;
 			$scope.mediosContacto = {};
 			$scope.medioSel = {};
-			
+			$scope.motivoActivo = false;
+			$scope.msgError = null;
+			$scope.msgSuccess = null;
+			$scope.nombre = null;
+			$scope.nroExpedienteActivo = false;
+			$scope.nroResolucionActivo = false;
 			$scope.nuevaFormacion = {};
 			$scope.nuevasFormacionesAcademicas = new Array();
-			$scope.tiposFormacion = {};
-			$scope.tipoFormacionSel = {};
-			
-			$scope.tiposPersonal = {};
-			$scope.tipoPersonalSel = null;
-//			$scope.tipoPersonalSel = {};
-			
-			$scope.tiposMotivo = {};
-			$scope.tipoMotivoSel = {};
-			
-			$scope.tiposSituacionActual = {};
-			$scope.tipoSituacionActualSel = null;
-//			$scope.tipoSituacionActualSel = {};
-			
-			$scope.tiposSituacionRevista = {};
-			$scope.tipoSituacionRevistaSel = {};
-			
-			$scope.tipoEstadoFormacionSel = {};
-			$scope.tiposEstadoFormacion = {};
-			
-			$scope.tipoEstadoContractualSel = {};
-			$scope.tiposEstadoContractual = {};
-			
-			$scope.nuevoEmpleo = {};
-			$scope.nuevosEmpleos = new Array();
-			$scope.tiposCargo = {};
-			$scope.tipoCargoSel = {};
-			$scope.tiposAdmin = {};
-			$scope.tipoAdminSel = {};
-			$scope.tiposRelacion = {};
-			$scope.tipoRelacionSel = {};
-			
 			$scope.nuevoDomicilio = {};
+			$scope.nuevoEmpleo = {};
+			$scope.nuevoMedio = {};
 			$scope.nuevosDomicilios = new Array();
-			$scope.domicilios = {};
-			$scope.localidades = {};
-			$scope.localidadSel = {};
-
-			$scope.motivoActivo = false;
-			$scope.situacionRevistaActivo = false;
-			$scope.nroExpedienteActivo = false;
-			$scope.documentacionActivo = false;
-			$scope.nroResolucionActivo = false;
-			
-			$scope.antiguedad = null;
-			
-			$scope.colapsarFormulario = true;
-			
+			$scope.nuevosEmpleos = new Array();
+			$scope.nuevosMediosContacto = new Array();
+			$scope.numeroDoc = null;
+			$scope.numeroDocCuil = null;
 			$scope.obj = {};
+			$scope.partidos = null;
+			$scope.partidoSel = null;
+			$scope.provincias = null;
+			$scope.provinciaSel = null;
+			$scope.situacionRevistaActivo = false;
+			$scope.success = null;
+			$scope.textoConfirm = null;
+			$scope.tipoAdminSel = {};
+			$scope.tipoCargoSel = {};
+			$scope.tipoDocSel = {};
+			$scope.tipoEstadoContractualSel = {};
+			$scope.tipoEstadoFormacionSel = {};
+			$scope.tipoFormacionSel = {};
+			$scope.tipoMotivoSel = {};
+			$scope.tipoPersonalSel = null;
+			$scope.tipoRelacionSel = {};
+			$scope.tiposAdmin = {};
+			$scope.tiposCargo = {};
+			$scope.tiposCuil = [20,23,24,27,30,33];
+			$scope.tiposDoc = {};
+			$scope.tiposEstadoContractual = {};
+			$scope.tiposEstadoFormacion = {};
+			$scope.tiposFormacion = {};
+			$scope.tipoSituacionActualSel = null;
+			$scope.tipoSituacionRevistaSel = {};
+			$scope.tiposMotivo = {};
+			$scope.tiposPersonal = {};
+			$scope.tiposRelacion = {};
+			$scope.tiposSituacionActual = {};
+			$scope.tiposSituacionRevista = {};
+			$scope.validadoresCuil = [0,1,2,3,4,5,6,7,8,9];
 			
 			var orderBy = $filter('orderBy');
 			
@@ -233,7 +225,7 @@ msegErpControllers.controller('DocenteCtrl', [
 			$scope.removeEmpleo = function(empleo) {
 				$scope.nuevosEmpleos.splice($scope.nuevosEmpleos.indexOf(empleo),1);
 				$scope.nuevoEmpleo = {};
-			}
+			};
 
 			$scope.listarMediosContacto = function() {
 				TipoContactoService.listar({}, function (response){
@@ -439,6 +431,40 @@ msegErpControllers.controller('DocenteCtrl', [
 						alert(error);
 					})
 			};
+
+			$scope.listarPartidos = function() {
+				PartidoService.listar({}, 
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.partidos = angular.fromJson(response.data);
+							$scope.partidos = orderBy($scope.partidos, 'nombre');
+						} else {
+							$scope.msgError = response.errorMessage;
+							console.log('No se pudieron obtener las Partidos');
+							$('#message-modal').modal('show');
+						}
+					}, function(error) {
+						alert(error);
+					});
+			};
+			
+			$scope.listarProvincias = function() {
+				ProvinciaService.listar({}, 
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.provincias = angular.fromJson(response.data);
+							$scope.provincias = orderBy($scope.provincias, 'nombre');
+						} else {
+							$scope.msgError = response.errorMessage;
+							console.log('No se pudieron obtener las Provincias');
+							$('#message-modal').modal('show');
+						}
+					}, function(error) {
+						alert(error);
+					});
+			};
 			
 			$scope.listarTiposDoc = function() {
 				TipoDocumentoService.listar({},
@@ -490,9 +516,14 @@ msegErpControllers.controller('DocenteCtrl', [
 				$scope.antiguedad = fechaActual.getFullYear() - fechaAlta.getFullYear(); 
 			}
 			
+			$scope.actualizarEdad = function(fechaNac) {
+				var fechaActual = new Date();
+				$scope.edad = fechaActual.getFullYear() - fechaNac.getFullYear(); 
+			}
+			
 			$scope.guardar = function() {
-				$scope.infoAdministrativa.fechaAlta = $scope.infoAdministrativa.fechaAlta.getTime(); 
-				$scope.infoAdministrativa.fechaMotivo = $scope.infoAdministrativa.fechaMotivo.getTime(); 
+				$scope.infoAdministrativa.fechaAlta = ($scope.infoAdministrativa.fechaAlta != null && $scope.infoAdministrativa.fechaAlta != undefined) ? (angular.isObject($scope.infoAdministrativa.fechaAlta) ? $scope.infoAdministrativa.fechaAlta.getTime() : $scope.infoAdministrativa.fechaAlta) : null; 
+				$scope.infoAdministrativa.fechaMotivo = ($scope.infoAdministrativa.fechaAlta != null && $scope.infoAdministrativa.fechaMotivo != undefined) ? (angular.isObject($scope.infoAdministrativa.fechaMotivo) ? $scope.infoAdministrativa.fechaMotivo.getTime() : $scope.infoAdministrativa.fechaMotivo) : null; 
 				$scope.infoAdministrativa.tipoPersonal = $scope.tipoPersonalSel;
 				$scope.infoAdministrativa.tipoEstadoContractual = $scope.tipoEstadoContractualSel;
 				$scope.infoAdministrativa.tipoSituacion = $scope.tipoSituacionActualSel;
@@ -503,7 +534,7 @@ msegErpControllers.controller('DocenteCtrl', [
 						'id' : $scope.id,
 						'nombre' : $scope.nombre,
 						'apellido' : $scope.apellido,
-						'fechaNac' : $scope.fechaNac.getTime(),
+						'fechaNac' : ($scope.fechaNac != null && $scope.fechaNac != undefined) ? (angular.isObject($scope.fechaNac) ? $scope.fechaNac.getTime() : $scope.fechaNac): null,
 						'id_tipoDoc' : $scope.tipoDocSel,
 						'numeroDoc' : $scope.numeroDoc,
 						'tipoCuil' : $scope.cuilTipoSel,

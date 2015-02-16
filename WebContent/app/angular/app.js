@@ -27,4 +27,4 @@ msegErpApp.run(function($rootScope, $location, $cookieStore) {
 		}
 	});
 	
-})
+});

@@ -1,6 +1,7 @@
 package mseg.erp.rest;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -126,6 +127,8 @@ public class DocenteService {
 			}
 
 			voInfoAdministrativa = gson.fromJson(object.get("infoAdministrativa"), VOInfoAdministrativa.class);
+			Date t1 = new Date(voInfoAdministrativa.getFechaAlta());
+			Date t2 = new Date(voInfoAdministrativa.getFechaMotivo());
 			
 			id_tipoDoc = Long.valueOf(tipoDoc_id);
 			VOTipoDocumento voTipoDocumento = tipoDocumentoDAO.encontrar(id_tipoDoc, em);
