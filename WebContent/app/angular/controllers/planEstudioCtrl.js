@@ -2,8 +2,8 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Plan Estudio */
-msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstudioService',  
-		function($scope, $filter, PlanEstudioService) {
+msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstudioService', 'AsignaturaService', 
+		function($scope, $filter, PlanEstudioService, AsignaturaService) {
 
 			$scope.modulo = 'Planes de Estudio';
 			$scope.nombreForm = 'Plan de Estudio';
@@ -18,6 +18,8 @@ msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstu
 			$scope.planEstudio = {};
 			$scope.planesEstudio = {};
 			$scope.anioSel = null;
+			$scope.asignaturas = {};
+			$scope.asignaturaSel = {};
 
 			$scope.colapsarFormulario = true;
 
@@ -96,6 +98,21 @@ msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstu
 						$scope.planesEstudio = angular.fromJson(response.data);
 					} else {
 						$scope.msgError = 'No se pudieron obtener los planes de estudio.';
+						$('#message-modal').modal('show');
+					}
+					;
+				}, function(error) {
+					alert(error);
+				});
+			};
+			
+			$scope.listarAsignaturas = function() {
+				AsignaturaService.listar({}, function(response) {
+					$scope.success = response.ok;
+					if (response.ok) {
+						$scope.asignaturas = angular.fromJson(response.data);
+					} else {
+						$scope.msgError = 'No se pudieron obtener las asignaturas.';
 						$('#message-modal').modal('show');
 					}
 					;

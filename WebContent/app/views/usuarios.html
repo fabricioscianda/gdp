@@ -19,25 +19,45 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body" collapse="colapsarFormulario">
-				<form role="form" name="formAction">
-					<div class="form-group">
-						<input type="text" class="form-control text-capitalize" id="apellido" name="apellido" ng-model="usuario.apellido" placeholder="Apellido">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control text-capitalize" id="nombre" name="nombre" ng-model="usuario.nombre" placeholder="Nombre">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="username" name="username" ng-model="usuario.username" placeholder="Nombre de Usuario">
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control" id="password" name="password" ng-model="usuario.password" placeholder="Password">
-					</div>
-					<div class="form-group checkbox">
-					    <label>
-					      	<input type="checkbox" ng-model="usuario.esAdmin"> Administrador
-					    </label>
-					</div>
-				</form>
+				<dl class="dl-horizontal">
+					<dt>
+						<label for="apellido">Apellido</label>
+					</dt>
+					<dd>
+						<input type="text" class="form-control text-capitalize"
+							id="apellido" name="apellido" ng-model="usuario.apellido"
+							placeholder="Apellido">
+					</dd>
+					<dt>
+						<label for="nombre">Nombre</label>
+					</dt>
+					<dd>
+						<input type="text" class="form-control text-capitalize"
+							id="nombre" name="nombre" ng-model="usuario.nombre"
+							placeholder="Nombre">
+					</dd>
+					<dt>
+						<label for="username">Username</label>
+					</dt>
+					<dd>
+						<input type="text" class="form-control" id="username"
+							name="username" ng-model="usuario.username"
+							placeholder="Nombre de Usuario">
+					</dd>
+					<dt>
+						<label for="password">Password</label>
+					</dt>
+					<dd>
+						<input type="password" class="form-control" id="password"
+							name="password" ng-model="usuario.password"
+							placeholder="Password">
+					</dd>
+					<dd>
+						<label> <input type="checkbox" ng-model="usuario.esAdmin">
+							Administrador
+						</label>
+					</dd>
+				</dl>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer" ng-show="!colapsarFormulario">

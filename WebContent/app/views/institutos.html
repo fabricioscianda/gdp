@@ -19,11 +19,14 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body" collapse="colapsarFormulario">
-				<form role="form" name="formAction">
-					<div class="form-group">
+				<dl class="dl-horizontal">
+					<dt>
+						<label for="nombre">Nombre</label>
+					</dt>
+					<dd>
 						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Nombre del Instituto">
-					</div>
-				</form>
+					</dd>
+				</dl>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer" ng-show="!colapsarFormulario">

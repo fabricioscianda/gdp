@@ -25,7 +25,7 @@ msegErpFilters.filter('includeFromProvincia', function() {
 					// if so, keep it in the filtered results
 					return !filterCriteria || angular.equals(item.provincia.nombre, filterCriteria);
 				});
-			} else if (filterCriteria == undefined || filterCriteria == null || inputArray.length != 0) {
+			} else if ((filterCriteria == undefined || filterCriteria == null) && (inputArray.length != undefined) && (inputArray.length != 0)) {
 				return inputArray.filter(function(item) {
 					return false;
 				});
@@ -46,7 +46,7 @@ msegErpFilters.filter('includeFromPartido', function() {
 					// if so, keep it in the filtered results
 					return !filterCriteria || angular.equals(item.partido.nombre, filterCriteria);
 				});
-			} else if (filterCriteria == undefined || filterCriteria == null || inputArray != 0) {
+			} else if ((filterCriteria == undefined || filterCriteria == null) && (inputArray.length != undefined) && (inputArray.length != 0)) {
 				return inputArray.filter(function(item) {
 					return false;
 				});

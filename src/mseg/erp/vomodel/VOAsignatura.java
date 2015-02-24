@@ -9,6 +9,7 @@ public class VOAsignatura implements Serializable {
 	private Long id;
 	private String nombre;
 	private Integer anio;
+	private boolean extra;
 	private VOCarrera carrera;
 
 	@Override
@@ -53,6 +54,14 @@ public class VOAsignatura implements Serializable {
 
 	public void setCarrera(VOCarrera carrera) {
 		this.carrera = carrera;
+	}
+
+	public boolean isExtra() {
+		return extra;
+	}
+
+	public void setExtra(boolean extra) {
+		this.extra = extra;
 	}
 
 }

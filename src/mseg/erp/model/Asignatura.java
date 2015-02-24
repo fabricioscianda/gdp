@@ -29,6 +29,7 @@ public class Asignatura implements Serializable {
 	private Long id;
 	private String nombre;
 	private Integer anio;
+	private boolean extra;
 	@ManyToOne
 	private Carrera carrera;
 	
@@ -77,6 +78,14 @@ public class Asignatura implements Serializable {
 
 	public void setCarrera(Carrera carrera) {
 		this.carrera = carrera;
+	}
+
+	public boolean isExtra() {
+		return extra;
+	}
+
+	public void setExtra(boolean extra) {
+		this.extra = extra;
 	}
 
 }

@@ -2,8 +2,8 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Sede */
-msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'LocalidadService', 'InstitutoService', 
-		function($scope, $filter, SedeService, LocalidadService, InstitutoService) {
+msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', 'LocalidadService', 'InstitutoService', 'PartidoService', 'ProvinciaService', 
+		function($scope, $filter, SedeService, LocalidadService, InstitutoService, PartidoService, ProvinciaService) {
 
 			$scope.modulo = 'Sedes';
 			$scope.nombreForm = 'Sede';
@@ -20,6 +20,10 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.localidad = {};
 			$scope.localidadSel = {};
 			$scope.localidades = {};
+			$scope.partidos = {};
+			$scope.partidoSel = {};
+			$scope.provincias = {};
+			$scope.provinciaSel = {};
 			$scope.instituto = {};
 			$scope.institutoSel = {};
 			$scope.institutos = {};
@@ -32,6 +36,8 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 
 			$scope.inicializarListados = function() {
 				$scope.listarLocalidades();
+				$scope.listarPartidos();
+				$scope.listarProvincias();
 				$scope.listarInstitutos();
 			}
 			
@@ -52,6 +58,40 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 					function(error) {
 						alert(error);
 					})
+			};
+			
+			$scope.listarPartidos = function() {
+				PartidoService.listar({}, 
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.partidos = angular.fromJson(response.data);
+							$scope.partidos = orderBy($scope.partidos, 'nombre');
+						} else {
+							$scope.msgError = response.errorMessage;
+							console.log('No se pudieron obtener las Partidos');
+							$('#message-modal').modal('show');
+						}
+					}, function(error) {
+						alert(error);
+					});
+			};
+			
+			$scope.listarProvincias = function() {
+				ProvinciaService.listar({}, 
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.provincias = angular.fromJson(response.data);
+							$scope.provincias = orderBy($scope.provincias, 'nombre');
+						} else {
+							$scope.msgError = response.errorMessage;
+							console.log('No se pudieron obtener las Provincias');
+							$('#message-modal').modal('show');
+						}
+					}, function(error) {
+						alert(error);
+					});
 			};
 			
 			$scope.listarInstitutos = function() {
@@ -76,7 +116,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.guardar = function(nueva) {
 				nueva.localidad = $scope.localidadSel; 
 				nueva.instituto = $scope.institutoSel; 
-				if (nueva != null && nueva.nombre != undefined && nueva.localidad!=null && nueva.instituto!=null) {
+				if (nueva != null && nueva.nombre != undefined && nueva.localidad != null && nueva.instituto != null) {
 					SedeService.guardar({
 						'nueva' : nueva
 					}, function(response) {
@@ -84,6 +124,8 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 						if (response.ok) {
 							$scope.msgSuccess = nueva.nombre + ', Guardada.';
 							$scope.localidadSel = $scope.localidades[-1];
+							$scope.partidoSel = $scope.partidos[-1];
+							$scope.provinciaSel = $scope.provincias[-1];
 							$scope.institutoSel = $scope.institutos[-1];
 							$scope.nueva = {};
 							$scope.listar();
@@ -147,7 +189,24 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 					$scope.msgError = 'Error buscando la localidad de la sede a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
-				var i = $scope.indiceDe($scope.institutos, sede.instituto.id, 'id');
+				i = null;
+				i = $scope.indiceDe($scope.partidos, sede.localidad.partido.id, 'id');
+				if (i!=-1) {
+					$scope.partidoSel = $scope.partidos[i];
+				} else {
+					$scope.msgError = 'Error buscando el partido de la sede a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
+				i = null;
+				i = $scope.indiceDe($scope.provincias, sede.localidad.partido.provincia.id, 'id');
+				if (i!=-1) {
+					$scope.provinciaSel = $scope.provincias[i];
+				} else {
+					$scope.msgError = 'Error buscando la provincia de la sede a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
+				i = null;
+				i = $scope.indiceDe($scope.institutos, sede.instituto.id, 'id');
 				if (i!=-1) {
 					$scope.institutoSel = $scope.institutos[i];
 				} else {
@@ -159,6 +218,8 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 
 			$scope.editar = function(sede) {
 				sede.localidad = $scope.localidadSel;
+				sede.partido = $scope.partidoSel;
+				sede.provincia = $scope.provinciaSel;
 				sede.instituto = $scope.institutoSel;
 				SedeService.editar({
 					'sede' : sede
@@ -192,6 +253,8 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.localidadSel = $scope.localidades[-1];
+				$scope.partidoSel = $scope.partidos[-1];
+				$scope.provinciaSel = $scope.provincias[-1];
 				$scope.institutoSel = $scope.institutos[-1];
 			}
 			

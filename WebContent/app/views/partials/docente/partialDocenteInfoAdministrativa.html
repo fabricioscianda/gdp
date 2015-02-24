@@ -21,7 +21,9 @@
 					</div>
 					<div class="form-group form-inline">
 			            <p class="input-group">
-			              <input ng-change="actualizarAntiguedad(infoAdministrativa.fechaAlta)" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="infoAdministrativa.fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
+			              <input ng-change="actualizarAntiguedad(infoAdministrativa.fechaAlta)" type="text" class="form-control" datepicker-popup="{{format}}" 
+			              ng-model="infoAdministrativa.fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" 
+			              clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
 			              <span class="input-group-btn">
 			              	<button type="button" class="btn btn-default" ng-click="openFechaAlta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 			              </span>

@@ -6,7 +6,7 @@
 	<!-- Confirmacion Borrar -->
 	<modal-confirm></modal-confirm>
 	<!-- Form Nuevo -->
-	<div class="row col-sm-3 col-sm-offset-1">
+	<div class="row col-sm-4 col-sm-offset-1">
 		<!-- Panel -->
 		<div class="panel panel-primary">
 			<!-- Panel Header -->
@@ -19,16 +19,22 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body" collapse="colapsarFormulario">
-				<form role="form" name="formAction" ng-init="listarProvincias()">
-					<div class="form-group">
-						<select class="form-control" ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel">
+				<dl class="dl-horizontal" ng-init="listarProvincias()">
+					<dt>
+						<label for="provincia">Provincia</label>
+					</dt>
+					<dd>
+						<select class="form-control" id="provincia" ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel">
 							<option value="">-- Provincia --</option>
 						</select>
-					</div>
-					<div class="form-group">
+					</dd>
+					<dt>
+						<label for="partido">Partido</label>
+					</dt>
+					<dd>
 						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Partido">
-					</div>
-				</form>
+					</dd>
+				</dl>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer" ng-show="!colapsarFormulario">

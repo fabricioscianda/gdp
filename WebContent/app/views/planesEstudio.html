@@ -19,19 +19,43 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body" collapse="colapsarFormulario">
-				<form role="form" name="formAction">
-					<div class="form-group">
+				<dl class="dl-horizontal">
+					<dt>
+						<label>Nombre</label>
+					</dt>
+					<dd>
 						<input type="text" class="form-control text-capitalize" id="nombre" name="nombre" ng-model="nuevo.nombre" placeholder="Nombre del Plan">
-					</div>
-					<div class="form-group form-inline">
-			            <p class="input-group">
+					</dd>
+					<dt>
+						<label>Año</label>
+					</dt>
+					<dd>
+						<p class="input-group">
 			              <input type="text" class="form-control" datepicker-popup="{{formatYearOnly}}" ng-model="anioSel" is-open="openedAnio" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
 			              <span class="input-group-btn">
 			                <button type="button" class="btn btn-default" ng-click="openAnio($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 			              </span>
 			            </p>
-					</div>
-				</form>
+					</dd>
+					<dd>
+						<div class="row col-sm-11">
+							<!-- Panel -->
+							<div class="panel panel-primary" ng-init="listarAsignaturas()">
+								<!-- Panel Header -->
+								<div class="panel-heading">
+									<h4 class="panel-title">Asignaturas</h4>
+								</div>
+								<div class="panel-body">
+									<div class="checkbox" ng-repeat="asignatura in asignaturas | orderBy:['extra','nombre']">
+										<label>
+											<input type="checkbox" value="asignatura.checked">{{asignatura.nombre}} {{(asignatura.extra)?' (Extracurricular)':''}}
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</dd>
+				</dl>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer" ng-show="!colapsarFormulario">

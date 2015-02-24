@@ -2,8 +2,8 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Localidad */
-msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadService', 'PartidoService', 
-		function($scope, $filter, LocalidadService, PartidoService) {
+msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadService', 'PartidoService', 'ProvinciaService', 
+		function($scope, $filter, LocalidadService, PartidoService, ProvinciaService) {
 
 			$scope.modulo = 'Localidades';
 			$scope.nombreForm = 'Localidad';
@@ -19,6 +19,8 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 			$scope.localidades = {};
 			$scope.partidoSel = {};
 			$scope.partidos = {};
+			$scope.provinciaSel = {};
+			$scope.provincias = {};
 
 			$scope.colapsarFormulario = true;
 			
@@ -26,6 +28,23 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 			
 			var orderBy = $filter('orderBy');
 
+			$scope.listarProvincias = function() {
+				ProvinciaService.listar({}, 
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.provincias = angular.fromJson(response.data);
+							$scope.provincias = orderBy($scope.provincias, 'nombre');
+						} else {
+							$scope.msgError = response.errorMessage;
+							console.log('No se pudieron obtener las Provincias');
+							$('#message-modal').modal('show');
+						}
+					}, function(error) {
+						alert(error);
+					});
+			};
+			
 			$scope.listarPartidos = function() {
 				PartidoService.listar({},
 					function (response){

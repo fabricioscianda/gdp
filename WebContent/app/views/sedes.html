@@ -7,7 +7,7 @@
 	<modal-confirm></modal-confirm>
 	
 	<!-- Form Nuevo -->
-	<div class="row col-sm-4 col-sm-offset-1">
+	<div class="row col-sm-4">
 		<!-- Panel -->
 		<div class="panel panel-primary">
 			<!-- Panel Header -->
@@ -20,21 +20,55 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body" collapse="colapsarFormulario">
-				<form role="form" name="formAction" ng-init="inicializarListados()">
-					<div class="form-group">
-						<select class="form-control" ng-options="instituto.nombre for instituto in institutos" required ng-model="institutoSel">
+				<dl class="dl-horizontal" ng-init="inicializarListados()">
+					<dt>
+						<label for="instituto">Instituto</label>
+					</dt>
+					<dd>
+						<select class="form-control"
+							ng-options="instituto.nombre for instituto in institutos"
+							required ng-model="institutoSel">
 							<option value="">-- Instituto --</option>
 						</select>
-					</div>
-					<div class="form-group">
-						<select class="form-control" ng-options="(localidad.nombre + ' , ' + localidad.partido.nombre + ' , ' + localidad.partido.provincia.nombre) for localidad in localidades" required ng-model="localidadSel">
-							<option value="">-- Localidad, Partido, Provincia --</option>
+					</dd>
+					<dt>
+						<label for="provincia">Provincia</label>
+					</dt>
+					<dd>
+						<select id="provincia" class="form-control text-capitalize"
+							ng-options="provincia.nombre for provincia in provincias"
+							required ng-model="provinciaSel">
+							<option value="">-- Provincia --</option>
 						</select>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre" placeholder="Nombre de la Sede">
-					</div>
-				</form>
+					</dd>
+					<dt>
+						<label for="partido">Partido</label>
+					</dt>
+					<dd>
+						<select id="partido" class="form-control text-capitalize"
+							ng-options="partido.nombre for partido in partidos | includeFromProvincia:provinciaSel.nombre"
+							required ng-model="partidoSel">
+							<option value="">-- Partido --</option>
+						</select>
+					</dd>
+					<dt>
+						<label for="localidad">Localidad</label>
+					</dt>
+					<dd>
+						<select id="localidad" class="form-control text-capitalize"
+							ng-options="local.nombre for local in localidades | includeFromPartido:partidoSel.nombre"
+							required ng-model="localSel">
+							<option value="">-- Localidad --</option>
+						</select>
+					</dd>
+					<dt>
+						<label for="nombre">Nombre</label>
+					</dt>
+					<dd>
+						<input type="text" class="form-control" id="nombre" name="nombre"
+							ng-model="nueva.nombre" placeholder="Nombre de la Sede">
+					</dd>
+				</dl>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer" ng-show="!colapsarFormulario">
@@ -46,7 +80,7 @@
 	</div>
 	
 	<!-- Listado Actuales -->
-	<div class="row col-sm-5 col-sm-offset-1">
+	<div class="row col-sm-7 col-sm-offset-1">
 		<!-- Panel -->
 		<div class="panel panel-primary">
 			<!-- Panel Header -->
@@ -58,9 +92,11 @@
 				<table class="table table-hover table-condensed table-striped" ng-show="sedes.length!=0">
 					<thead>
 						<tr>
-							<th><em>Sede</em></th>
-							<th><em>Instituto</em></th>
-							<th><em>Localidad, Partido, Provincia</em></th>
+							<th>Sede</th>
+							<th>Instituto</th>
+							<th>Localidad</th>
+							<th>Partido</th>
+							<th>Provincia</th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -69,7 +105,9 @@
 						<tr ng-repeat="sede in sedes | orderBy:['instituto.nombre', 'localidad.nombre', 'nombre']">
 							<td>{{sede.nombre}}</td>
 							<td>{{sede.instituto.nombre}}</td>
-							<td>{{sede.localidad.nombre}}, {{sede.localidad.partido.nombre}}, {{sede.localidad.partido.provincia.nombre}}</td>
+							<td>{{sede.localidad.nombre}}</td>
+							<td>{{sede.localidad.partido.nombre}}</td>
+							<td>{{sede.localidad.partido.provincia.nombre}}</td>
 							<td><a href="#/{{urlModulo}}" ng-click="editarElemento(sede)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
 							<td><a href="#/{{urlModulo}}" ng-click="confirmarBorrar(sede)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
 						</tr>

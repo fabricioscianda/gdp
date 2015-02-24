@@ -19,19 +19,36 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body" collapse="colapsarFormulario">
-				<form role="form" name="formAction" ng-init="listarPartidos()">
-					<div class="form-group">
-						<select class="form-control" ng-options="partido.nombre for partido in partidos" required ng-model="partidoSel">
+				<dl class="dl-horizontal" ng-init="listarProvincias(); listarPartidos()">
+					<dt>
+						<label>Provincia</label>
+					</dt>
+					<dd>
+						<select class="form-control" ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel">
+							<option value="">-- Provincia --</option>
+						</select>
+					</dd>
+					<dt>
+						<label>Partido</label>
+					</dt>
+					<dd>
+						<select class="form-control" ng-options="partido.nombre for partido in partidos | includeFromProvincia:provinciaSel.nombre" required ng-model="partidoSel">
 							<option value="">-- Partido --</option>
 						</select>
-					</div>
-					<div class="form-group">
+					</dd>
+					<dt>
+						<label>Localidad</label>
+					</dt>
+					<dd>
 						<input type="text" class="form-control" id="nombre" name="nombre" ng-model="nueva.nombre" placeholder="Localidad">
-					</div>
-					<div class="form-group">
+					</dd>
+					<dt>
+						<label>Código Postal</label>
+					</dt>
+					<dd>
 						<input type="text" class="form-control" id="cp" name="cp" ng-model="nueva.cp" placeholder="Código Postal">
-					</div>
-				</form>
+					</dd>
+				</dl>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer" ng-show="!colapsarFormulario">

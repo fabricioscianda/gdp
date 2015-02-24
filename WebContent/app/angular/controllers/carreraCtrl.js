@@ -2,8 +2,11 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Carrera */
-msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraService', 'SedeService', 
-		function($scope, $filter, CarreraService, SedeService) {
+msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraService', 
+//                                              'SedeService', 'LocalidadService', 'PartidoService', 'ProvinciaService', 'InstitutoService',  
+		function($scope, $filter, CarreraService
+//				, SedeService, LocalidadService, PartidoService, ProvinciaService, InstitutoService
+				) {
 
 			$scope.modulo = 'Carreras';
 			$scope.nombreForm = 'Carrera';
@@ -17,9 +20,17 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			$scope.nueva = {};
 			$scope.carrera = {};
 			$scope.carreras = {};
-			$scope.sedeSel = {};
-			$scope.sede = {};
-			$scope.sedes = {};
+//			$scope.sedeSel = {};
+//			$scope.sede = {};
+//			$scope.sedes = {};
+//			$scope.localidades = {};
+//			$scope.localidadSel = {};
+//			$scope.partidos = {};
+//			$scope.partidoSel = {};
+//			$scope.provincias = {};
+//			$scope.provinciaSel = {};
+//			$scope.institutos = {};
+//			$scope.institutoSel = {};
 			
 			$scope.anios = [ {
 				'value' : 1
@@ -37,36 +48,107 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			
 			var orderBy = $filter('orderBy');
 
-			$scope.listarSedes = function() {
-				SedeService.listar({},
-					function (response){
-						$scope.success = response.ok;
-						if (response.ok) {
-							 $scope.sedes = angular.fromJson(response.data);
-							 $scope.sedeSel = $scope.sedes[-1];
-							 $scope.sedes = orderBy($scope.sedes, 'nombre');
-						} else {
-							$scope.msgError = 'No se pudieron obtener las sedes';
-							console.log('No se pudieron obtener las sedes');
-							$('#message-modal').modal('show');
-						}
-					},
-					function(error) {
-						alert(error);
-					})
-			};
+//			$scope.listarLocalidades = function() {
+//				LocalidadService.listar({}, 
+//					function (response){
+//						$scope.success = response.ok;
+//						if (response.ok) {
+//							$scope.localidades = angular.fromJson(response.data);
+//							$scope.localidades = orderBy($scope.localidades, ['nombre']);
+//						} else {
+//							$scope.msgError = response.errorMessage;
+//							console.log('No se pudieron obtener las Localidades');
+//							$('#message-modal').modal('show');
+//						}
+//					},
+//					function(error) {
+//						alert(error);
+//					})
+//			};
+//
+//			$scope.listarPartidos = function() {
+//				PartidoService.listar({}, 
+//					function(response) {
+//						$scope.success = response.ok;
+//						if (response.ok) {
+//							$scope.partidos = angular.fromJson(response.data);
+//							$scope.partidos = orderBy($scope.partidos, 'nombre');
+//						} else {
+//							$scope.msgError = response.errorMessage;
+//							console.log('No se pudieron obtener las Partidos');
+//							$('#message-modal').modal('show');
+//						}
+//					}, function(error) {
+//						alert(error);
+//					});
+//			};
+//			
+//			$scope.listarProvincias = function() {
+//				ProvinciaService.listar({}, 
+//					function(response) {
+//						$scope.success = response.ok;
+//						if (response.ok) {
+//							$scope.provincias = angular.fromJson(response.data);
+//							$scope.provincias = orderBy($scope.provincias, 'nombre');
+//						} else {
+//							$scope.msgError = response.errorMessage;
+//							console.log('No se pudieron obtener las Provincias');
+//							$('#message-modal').modal('show');
+//						}
+//					}, function(error) {
+//						alert(error);
+//					});
+//			};
+//			
+//			$scope.listarInstitutos = function() {
+//				InstitutoService.listar({}, 
+//					function (response){
+//						$scope.success = response.ok;
+//						if (response.ok) {
+//							$scope.institutos = angular.fromJson(response.data);
+//							$scope.institutos = orderBy($scope.institutos, ['nombre']);
+//						} else {
+//							$scope.msgError = response.errorMessage;
+//							console.log('No se pudieron obtener los Institutos');
+//							$('#message-modal').modal('show');
+//						}
+//					},
+//					function(error) {
+//						alert(error);
+//					})
+//			};
+			
+//			$scope.listarSedes = function() {
+//				SedeService.listar({},
+//					function (response){
+//						$scope.success = response.ok;
+//						if (response.ok) {
+//							 $scope.sedes = angular.fromJson(response.data);
+//							 $scope.sedeSel = $scope.sedes[-1];
+//							 $scope.sedes = orderBy($scope.sedes, 'nombre');
+//						} else {
+//							$scope.msgError = 'No se pudieron obtener las sedes';
+//							console.log('No se pudieron obtener las sedes');
+//							$('#message-modal').modal('show');
+//						}
+//					},
+//					function(error) {
+//						alert(error);
+//					})
+//			};
 			
 			$scope.guardar = function(nueva) {
-				nueva.sede = $scope.sedeSel; 
+//				nueva.sede = $scope.sedeSel; 
 				nueva.cantAnios = $scope.anioSel;
-				if (nueva != null && nueva.nombre != undefined && nueva.sede!=null) {
+				if (nueva != null && nueva.nombre != undefined) {
+//					if (nueva != null && nueva.nombre != undefined && nueva.sede!=null) {
 					CarreraService.guardar({
 						'nueva' : nueva
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = nueva.nombre + ', Guardada.';
-							$scope.sedeSel = $scope.sedes[-1];
+//							$scope.sedeSel = $scope.sedes[-1];
 							$scope.nueva = {};
 							$scope.anioSel = {};
 							$scope.listar();
@@ -125,18 +207,18 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 				$scope.nueva.nombre = carrera.nombre;
 				$scope.nueva.cantAnios = carrera.cantAnios;
 				$scope.anioSel = carrera.cantAnios;
-				var i = $scope.indiceDe($scope.sedes, carrera.sede.id, 'id');
-				if (i!=-1) {
-					$scope.sedeSel = $scope.sedes[i];
-				} else {
-					$scope.msgError = 'Error buscando la sede de la carrera a editar, en el listado.';
-					$('#message-modal').modal('show');
-				}
+//				var i = $scope.indiceDe($scope.sedes, carrera.sede.id, 'id');
+//				if (i!=-1) {
+//					$scope.sedeSel = $scope.sedes[i];
+//				} else {
+//					$scope.msgError = 'Error buscando la sede de la carrera a editar, en el listado.';
+//					$('#message-modal').modal('show');
+//				}
 				$scope.colapsarFormulario = false;
 			}
 
 			$scope.editar = function(carrera) {
-				carrera.localidad = $scope.localidadSel;
+//				carrera.localidad = $scope.localidadSel;
 				carrera.cantAnios = $scope.anioSel;
 				CarreraService.editar({
 					'carrera' : carrera
@@ -169,7 +251,7 @@ msegErpControllers.controller('CarreraCtrl', ['$scope', '$filter', 'CarreraServi
 			
 			$scope.limpiar = function() {
 				$scope.nueva = {};
-				$scope.sedeSel = $scope.sedes[-1];
+//				$scope.sedeSel = $scope.sedes[-1];
 				$scope.nueva.cantAnios = {};
 				$scope.carrera.cantAnios = {};
 				$scope.anioSel = {};

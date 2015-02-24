@@ -19,49 +19,57 @@
 			</div>
 			<!-- Panel Body -->
 			<div class="panel-body" collapse="colapsarFormulario">
-				<form role="form" name="formAction" ng-init="initListados()">
-					<div class="form-group" ng-class="{'has-error':docenteSel==null, 'has-success':docenteSel!=null}">
+				<dl class="dl-horizontal" ng-init="initListados()">
+					<dt>
+						<label>Docente</label>
+					</dt>
+					<dd>
 						<select class="form-control" ng-options="(docente.persona.nombre + ' ' + docente.persona.apellido) for docente in docentes" required ng-model="docenteSel">
 							<option value="">-- Docente --</option>
 						</select>
-					</div>
-					<div class="form-group" ng-class="{'has-error':asignaturaSel==null, 'has-success':asignaturaSel!=null}">
+					</dd>
+					<dt>
+						<label>Asignatura</label>
+					</dt>
+					<dd>
 						<select class="form-control" ng-options="(asignatura.nombre + ', ' + asignatura.anio + '°, ' + asignatura.carrera.nombre) for asignatura in asignaturas" required ng-model="asignaturaSel">
 							<option value="">-- Asignatura --</option>
 						</select>
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-4">
-							<select class="form-control" ng-options="mes.nombre for mes in meses" required ng-model="mesSel">
-								<option value="">-- Mes --</option>
-							</select>
-						</div>
-						<div class="form-group form-inline col-sm-4">
-				            <p class="input-group">
-				              <input placeholder="Año" type="text" class="form-control" datepicker-popup="{{formatYearOnly}}" ng-model="anioSel" is-open="openedAnio" 
-				              		max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" 
-				              		disabled/>
-				              <span class="input-group-btn">
-				                <button type="button" class="btn btn-default" ng-click="openAnio($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-				              </span>
-				            </p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-6">
-							<div class="input-group">
-						      	<input type="number" class="form-control" id="hcs" placeholder="HCS" ng-model="hcs" max="22" min="0">
-						      	<div class="input-group-addon">HCS Mensuales</div>
-						    </div>
-						</div>
-						<div class="form-group col-sm-5">
-							<div class="input-group">
-						      	<input type="number" class="form-control" id="faltas" placeholder="Hs" ng-model="faltas" max="50" min="0">
-						      	<div class="input-group-addon">Inasistencias</div>
-						    </div>
-					    </div>
-					</div>
-				</form>
+					</dd>
+					<dt>
+						<label>Mes</label>
+					</dt>
+					<dd>
+						<select class="form-control" ng-options="mes.nombre for mes in meses" required ng-model="mesSel">
+							<option value="">-- Mes --</option>
+						</select>
+					</dd>
+					<dt>
+						<label>Año</label>
+					</dt>
+					<dd>
+						<p class="input-group">
+			              <input placeholder="Año" type="text" class="form-control" datepicker-popup="{{formatYearOnly}}" ng-model="anioSel" is-open="openedAnio" 
+			              		max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" 
+			              		disabled/>
+			              <span class="input-group-btn">
+			                <button type="button" class="btn btn-default" ng-click="openAnio($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+			              </span>
+			            </p>
+					</dd>
+					<dt>
+						<label>HCS Mensuales</label>
+					</dt>
+					<dd>
+				      	<input type="number" class="form-control" id="hcs" placeholder="HCS" ng-model="hcs" max="22" min="0">
+					</dd>
+					<dt>
+						<label>Inasistencias</label>
+					</dt>
+					<dd>
+				      	<input type="number" class="form-control" id="faltas" placeholder="Hs" ng-model="faltas" max="50" min="0">
+					</dd>
+				</dl>
 			</div>
 			<!-- Panel Footer : Buttons -->
 			<div class="panel-footer" ng-show="!colapsarFormulario">
