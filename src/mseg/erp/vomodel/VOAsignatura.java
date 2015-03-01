@@ -10,6 +10,7 @@ public class VOAsignatura implements Serializable {
 	private String nombre;
 	private Integer anio;
 	private boolean extra;
+	private boolean checked;
 	private VOCarrera carrera;
 
 	@Override
@@ -62,6 +63,14 @@ public class VOAsignatura implements Serializable {
 
 	public void setExtra(boolean extra) {
 		this.extra = extra;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 }
