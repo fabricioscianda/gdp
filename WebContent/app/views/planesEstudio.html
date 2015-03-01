@@ -48,7 +48,7 @@
 								<div class="panel-body">
 									<div class="checkbox" ng-repeat="asignatura in asignaturas | orderBy:['extra','nombre']">
 										<label>
-											<input type="checkbox" value="asignatura.checked">{{asignatura.nombre}} {{(asignatura.extra)?' (Extracurricular)':''}}
+											<input type="checkbox" ng-checked="asignatura.checked" ng-model="asignatura.checked">{{asignatura.nombre}} {{(asignatura.extra)?' (Extracurricular)':''}}
 										</label>
 									</div>
 								</div>
