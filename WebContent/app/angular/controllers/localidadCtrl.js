@@ -73,8 +73,8 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = nueva.nombre + ', Guardada.';
-							$scope.partidoSel = $scope.partidos[-1];
 							$scope.nueva = {};
+							$scope.limpiar();
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
@@ -130,11 +130,18 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 				$scope.nueva.id = localidad.id;
 				$scope.nueva.cp = localidad.cp;
 				$scope.nueva.nombre = localidad.nombre;
-				var i = $scope.indiceDe($scope.partidos, localidad.partido.id, 'id');
+				var i = $scope.indiceDe($scope.provincias, localidad.partido.provincia.id, 'id');
+				if (i!=-1) {
+					$scope.provinciaSel = $scope.provincias[i];
+				} else {
+					$scope.msgError = 'Error buscando la provincia del partido a editar, en el listado.';
+					$('#message-modal').modal('show');
+				}
+				i = $scope.indiceDe($scope.partidos, localidad.partido.id, 'id');
 				if (i!=-1) {
 					$scope.partidoSel = $scope.partidos[i];
 				} else {
-					$scope.msgError = 'Error buscando el partido de la localidad a editar, en el listado.';
+					$scope.msgError = 'Error buscando el partido a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
 				$scope.colapsarFormulario = false;
@@ -148,6 +155,7 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 					$scope.success = response.ok;
 					if (response.ok) {
 						$scope.msgSuccess = localidad.nombre + ", Guardada.";
+						$scope.limpiar();
 						$scope.listar();
 					} else {
 						$scope.msgError = "No se pudo editar el elemento, " + localidad.nombre;
@@ -174,6 +182,7 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 			$scope.limpiar = function() {
 				$scope.nueva = {};
 				$scope.partidoSel = $scope.partidos[-1];
+				$scope.provinciaSel = $scope.provincias[-1];
 			}
 			
 			$scope.confirmarBorrar = function(localidad) {

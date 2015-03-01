@@ -18,7 +18,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			$scope.sede = {};
 			$scope.sedes = {};
 			$scope.localidad = {};
-			$scope.localidadSel = {};
+			$scope.localSel = {};
 			$scope.localidades = {};
 			$scope.partidos = {};
 			$scope.partidoSel = {};
@@ -47,7 +47,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 						$scope.success = response.ok;
 						if (response.ok) {
 							 $scope.localidades = angular.fromJson(response.data);
-							 $scope.localidadSel = $scope.localidades[-1];
+							 $scope.localSel = $scope.localidades[-1];
 							 $scope.localidades = orderBy($scope.localidades, 'nombre');
 						} else {
 							$scope.msgError = 'No se pudieron obtener las localidades';
@@ -114,7 +114,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			};
 			
 			$scope.guardar = function(nueva) {
-				nueva.localidad = $scope.localidadSel; 
+				nueva.localidad = $scope.localSel; 
 				nueva.instituto = $scope.institutoSel; 
 				if (nueva != null && nueva.nombre != undefined && nueva.localidad != null && nueva.instituto != null) {
 					SedeService.guardar({
@@ -123,11 +123,11 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = nueva.nombre + ', Guardada.';
-							$scope.localidadSel = $scope.localidades[-1];
+							$scope.localSel = $scope.localidades[-1];
 							$scope.partidoSel = $scope.partidos[-1];
 							$scope.provinciaSel = $scope.provincias[-1];
 							$scope.institutoSel = $scope.institutos[-1];
-							$scope.nueva = {};
+							$scope.limpiar();
 							$scope.listar();
 						} else {
 							$scope.msgError = 'No se pudo guardar.';
@@ -184,12 +184,11 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 				$scope.nueva.nombre = sede.nombre;
 				var i = $scope.indiceDe($scope.localidades, sede.localidad.id, 'id');
 				if (i!=-1) {
-					$scope.localidadSel = $scope.localidades[i];
+					$scope.localSel = $scope.localidades[i];
 				} else {
 					$scope.msgError = 'Error buscando la localidad de la sede a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
-				i = null;
 				i = $scope.indiceDe($scope.partidos, sede.localidad.partido.id, 'id');
 				if (i!=-1) {
 					$scope.partidoSel = $scope.partidos[i];
@@ -197,7 +196,6 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 					$scope.msgError = 'Error buscando el partido de la sede a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
-				i = null;
 				i = $scope.indiceDe($scope.provincias, sede.localidad.partido.provincia.id, 'id');
 				if (i!=-1) {
 					$scope.provinciaSel = $scope.provincias[i];
@@ -205,7 +203,6 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 					$scope.msgError = 'Error buscando la provincia de la sede a editar, en el listado.';
 					$('#message-modal').modal('show');
 				}
-				i = null;
 				i = $scope.indiceDe($scope.institutos, sede.instituto.id, 'id');
 				if (i!=-1) {
 					$scope.institutoSel = $scope.institutos[i];
@@ -217,7 +214,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			}
 
 			$scope.editar = function(sede) {
-				sede.localidad = $scope.localidadSel;
+				sede.localidad = $scope.localSel;
 				sede.partido = $scope.partidoSel;
 				sede.provincia = $scope.provinciaSel;
 				sede.instituto = $scope.institutoSel;
@@ -252,7 +249,7 @@ msegErpControllers.controller('SedeCtrl', ['$scope', '$filter', 'SedeService', '
 			
 			$scope.limpiar = function() {
 				$scope.nueva = {};
-				$scope.localidadSel = $scope.localidades[-1];
+				$scope.localSel = $scope.localidades[-1];
 				$scope.partidoSel = $scope.partidos[-1];
 				$scope.provinciaSel = $scope.provincias[-1];
 				$scope.institutoSel = $scope.institutos[-1];
