@@ -19,7 +19,6 @@ msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstu
 			$scope.planesEstudio = {};
 			$scope.anioSel = null;
 			$scope.asignaturas = {};
-			$scope.asignaturaSel = {};
 
 			$scope.colapsarFormulario = true;
 
@@ -70,10 +69,12 @@ msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstu
 						'id' : nuevo.id, 
 						'nombre' : nuevo.nombre,
 						'anio' : $scope.anioSel.getTime(),
+						'asignaturas' : $scope.asignaturas,
 					}, function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
 							$scope.msgSuccess = nuevo.nombre + ', Guardado.';
+							$scope.limpiarAsignaturasSelect();
 							$scope.listar();
 							$scope.cerrarForm();
 						} else {
@@ -111,6 +112,7 @@ msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstu
 					$scope.success = response.ok;
 					if (response.ok) {
 						$scope.asignaturas = angular.fromJson(response.data);
+						$scope.limpiarAsignaturasSelect();
 					} else {
 						$scope.msgError = 'No se pudieron obtener las asignaturas.';
 						$('#message-modal').modal('show');
@@ -121,6 +123,12 @@ msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstu
 				});
 			};
 
+			$scope.limpiarAsignaturasSelect = function() {
+				for(var i = 0, len = $scope.asignaturas.length; i < len; i++) {
+					$scope.asignaturas[i].checked = false;
+			    }
+			}
+			
 			$scope.borrar = function(planEstudio) {
 				PlanEstudioService.borrar({
 					'id' : planEstudio.id
@@ -146,6 +154,14 @@ msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstu
 				$scope.nuevo.nombre = planEstudio.nombre;
 				$scope.anioSel = new Date();
 				$scope.anioSel.setFullYear(planEstudio.anio);
+				var asignaturas = planEstudio.asignaturas; 
+				for(var i = 0, len = $scope.asignaturas.length; i < len; i++) {
+					if ($scope.indiceDe(asignaturas, $scope.asignaturas[i].id, 'id') > -1) {
+						$scope.asignaturas[i].checked = true;
+					} else {
+						$scope.asignaturas[i].checked = false;
+					}
+			    }
 				$scope.colapsarFormulario = false;
 			}
 
@@ -166,6 +182,7 @@ msegErpControllers.controller('PlanEstudioCtrl', ['$scope', '$filter', 'PlanEstu
 				$scope.nuevo = {};
 				$scope.planEstudio.anio = {};
 				$scope.anioSel = null;
+				$scope.limpiarAsignaturasSelect();
 			}
 			
 			$scope.confirmarBorrar = function(planEstudio) {
