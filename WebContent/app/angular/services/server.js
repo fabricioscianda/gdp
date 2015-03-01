@@ -4,7 +4,7 @@ var msegErpServices = angular.module('msegErpServices');
 msegErpServices.factory('srvHttp', function($http, $rootScope, $location, $cookieStore) {
 
 	var s = window.location.protocol + "//" + window.location.host;
-	var serviceUrl = s + "/msegErp/rest/";
+	var serviceUrl = s + "/gedo/rest/";
 	// var serviceUrl = s + "/rest/";
 
 	var wrapped = function(originalFn) {
