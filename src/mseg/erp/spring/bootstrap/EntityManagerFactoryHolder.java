@@ -19,7 +19,7 @@ public class EntityManagerFactoryHolder {
 		try {
 			_logger.info("Starting EMF Component Initter");
 
-			emf = Persistence.createEntityManagerFactory("msegErp");
+			emf = Persistence.createEntityManagerFactory("gedo");
 			emf.createEntityManager();
 
 			_logger.info("EMF init method executed correctly");
