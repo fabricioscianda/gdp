@@ -1,6 +1,9 @@
 package mseg.erp.rest;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +11,7 @@ import javax.persistence.EntityManager;
 
 import mseg.erp.dao.planEstudio.IPlanEstudioDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOAsignatura;
 import mseg.erp.vomodel.VOPlanEstudio;
 import mseg.erp.vomodel.VOResponse;
 
@@ -19,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 @RestController
 @RequestMapping(value = "/rest/planEstudioService")
@@ -48,6 +54,24 @@ public class PlanEstudioService {
 		String nombre = gson.fromJson(object.get("nombre"), String.class);
 		Long anio = gson.fromJson(object.get("anio"), Long.class);
 		Long id = gson.fromJson(object.get("id"), Long.class);
+
+		List<VOAsignatura> asignaturasList = null, asignaturas = new ArrayList<VOAsignatura>();
+		JsonArray asignaturasJson = object.get("asignaturas").getAsJsonArray();
+		if (!asignaturasJson.isJsonNull()) {
+			Type listType = new TypeToken<List<VOAsignatura>>() {}.getType();
+			asignaturasList = gson.fromJson(asignaturasJson, listType);
+		}
+		if (asignaturasList != null && asignaturasList.size() != 0) {
+			for (Iterator<VOAsignatura> iterator = asignaturasList.iterator(); iterator.hasNext();) {
+				VOAsignatura voAsignatura = (VOAsignatura) iterator.next();
+				if (voAsignatura.isChecked()) {
+					asignaturas.add(voAsignatura);
+				}
+			}
+			if (asignaturas.size() == 0) {
+				asignaturas = null;
+			}
+		}
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(anio);
@@ -57,10 +81,21 @@ public class PlanEstudioService {
 			voPlanEstudio.setNombre(StringUtils.capitalize(nombre));
 			voPlanEstudio.setAnio(calendar.get(Calendar.YEAR));
 			emfh.beginTransaction(em);
+			//	si se trata de un plan de estudio existente
 			if (id != null && id != 0) {
+				//	se setean las asignaturas en null para eliminar las anteriores
+				voPlanEstudio.setAsignaturas(null);
 				planEstudio = planEstudioDAO.modificar(voPlanEstudio, em);
 			} else {
+				// se setean las asignaturas definitivas, ya que no existian previas
+				voPlanEstudio.setAsignaturas(asignaturas);
 				planEstudio = planEstudioDAO.guardar(voPlanEstudio, em);
+			}
+			//	si se guardo correctamente y ademas era un plan existente
+			if (planEstudio != null && id != null && id != 0) {
+				// se setean las asignaturas definitivas
+				voPlanEstudio.setAsignaturas(asignaturas);
+				planEstudio = planEstudioDAO.modificar(voPlanEstudio, em);
 			}
 			emfh.commitTransaction(em);
 			voResponse.setData(gson.toJson(planEstudio));
