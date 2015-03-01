@@ -37,8 +37,8 @@ public class RequestHandlerInterceptor extends HandlerInterceptorAdapter {
 
 		VOResponse responsevo = new VOResponse();
 
-		if ((!request.getRequestURI().equals("/msegErp/rest/loginService/login"))
-		 && (!request.getRequestURI().equals("/msegErp/rest/loginService/logout"))) {
+		if ((!request.getRequestURI().equals("/gedo/rest/loginService/login"))
+		 && (!request.getRequestURI().equals("/gedo/rest/loginService/logout"))) {
 			
 			String clientToken = request.getHeader("authorization");
 			if (clientToken != null) {
