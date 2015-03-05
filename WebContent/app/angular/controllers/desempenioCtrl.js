@@ -2,8 +2,16 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Desempeño */
-msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'DesempenioService', 'AsignaturaService', 'DocenteService',  
-		function($scope, $filter, DesempenioService, AsignaturaService, DocenteService) {
+msegErpControllers.controller(
+				'DesempenioCtrl',
+				[
+						'$scope',
+						'$filter',
+						'DesempenioService',
+						'AsignaturaService',
+						'DocenteService',
+						function($scope, $filter, DesempenioService,
+								AsignaturaService, DocenteService) {
 
 			$scope.modulo = 'Desempeños';
 			$scope.nombreForm = 'Desempeño';
@@ -103,7 +111,7 @@ msegErpControllers.controller('DesempenioCtrl', ['$scope', '$filter', 'Desempeni
 				startingDay : 1
 			};
 			
-			$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'yyyy' ];
+			$scope.formats = [ 'dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate', 'yyyy' ];
 			
 			$scope.formatYearOnly = $scope.formats[4];
 			

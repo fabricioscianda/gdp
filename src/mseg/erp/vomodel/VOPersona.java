@@ -120,14 +120,6 @@ public class VOPersona implements Serializable {
 		this.empleos = empleos;
 	}
 
-	public VOInfoAdministrativa getInfoAdministrativa() {
-		return infoAdministrativa;
-	}
-
-	public void setInfoAdministrativa(VOInfoAdministrativa infoAdministrativa) {
-		this.infoAdministrativa = infoAdministrativa;
-	}
-
 	public VOLocalidad getLocalidad() {
 		return localidad;
 	}
@@ -142,6 +134,14 @@ public class VOPersona implements Serializable {
 
 	public void setCp(String cp) {
 		this.cp = cp;
+	}
+
+	public VOInfoAdministrativa getInfoAdministrativa() {
+		return infoAdministrativa;
+	}
+
+	public void setInfoAdministrativa(VOInfoAdministrativa infoAdministrativa) {
+		this.infoAdministrativa = infoAdministrativa;
 	}
 
 	

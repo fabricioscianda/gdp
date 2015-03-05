@@ -43,8 +43,9 @@ msegErpControllers.controller('DocenteCtrl', [
 			$scope.colapsarFormulario = true;
 			$scope.cuilTipoSel = {};
 			$scope.cuilValidadorSel = {};
-			$scope.docente = {};
+			$scope.docente = null;
 			$scope.docentes = {};
+			$scope.docentesMini = {};
 			$scope.documentacionActivo = false;
 			$scope.domicilios = {};
 			$scope.edad = null;
@@ -107,6 +108,8 @@ msegErpControllers.controller('DocenteCtrl', [
 			$scope.validadoresCuil = [0,1,2,3,4,5,6,7,8,9];
 			
 			var orderBy = $filter('orderBy');
+			
+			$scope.status = {};
 			
 			/*
 			 * datetime picker
@@ -569,12 +572,38 @@ msegErpControllers.controller('DocenteCtrl', [
 				}
 			};
 
-			$scope.listar = function() {
-				DocenteService.listar({}, 
+			$scope.docenteActualID = null;
+			
+			$scope.mostrarDetalle = function(docenteMini) {
+				DocenteService.encontrar(
+					{
+						'id' : docenteMini.id
+					},
 					function(response) {
 						$scope.success = response.ok;
 						if (response.ok) {
-							$scope.docentes = angular.fromJson(response.data);
+							$scope.docente = angular.fromJson(response.data);
+							$scope.docenteActualID = $scope.docente.id;
+						} else {
+							$scope.msgError = response.errorMessage;
+							$('#message-modal').modal('show');
+						}
+						;
+					}, function(error) {
+						alert(error);
+					})
+			};
+			
+			$scope.listar = function() {
+				DocenteService.listarMinimo({}, 
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.docentesMini = angular.fromJson(response.data);
+							for (var i = 0; i < $scope.docentesMini.length; i++) {
+								var d = $scope.docentesMini[i];
+								d.visible = false;
+							}
 						} else {
 							$scope.msgError = response.errorMessage;
 							$('#message-modal').modal('show');
@@ -604,93 +633,128 @@ msegErpControllers.controller('DocenteCtrl', [
 			}
 
 			$scope.editarElemento = function(docente) {
-				$scope.id = docente.id;
-				$scope.nombre = docente.persona.nombre;
-				$scope.apellido = docente.persona.apellido;
-				$scope.fechaNac = new Date(docente.persona.fechaNac);
-				$scope.numeroDoc = docente.persona.numeroDoc;
-				$scope.numeroDocCuil = docente.persona.cuil.substring(2,10);
-				if (docente.persona.tipoDoc != undefined && docente.persona.tipoDoc != null) {
-					var i = $scope.indiceDe($scope.tiposDoc, docente.persona.tipoDoc.id, 'id');
-					if (i != -1) {
-						$scope.tipoDocSel = $scope.tiposDoc[i].id;
-					} else {
-						$scope.msgError = 'Error buscando el tipo de documento del docente a editar, en el listado.';
-						$('#message-modal').modal('show');
-						$scope.success = false;
-					}
-				}
-				$scope.cuilTipoSel = parseInt(docente.persona.cuil.substring(0,2));
-				$scope.cuilValidadorSel = parseInt(docente.persona.cuil.substring(10,11));
-				$scope.localSel = docente.persona.localidad;
-				$scope.cp = docente.persona.cp;
-				$scope.nuevosDomicilios = docente.persona.domicilios;
-				$scope.nuevosEmpleos = docente.persona.empleos;
-				$scope.nuevosMediosContacto = docente.persona.mediosContacto;
-				$scope.nuevasFormacionesAcademicas = docente.persona.formacionAcademica;
-				$scope.infoAdministrativa = docente.persona.infoAdministrativa;
+				DocenteService.encontrar(
+					{
+						'id' : docente.id
+					},
+					function(response) {
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.docente = angular.fromJson(response.data);
+							$scope.id = $scope.docente.id;
+							$scope.nombre = $scope.docente.persona.nombre;
+							$scope.apellido = $scope.docente.persona.apellido;
+							$scope.fechaNac = new Date($scope.docente.persona.fechaNac);
+							var fechaActual = new Date();
+							$scope.edad = (fechaActual.getFullYear() - $scope.fechaNac.getFullYear());
+							$scope.numeroDoc = $scope.docente.persona.numeroDoc;
+							$scope.numeroDocCuil = $scope.docente.persona.cuil.substring(2,10);
+							if ($scope.docente.persona.tipoDoc != undefined && $scope.docente.persona.tipoDoc != null) {
+								var i = $scope.indiceDe($scope.tiposDoc, $scope.docente.persona.tipoDoc.id, 'id');
+								if (i != -1) {
+									$scope.tipoDocSel = $scope.tiposDoc[i].id;
+								} else {
+									$scope.msgError = 'Error buscando el tipo de documento del docente a editar, en el listado.';
+									$('#message-modal').modal('show');
+									$scope.success = false;
+								}
+							}
+							$scope.cuilTipoSel = parseInt($scope.docente.persona.cuil.substring(0,2));
+							$scope.cuilValidadorSel = parseInt($scope.docente.persona.cuil.substring(10,11));
+							var i = $scope.indiceDe($scope.provincias, $scope.docente.persona.localidad.partido.provincia.id, 'id');
+							if (i!=-1) {
+								$scope.provinciaSel = $scope.provincias[i];
+							} else {
+								$scope.msgError = 'Error buscando la provincia del docente a editar, en el listado.';
+								$('#message-modal').modal('show');
+							}
+							i = $scope.indiceDe($scope.partidos, $scope.docente.persona.localidad.partido.id, 'id');
+							if (i!=-1) {
+								$scope.partidoSel = $scope.partidos[i];
+							} else {
+								$scope.msgError = 'Error buscando el partido del docente a editar, en el listado.';
+								$('#message-modal').modal('show');
+							}
+							i = $scope.indiceDe($scope.localidades, $scope.docente.persona.localidad.id, 'id');
+							if (i!=-1) {
+								$scope.localSel = $scope.localidades[i];
+							} else {
+								$scope.msgError = 'Error buscando la localidad del docente a editar, en el listado.';
+								$('#message-modal').modal('show');
+							}
+							$scope.cp = $scope.docente.persona.cp;
+							$scope.nuevosDomicilios = $scope.docente.persona.domicilios;
+							$scope.nuevosEmpleos = $scope.docente.persona.empleos;
+							$scope.nuevosMediosContacto = $scope.docente.persona.mediosContacto;
+							$scope.nuevasFormacionesAcademicas = $scope.docente.persona.formacionAcademica;
+							$scope.infoAdministrativa = $scope.docente.persona.infoAdministrativa;
+							fechaActual = new Date();
+							$scope.antiguedad = (fechaActual.getFullYear() - (new Date($scope.infoAdministrativa.fechaAlta)).getFullYear());
+							
+							if ($scope.infoAdministrativa != undefined && $scope.infoAdministrativa != null) {
+								if ($scope.docente.persona.infoAdministrativa.tipoPersonal != undefined && $scope.docente.persona.infoAdministrativa.tipoPersonal != null) {
+									var i = $scope.indiceDe($scope.tiposPersonal, $scope.docente.persona.infoAdministrativa.tipoPersonal.id, 'id');
+									if (i!=-1) {
+										$scope.tipoPersonalSel = $scope.tiposPersonal[i];
+										$scope.activarSituacionRevista($scope.tipoPersonalSel);
+									} else {
+										$scope.msgError = 'Error buscando el Tipo de Personal a editar, en el listado.';
+										$('#message-modal').modal('show');
+									}
+								}
+								
+								if ($scope.docente.persona.infoAdministrativa.tipoEstadoContractual != undefined && $scope.docente.persona.infoAdministrativa.tipoEstadoContractual != null) {
+									var i = $scope.indiceDe($scope.tiposEstadoContractual, $scope.docente.persona.infoAdministrativa.tipoEstadoContractual.id, 'id');
+									if (i!=-1) {
+										$scope.tipoEstadoContractualSel = $scope.tiposEstadoContractual[i];
+										$scope.activarExpedienteResolucion($scope.tipoEstadoContractualSel);
+									} else {
+										$scope.msgError = 'Error buscando Tipo de Estado Contractual a editar, en el listado.';
+										$('#message-modal').modal('show');
+									}
+								}
 				
-				if ($scope.infoAdministrativa != undefined && $scope.infoAdministrativa != null) {
-					if (docente.persona.infoAdministrativa.tipoPersonal != undefined && docente.persona.infoAdministrativa.tipoPersonal != null) {
-						var i = $scope.indiceDe($scope.tiposPersonal, docente.persona.infoAdministrativa.tipoPersonal.id, 'id');
-						if (i!=-1) {
-							$scope.tipoPersonalSel = $scope.tiposPersonal[i];
-						} else {
-							$scope.msgError = 'Error buscando el Tipo de Personal a editar, en el listado.';
-							$('#message-modal').modal('show');
-						}
-					}
-					
-					if (docente.persona.infoAdministrativa.tipoEstadoContractual != undefined && docente.persona.infoAdministrativa.tipoEstadoContractual != null) {
-						var i = $scope.indiceDe($scope.tiposEstadoContractual, docente.persona.infoAdministrativa.tipoEstadoContractual.id, 'id');
-						if (i!=-1) {
-							$scope.tipoEstadoContractualSel = $scope.tiposEstadoContractual[i];
-						} else {
-							$scope.msgError = 'Error buscando Tipo de Estado Contractual a editar, en el listado.';
-							$('#message-modal').modal('show');
-						}
-					}
-	
-					if (docente.persona.infoAdministrativa.tipoSituacion != undefined && docente.persona.infoAdministrativa.tipoSituacion != null) {
-						var i = $scope.indiceDe($scope.tiposSituacionActual, docente.persona.infoAdministrativa.tipoSituacion.id, 'id');
-						if (i!=-1) {
-							$scope.tipoSituacionActualSel = $scope.tiposSituacionActual[i];
-						} else {
-							$scope.msgError = 'Error buscando el Tipo de Situacion Actual a editar, en el listado.';
-							$('#message-modal').modal('show');
-						}
-					}
-	
-					if (docente.persona.infoAdministrativa.tipoSituacionRevista != undefined && docente.persona.infoAdministrativa.tipoSituacionRevista != null) {
-						var i = $scope.indiceDe($scope.tiposSituacionRevista, docente.persona.infoAdministrativa.tipoSituacionRevista.id, 'id');
-						if (i!=-1) {
-							$scope.tipoSituacionRevistaSel = $scope.tiposSituacionRevista[i];
-						} else {
-							$scope.msgError = 'Error buscando el Tipo de Situacion de Revista a editar, en el listado.';
-							$('#message-modal').modal('show');
-						}
-					}
-					
-					if (docente.persona.infoAdministrativa.tipoMotivo != undefined && docente.persona.infoAdministrativa.tipoMotivo != null) {
-						var i = $scope.indiceDe($scope.tiposMotivo, docente.persona.infoAdministrativa.tipoMotivo.id, 'id');
-						if (i!=-1) {
-							$scope.tipoMotivoSel = $scope.tiposMotivo[i];
-						} else {
-							$scope.msgError = 'Error buscando el Tipo de Motivo a editar, en el listado.';
-							$('#message-modal').modal('show');
-						}
-					}
-				}
+								if ($scope.docente.persona.infoAdministrativa.tipoSituacion != undefined && $scope.docente.persona.infoAdministrativa.tipoSituacion != null) {
+									var i = $scope.indiceDe($scope.tiposSituacionActual, $scope.docente.persona.infoAdministrativa.tipoSituacion.id, 'id');
+									if (i!=-1) {
+										$scope.tipoSituacionActualSel = $scope.tiposSituacionActual[i];
+										$scope.activarMotivo($scope.tipoSituacionActualSel);
+									} else {
+										$scope.msgError = 'Error buscando el Tipo de Situacion Actual a editar, en el listado.';
+										$('#message-modal').modal('show');
+									}
+								}
 				
-				$scope.colapsarFormulario = false;
-			}
-
-			$scope.indiceDe = function (array, cadena, propiedad) {
-			    for(var i = 0, len = array.length; i < len; i++) {
-			        if (array[i][propiedad] === cadena) 
-			        	return i;
-			    }
-			    return -1;
+								if ($scope.docente.persona.infoAdministrativa.tipoSituacionRevista != undefined && $scope.docente.persona.infoAdministrativa.tipoSituacionRevista != null) {
+									var i = $scope.indiceDe($scope.tiposSituacionRevista, $scope.docente.persona.infoAdministrativa.tipoSituacionRevista.id, 'id');
+									if (i!=-1) {
+										$scope.tipoSituacionRevistaSel = $scope.tiposSituacionRevista[i];
+									} else {
+										$scope.msgError = 'Error buscando el Tipo de Situacion de Revista a editar, en el listado.';
+										$('#message-modal').modal('show');
+									}
+								}
+								
+								if ($scope.docente.persona.infoAdministrativa.tipoMotivo != undefined && $scope.docente.persona.infoAdministrativa.tipoMotivo != null) {
+									var i = $scope.indiceDe($scope.tiposMotivo, $scope.docente.persona.infoAdministrativa.tipoMotivo.id, 'id');
+									if (i!=-1) {
+										$scope.tipoMotivoSel = $scope.tiposMotivo[i];
+									} else {
+										$scope.msgError = 'Error buscando el Tipo de Motivo a editar, en el listado.';
+										$('#message-modal').modal('show');
+									}
+								}
+							}
+							
+							$scope.colapsarFormulario = false;
+						} else {
+							$scope.msgError = response.errorMessage;
+							$('#message-modal').modal('show');
+						}
+						;
+					}, function(error) {
+						alert(error);
+					})
 			}
 
 			$scope.cerrarForm = function() {
@@ -703,14 +767,18 @@ msegErpControllers.controller('DocenteCtrl', [
 				$scope.nombre = null;
 				$scope.apellido = null;
 				$scope.fechaNac = null;
+				$scope.edad = null;
 				$scope.tipoDocSel = null;
 				$scope.numeroDoc = null;
 				$scope.cuilTipoSel = null;
 				$scope.numeroDocCuil = null;
 				$scope.cuilValidadorSel = null;
 				$scope.localSel = null;
+				$scope.partidoSel = null;
+				$scope.provinciaSel = null;
 				$scope.cp = null;
 				$scope.infoAdministrativa = null;
+				$scope.antiguedad = null;
 				$scope.tipoDocSel = $scope.tiposDoc[-1];
 				$scope.tipoPersonalSel = null;
 				$scope.tipoEstadoContractualSel = null;

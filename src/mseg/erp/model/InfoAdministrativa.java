@@ -44,7 +44,7 @@ public class InfoAdministrativa implements Serializable {
 	private boolean titulos;
 	private boolean certAntec;
 	private boolean certReinc;
-	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY)
 	private Persona persona;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TipoEstadoContractual tipoEstadoContractual;
@@ -92,14 +92,6 @@ public class InfoAdministrativa implements Serializable {
 		this.fechaAlta = fechaAlta;
 	}
 
-	public Long getFechaMotivo() {
-		return fechaMotivo;
-	}
-
-	public void setFechaMotivo(Long fechaMotivo) {
-		this.fechaMotivo = fechaMotivo;
-	}
-
 	public String getNroExpe() {
 		return nroExpe;
 	}
@@ -130,14 +122,6 @@ public class InfoAdministrativa implements Serializable {
 
 	public void setTipoEstadoContractual(TipoEstadoContractual tipoEstadoContractual) {
 		this.tipoEstadoContractual = tipoEstadoContractual;
-	}
-
-	public TipoMotivo getTipoMotivo() {
-		return tipoMotivo;
-	}
-
-	public void setTipoMotivo(TipoMotivo tipoMotivo) {
-		this.tipoMotivo = tipoMotivo;
 	}
 
 	public TipoSituacionRevista getTipoSituacionRevista() {
@@ -218,6 +202,22 @@ public class InfoAdministrativa implements Serializable {
 
 	public void setCertReinc(boolean certReinc) {
 		this.certReinc = certReinc;
+	}
+
+	public Long getFechaMotivo() {
+		return fechaMotivo;
+	}
+
+	public void setFechaMotivo(Long fechaMotivo) {
+		this.fechaMotivo = fechaMotivo;
+	}
+
+	public TipoMotivo getTipoMotivo() {
+		return tipoMotivo;
+	}
+
+	public void setTipoMotivo(TipoMotivo tipoMotivo) {
+		this.tipoMotivo = tipoMotivo;
 	}
 
 }

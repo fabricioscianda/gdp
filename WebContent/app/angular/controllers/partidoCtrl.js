@@ -2,8 +2,8 @@
 var msegErpControllers = angular.module('msegErpControllers');
 
 /* Partido */
-msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoService', 'ProvinciaService', 
-		function($scope, $filter, PartidoService, ProvinciaService) {
+msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', '$rootScope', 'PartidoService', 'ProvinciaService', 
+		function($scope, $filter, $rootScope, PartidoService, ProvinciaService) {
 
 			$scope.modulo = 'Partidos';
 			$scope.nombreForm = 'Partido';
@@ -110,7 +110,7 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 				$scope.nuevo = {};
 				$scope.nuevo.id = partido.id;
 				$scope.nuevo.nombre = partido.nombre;
-				var i = $scope.indiceDe($scope.provincias, partido.provincia.id, 'id');
+				var i = $rootScope.indiceDe($scope.provincias, partido.provincia.id, 'id');
 				if (i!=-1) {
 					$scope.provinciaSel = $scope.provincias[i];
 				} else {
@@ -138,14 +138,6 @@ msegErpControllers.controller('PartidoCtrl', ['$scope', '$filter', 'PartidoServi
 				});
 			}
 
-			$scope.indiceDe = function (array, cadena, propiedad) {
-			    for(var i = 0, len = array.length; i < len; i++) {
-			        if (array[i][propiedad] === cadena) 
-			        	return i;
-			    }
-			    return -1;
-			}
-			
 			$scope.cerrarForm = function() {
 				$scope.limpiar();
 				$scope.colapsarFormulario = true;

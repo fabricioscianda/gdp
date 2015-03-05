@@ -68,14 +68,6 @@ public class VOInfoAdministrativa implements Serializable {
 		this.fechaAlta = fechaAlta;
 	}
 
-	public Long getFechaMotivo() {
-		return fechaMotivo;
-	}
-
-	public void setFechaMotivo(Long fechaMotivo) {
-		this.fechaMotivo = fechaMotivo;
-	}
-
 	public String getNroExpe() {
 		return nroExpe;
 	}
@@ -98,14 +90,6 @@ public class VOInfoAdministrativa implements Serializable {
 
 	public void setTipoEstadoContractual(VOTipoEstadoContractual tipoEstadoContractual) {
 		this.tipoEstadoContractual = tipoEstadoContractual;
-	}
-
-	public VOTipoMotivo getTipoMotivo() {
-		return tipoMotivo;
-	}
-
-	public void setTipoMotivo(VOTipoMotivo tipoMotivo) {
-		this.tipoMotivo = tipoMotivo;
 	}
 
 	public VOTipoSituacionRevista getTipoSituacionRevista() {
@@ -186,6 +170,22 @@ public class VOInfoAdministrativa implements Serializable {
 
 	public void setCertReinc(boolean certReinc) {
 		this.certReinc = certReinc;
+	}
+
+	public Long getFechaMotivo() {
+		return fechaMotivo;
+	}
+
+	public void setFechaMotivo(Long fechaMotivo) {
+		this.fechaMotivo = fechaMotivo;
+	}
+
+	public VOTipoMotivo getTipoMotivo() {
+		return tipoMotivo;
+	}
+
+	public void setTipoMotivo(VOTipoMotivo tipoMotivo) {
+		this.tipoMotivo = tipoMotivo;
 	}
 
 }

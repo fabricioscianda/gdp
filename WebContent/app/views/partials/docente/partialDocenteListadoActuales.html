@@ -1,202 +1,51 @@
-<div class="row col-sm-11">
-	<!-- Panel -->
-	<div class="panel panel-primary" ng-init="listar()">
-		<!-- Panel Header -->
-		<div class="panel-heading">
-			<h4 class="panel-title">{{modulo}} Actuales (click en la linea para detalles del docente)</h4>
-		</div>
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-0">
+		<!-- Panel -->
+		<div class="panel panel-primary" ng-init="listar()">
+			<!-- Panel Header -->
+			<div class="panel-heading">
+				<h4 class="panel-title">{{modulo}} Actuales</h4>
+			</div>
 
-		<accordion ng-show="docentes.length!=0" close-others="true"> 
-			<accordion-group is-open="status.open" ng-repeat="docente in docentes">
-				<accordion-heading>
-					<div class="row">
-						<div class="pull-left">
-							{{docente.persona.nombre + ' ' + docente.persona.apellido + ' - Legajo N° ' + docente.persona.infoAdministrativa.nroLegajo + ' - ' + 
-							docente.persona.infoAdministrativa.tipoPersonal.nombre + ' - ' + docente.persona.infoAdministrativa.tipoSituacion.nombre + 
-							(docente.persona.infoAdministrativa.tipoSituacionRevista!=null ? (' - ' + docente.persona.infoAdministrativa.tipoSituacionRevista.nombre) : '') 
-							+ ' - Antiguedad ' + (docente.persona.infoAdministrativa.fechaAlta | antiguedad:docente.persona.infoAdministrativa.fechaAlta) + (((docente.persona.infoAdministrativa.fechaAlta | antiguedad:docente.persona.infoAdministrativa.fechaAlta)==1) ? ' año' : ' años')}}
-						</div>
-						<div class="pull-right"> 
-							<a href="#/{{urlModulo}}" ng-click="editarElemento(docente)">
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							</a>
-							<a href="#/{{urlModulo}}" ng-click="confirmarBorrar(docente)">
-								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-							</a>
-						</div>
-					</div>		
-				</accordion-heading>
-				<div class="row">
-					<!-- Info. Personal -->
-					<div class="col-sm-5">
-						<div class="panel panel-success">
-							<div class="panel-heading">Informacion Personal</div>
-							<div class="panel-body">
-								<dl class="dl-horizontal">
-								  <dt>Apellido y Nombre</dt><dd>{{docente.persona.apellido + ' ' + docente.persona.nombre}}</dd>
-								  <dt>Tipo y Nro. de Doc.</dt><dd>{{docente.persona.tipoDoc.nombre + ' ' + (docente.persona.numeroDoc | number:0)}}</dd>
-								  <dt>CUIL</dt><dd>{{docente.persona.cuil | cuil}}</dd>
-								  <dt>Fecha Nac. y Edad</dt><dd>{{(docente.persona.fechaNac | date:'dd/MM/yyyy') + ' (' + (docente.persona.fechaNac | antiguedad:docente.persona.fechaNac) + ' años)'}}</dd>
-								  <dt>Lugar de Nac.</dt><dd>{{docente.persona.localidad.nombre + ' (' + docente.persona.localidad.partido.nombre + ', ' + docente.persona.localidad.partido.provincia.nombre + ')'}}</dd>
-								  <dt>Código Postal</dt><dd>{{docente.persona.cp}}</dd>
-								</dl>
-							</div>
-						</div>
-					</div>
-					<!-- Info. Administrativa -->
-					<div class="col-sm-5">
-						<div class="panel panel-danger">
-							<div class="panel-heading">Informacion Administrativa</div>
-							<div class="panel-body">
-								<dl class="dl-horizontal">
-									<dt>Legajo</dt><dd>{{docente.persona.infoAdministrativa.nroLegajo}}</dd>
-									<dt>Fecha Alta</dt><dd>{{docente.persona.infoAdministrativa.fechaAlta | date:'dd/MM/yyyy'}}</dd>
-									<dt>Antigüedad</dt><dd>{{docente.persona.infoAdministrativa.fechaAlta | antiguedad:docente.persona.infoAdministrativa.fechaAlta}} {{((docente.persona.infoAdministrativa.fechaAlta | antiguedad:docente.persona.infoAdministrativa.fechaAlta)==1) ? 'año' : 'años'}}</dd>
-									<dt>Personal</dt><dd>{{docente.persona.infoAdministrativa.tipoPersonal.nombre}}</dd>
-									<dt ng-if="docente.persona.infoAdministrativa.tipoSituacionRevista!=null">Situacion Revista</dt><dd ng-if="docente.persona.infoAdministrativa.tipoSituacionRevista!=null">{{docente.persona.infoAdministrativa.tipoSituacionRevista.nombre}}</dd>
-									<dt>Situación Actual</dt><dd>{{docente.persona.infoAdministrativa.tipoSituacion.nombre}}</dd>
-									<dt ng-if="docente.persona.infoAdministrativa.tipoMotivo!=null">Motivo</dt><dd ng-if="docente.persona.infoAdministrativa.tipoMotivo!=null">{{docente.persona.infoAdministrativa.tipoMotivo.}}</dd>
-									<dt ng-if="docente.persona.infoAdministrativa.tipoMotivo!=null">Fecha</dt><dd ng-if="docente.persona.infoAdministrativa.tipoMotivo!=null">{{docente.persona.infoAdministrativa.fechaMotivo | date:'dd/MM/yyyy'}}</dd>
-									<dt>Estado Contractual</dt><dd>{{docente.persona.infoAdministrativa.tipoEstadoContractual.nombre}}</dd>
-									<dt ng-if="(docente.persona.infoAdministrativa.ddjj || docente.persona.infoAdministrativa.fotoDoc || docente.persona.infoAdministrativa.cuil
-											|| docente.persona.infoAdministrativa.cv || docente.persona.infoAdministrativa.titulos || docente.persona.infoAdministrativa.certAnte
-											|| docente.persona.infoAdministrativa.certReinc)">Doc. Entregada</dt>
-									<dd>
-										<ul>
-											<li ng-if="docente.persona.infoAdministrativa.ddjj">Declaración Jurada</li>
-											<li ng-if="docente.persona.infoAdministrativa.fotoDoc">Fotocopia DNI</li>
-											<li ng-if="docente.persona.infoAdministrativa.cuil">CUIL</li>
-											<li ng-if="docente.persona.infoAdministrativa.cv">CV</li>
-											<li ng-if="docente.persona.infoAdministrativa.titulos">Títulos</li>
-											<li ng-if="docente.persona.infoAdministrativa.certAnte">Certificado de Antecedentes</li>
-											<li ng-if="docente.persona.infoAdministrativa.certReinc">Certificado de Reincidencia</li>
-										</ul>
-									</dd>
-									<dt ng-if="docente.persona.infoAdministrativa.nroExpe!=null">N° Expediente</dt><dd ng-if="docente.persona.infoAdministrativa.nroExpe!=null">{{docente.persona.infoAdministrativa.nroExpe}}</dd>
-									<dt ng-if="docente.persona.infoAdministrativa.nroResol!=null">N° Resolución</dt><dd ng-if="docente.persona.infoAdministrativa.nroResol!=null">{{docente.persona.infoAdministrativa.nroResol}}</dd>
-								</dl>
-							</div>
-						</div>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<!-- Domicilios -->
-					<div class="col-sm-5">
-						<div class="panel panel-warning">
-							<div class="panel-heading">Domicilios</div>
-							<div class="panel-body" ng-show="docente.persona.domicilios!=null && docente.persona.domicilios.length!=0">
-								<table class="table table-hover table-condensed table-striped">
-									<thead>
-										<tr>
-											<th class="text-center">Actual</th>
-											<th>Domicilio</th>
-											<th>Localidad</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="dom in docente.persona.domicilios | orderBy:['actual','domicilio']" >
-											<td class="text-center"><span ng-class="{'glyphicon glyphicon-check':dom.actual}"></span></td>
-											<td class="text-capitalize">{{dom.domicilio}}</td>
-											<td>{{dom.localidad.nombre + ', ' + dom.localidad.partido.nombre + ', ' + dom.localidad.partido.provincia.nombre}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<!-- Empleos -->
-					<div class="col-sm-7">
-						<div class="panel panel-success">
-							<div class="panel-heading">
-								<h5 class="panel-title">Empleos</h5>
-							</div>
-							<div class="panel-body" ng-show="docente.persona.empleos!=null && docente.persona.empleos.length!=0">
-								<table class="table table-hover table-condensed table-striped">
-									<thead>
-										<tr>
-											<th>Razon Social</th>
-											<th>Cargo</th>
-											<th>Detalle del Cargo</th>
-											<th>Administracion</th>
-											<th>Relacion</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="emp in docente.persona.empleos" >
-											<td class="text-capitalize">{{emp.razonSocial}}</td>
-											<td class="text-capitalize">{{emp.tipoCargo.nombre}}</td>
-											<td class="text-capitalize">{{emp.detalleCargo}}</td>
-											<td class="text-capitalize">{{emp.tipoAdmin.nombre}}</td>
-											<td class="text-capitalize">{{emp.tipoRelacion.nombre}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<!-- Formación Académica -->
-					<div class="col-sm-7">
-						<div class="panel panel-danger">
-							<div class="panel-heading">
-								<h5 class="panel-title">Formacion Academica</h5>
-							</div>
-							<div class="panel-body" ng-show="docente.persona.formacionAcademica!=null && docente.persona.formacionAcademica.length!=0">
-								<table class="table table-hover table-condensed table-striped">
-									<thead>
-										<tr>
-											<th>Tipo</th>
-											<th>Titulo</th>
-											<th>Estado</th>
-											<th>Expedido por</th>
-											<th>Año expedido</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="form in docente.persona.formacionAcademica | orderBy:['anio']" >
-											<td><strong>{{form.tipoFormacion.nombre}}</strong></td>
-											<td class="text-capitalize">{{form.titulo}}</td>
-											<td>{{form.tipoEstadoFormacion.nombre}}</td>
-											<td class="text-capitalize">{{form.expedidoPor}}</td>
-											<td>{{form.anio | date:'yyyy'}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<!-- Medios de Contacto -->
-					<div class="col-sm-5">
-						<div class="panel panel-warning">
-							<div class="panel-heading">Medios de Contacto</div>
-							<div class="panel-body" ng-show="docente.persona.mediosContacto!=null && docente.persona.mediosContacto.length!=0">
-								<table class="table table-hover table-condensed table-striped">
-									<thead>
-										<tr>
-											<th>Medio</th>
-											<th>Contacto</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="med in docente.persona.mediosContacto | orderBy:['medio']" >
-											<td>{{med.tipoContacto.nombre}}</td>
-											<td>{{med.valor}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</accordion-group>
-		</accordion>
+			<div class="panel-body">
+				<table class="table table-hover table-condensed">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Legajo</th>
+							<th>Situacion</th>
+							<th>Situacion Revista</th>
+							<th>Antiguedad</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="docenteMini in docentesMini">
+							<td>{{docenteMini.nombre}}</td>
+							<td>{{docenteMini.apellido}}</td>
+							<td>{{docenteMini.nroLegajo}}</td>
+							<td>{{docenteMini.situacion}}</td>
+							<td>{{(docenteMini.situacionRevista!=null ?	docenteMini.situacionRevista : '')}}</td>
+							<td>{{(docenteMini.fechaAlta |
+								antiguedad:docenteMini.fechaAlta) + (((docenteMini.fechaAlta |
+								antiguedad:docenteMini.fechaAlta)==1) ? ' año' : ' años')}}</td>
+							<td data-toggle="tooltip" data-placement="top" title="Muestra el docente seleccionado en el área de detalle]"><a href="#/{{urlModulo}}" ng-click="mostrarDetalle(docenteMini)" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
+							<td data-toggle="tooltip" data-placement="button" title="Carga los datos del docente en el formulario para edición"><a href="#/{{urlModulo}}" ng-click="editarElemento(docenteMini)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+							<td data-toggle="tooltip" data-placement="top" title="Borrar"><a href="#/{{urlModulo}}" ng-click="confirmarBorrar(docenteMini)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-		<!-- Panel Footer -->
-		<div class="panel-footer">
-			<h5 class="panel-title">Total de docentes: {{docentes.length}}.</h5>
+			<!-- Panel Footer -->
+			<div class="panel-footer">
+				<h5 class="panel-title">Total de docentes:
+					{{docentesMini.length}}.</h5>
+			</div>
 		</div>
 	</div>
+	<docente-listado-actuales-detalle></docente-listado-actuales-detalle>
 </div>

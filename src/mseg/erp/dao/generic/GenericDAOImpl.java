@@ -84,7 +84,7 @@ public class GenericDAOImpl<U, T> implements IGenericDAO<U, T> {
 
 			T objeto = em.find(persistentClass, this.getId(objetoVO));
 
-			objeto = MapperUtils.map(objetoVO, this.getPersistentClass());
+			objeto = MapperUtils.map(objetoVO, persistentClass);
 
 			objeto = em.merge(objeto);
 

@@ -40,7 +40,7 @@ public class MapperUtils {
 		return getMapper().map(source, destType);
 	}
 	
-	public static <T, U> List<U> map(final List<T> source, final Class<U> destType,final String mapId) {
+	public static <T, U> List<U> map(final List<T> source, final Class<U> destType, final String mapId) {
 
 	    final List<U> dest = new ArrayList<U>();
 
@@ -54,6 +54,5 @@ public class MapperUtils {
 	public static <T, U> U map(final T source, final Class<U> destType,final String mapId) {
 		return getMapper().map(source, destType,mapId);
 	}
-	
 	
 }

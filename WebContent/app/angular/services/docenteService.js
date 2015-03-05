@@ -10,6 +10,9 @@ msegErpServices.factory('DocenteService', function(srvHttp) {
 		listar : function(data, success, error) {
 			return srvHttp.authPost('docenteService/docente/listar', data, success, error);
 		},
+		listarMinimo : function(data, success, error) {
+			return srvHttp.authPost('docenteService/docente/listarMinimo', data, success, error);
+		},
 		encontrar : function(data, success, error) {
 			return srvHttp.authPost('docenteService/docente/encontrar', data, success, error);
 		},

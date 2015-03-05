@@ -166,14 +166,6 @@ msegErpControllers.controller('LocalidadCtrl', ['$scope', '$filter', 'LocalidadS
 				});
 			}
 
-			$scope.indiceDe = function (array, cadena, propiedad) {
-			    for(var i = 0, len = array.length; i < len; i++) {
-			        if (array[i][propiedad] === cadena) 
-			        	return i;
-			    }
-			    return -1;
-			}
-			
 			$scope.cerrarForm = function() {
 				$scope.limpiar();
 				$scope.colapsarFormulario = true;

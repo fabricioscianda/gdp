@@ -3,6 +3,7 @@ package mseg.erp.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,7 +53,7 @@ public class Persona implements Serializable {
 	private List<FormacionAcademica> formacionAcademica;
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
 	private List<Empleo> empleos;
-	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona")
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "persona", cascade = CascadeType.ALL)
 	private InfoAdministrativa infoAdministrativa;
 
 	public Persona() {
@@ -154,14 +155,6 @@ public class Persona implements Serializable {
 		this.empleos = empleos;
 	}
 
-	public InfoAdministrativa getInfoAdministrativa() {
-		return infoAdministrativa;
-	}
-
-	public void setInfoAdministrativa(InfoAdministrativa infoAdministrativa) {
-		this.infoAdministrativa = infoAdministrativa;
-	}
-
 	public Localidad getLocalidad() {
 		return localidad;
 	}
@@ -176,6 +169,14 @@ public class Persona implements Serializable {
 
 	public void setCp(String cp) {
 		this.cp = cp;
+	}
+
+	public InfoAdministrativa getInfoAdministrativa() {
+		return infoAdministrativa;
+	}
+
+	public void setInfoAdministrativa(InfoAdministrativa infoAdministrativa) {
+		this.infoAdministrativa = infoAdministrativa;
 	}
 
 }

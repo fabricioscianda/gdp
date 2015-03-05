@@ -1,0 +1,218 @@
+<div class="col-sm-6">
+	<!-- Panel -->
+	<div class="panel panel-primary">
+		<!-- Panel Header -->
+		<div class="panel-heading">
+			<h4 class="panel-title">Detalle <strong>{{(docente!=null) ?
+				docente.persona.nombre + ' ' + docente.persona.apellido : ''}}</strong> (click en cada título para ver el contenido)</h4>
+		</div>
+		<div class="panel-body">
+			<accordion close-others="true"> <!-- Info. Personal -->
+			<div ng-if="docente!=null">
+				<accordion-group heading="Informacion Personal">
+				<div class="panel panel-success">
+					<div class="panel-heading">Informacion Personal</div>
+					<div class="panel-body">
+						<dl class="dl-horizontal">
+							<dt>Apellido y Nombre</dt>
+							<dd>{{docente.persona.apellido + ' ' +
+								docente.persona.nombre}}</dd>
+							<dt>Tipo y Nro. de Doc.</dt>
+							<dd>{{docente.persona.tipoDoc.nombre + ' ' +
+								(docente.persona.numeroDoc | number:0)}}</dd>
+							<dt>CUIL</dt>
+							<dd>{{docente.persona.cuil | cuil}}</dd>
+							<dt>Fecha Nac. y Edad</dt>
+							<dd>{{(docente.persona.fechaNac | date:'dd/MM/yyyy') + ' ('
+								+ (docente.persona.fechaNac |
+								antiguedad:docente.persona.fechaNac) + ' años)'}}</dd>
+							<dt>Lugar de Nac.</dt>
+							<dd>{{docente.persona.localidad.nombre + ' (' +
+								docente.persona.localidad.partido.nombre + ', ' +
+								docente.persona.localidad.partido.provincia.nombre + ')'}}</dd>
+							<dt>Código Postal</dt>
+							<dd>{{docente.persona.cp}}</dd>
+						</dl>
+					</div>
+				</div>
+				</accordion-group>
+				<!-- Info. Administrativa -->
+				<accordion-group heading="Informacion Administrativa">
+				<div class="panel panel-danger">
+					<div class="panel-heading">Informacion Administrativa</div>
+					<div class="panel-body">
+						<dl class="dl-horizontal">
+							<dt>Legajo</dt>
+							<dd>{{docente.persona.infoAdministrativa.nroLegajo}}</dd>
+							<dt>Fecha Alta</dt>
+							<dd>{{docente.persona.infoAdministrativa.fechaAlta |
+								date:'dd/MM/yyyy'}}</dd>
+							<dt>Antigüedad</dt>
+							<dd>{{docente.persona.infoAdministrativa.fechaAlta |
+								antiguedad:docente.persona.infoAdministrativa.fechaAlta}}
+								{{((docente.persona.infoAdministrativa.fechaAlta |
+								antiguedad:docente.persona.infoAdministrativa.fechaAlta)==1) ?
+								'año' : 'años'}}</dd>
+							<dt>Personal</dt>
+							<dd>{{docente.persona.infoAdministrativa.tipoPersonal.nombre}}</dd>
+							<dt
+								ng-if="docente.persona.infoAdministrativa.tipoSituacionRevista!=null">Situacion
+								Revista</dt>
+							<dd
+								ng-if="docente.persona.infoAdministrativa.tipoSituacionRevista!=null">{{docente.persona.infoAdministrativa.tipoSituacionRevista.nombre}}</dd>
+							<dt>Situación Actual</dt>
+							<dd>{{docente.persona.infoAdministrativa.tipoSituacion.nombre}}</dd>
+							<dt ng-if="docente.persona.infoAdministrativa.tipoMotivo!=null">Motivo</dt>
+							<dd ng-if="docente.persona.infoAdministrativa.tipoMotivo!=null">{{docente.persona.infoAdministrativa.tipoMotivo.}}</dd>
+							<dt ng-if="docente.persona.infoAdministrativa.tipoMotivo!=null">Fecha</dt>
+							<dd ng-if="docente.persona.infoAdministrativa.tipoMotivo!=null">{{docente.persona.infoAdministrativa.fechaMotivo
+								| date:'dd/MM/yyyy'}}</dd>
+							<dt>Estado Contractual</dt>
+							<dd>{{docente.persona.infoAdministrativa.tipoEstadoContractual.nombre}}</dd>
+							<dt
+								ng-if="(docente.persona.infoAdministrativa.ddjj || docente.persona.infoAdministrativa.fotoDoc || docente.persona.infoAdministrativa.cuil
+	  											|| docente.persona.infoAdministrativa.cv || docente.persona.infoAdministrativa.titulos || docente.persona.infoAdministrativa.certAnte
+	  											|| docente.persona.infoAdministrativa.certReinc)">Doc.
+								Entregada</dt>
+							<dd>
+								<ul>
+									<li ng-if="docente.persona.infoAdministrativa.ddjj">Declaración
+										Jurada</li>
+									<li ng-if="docente.persona.infoAdministrativa.fotoDoc">Fotocopia
+										DNI</li>
+									<li ng-if="docente.persona.infoAdministrativa.cuil">CUIL</li>
+									<li ng-if="docente.persona.infoAdministrativa.cv">CV</li>
+									<li ng-if="docente.persona.infoAdministrativa.titulos">Títulos</li>
+									<li ng-if="docente.persona.infoAdministrativa.certAnte">Certificado
+										de Antecedentes</li>
+									<li ng-if="docente.persona.infoAdministrativa.certReinc">Certificado
+										de Reincidencia</li>
+								</ul>
+							</dd>
+							<dt ng-if="docente.persona.infoAdministrativa.nroExpe!=null">N°
+								Expediente</dt>
+							<dd ng-if="docente.persona.infoAdministrativa.nroExpe!=null">{{docente.persona.infoAdministrativa.nroExpe}}</dd>
+							<dt ng-if="docente.persona.infoAdministrativa.nroResol!=null">N°
+								Resolución</dt>
+							<dd ng-if="docente.persona.infoAdministrativa.nroResol!=null">{{docente.persona.infoAdministrativa.nroResol}}</dd>
+						</dl>
+					</div>
+				</div>
+				</accordion-group>
+				<accordion-group heading="Domicilios"> <!-- Domicilios -->
+				<div class="panel panel-warning">
+					<div class="panel-heading">Domicilios</div>
+					<div class="panel-body"
+						ng-show="docente.persona.domicilios!=null && docente.persona.domicilios.length!=0">
+						<table class="table table-hover table-condensed table-striped">
+							<thead>
+								<tr>
+									<th class="text-center">Actual</th>
+									<th>Domicilio</th>
+									<th>Localidad</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="dom in docente.persona.domicilios | orderBy:['actual','domicilio']">
+									<td class="text-center"><span
+										ng-class="{'glyphicon glyphicon-check':dom.actual}"></span></td>
+									<td class="text-capitalize">{{dom.domicilio}}</td>
+									<td>{{dom.localidad.nombre + ', ' +
+										dom.localidad.partido.nombre + ', ' +
+										dom.localidad.partido.provincia.nombre}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</accordion-group>
+				<accordion-group heading="Empleos"> <!-- Empleos -->
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h5 class="panel-title">Empleos</h5>
+					</div>
+					<div class="panel-body"
+						ng-show="docente.persona.empleos!=null && docente.persona.empleos.length!=0">
+						<table class="table table-hover table-condensed table-striped">
+							<thead>
+								<tr>
+									<th>Razon Social</th>
+									<th>Cargo</th>
+									<th>Detalle del Cargo</th>
+									<th>Administracion</th>
+									<th>Relacion</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="emp in docente.persona.empleos">
+									<td class="text-capitalize">{{emp.razonSocial}}</td>
+									<td class="text-capitalize">{{emp.tipoCargo.nombre}}</td>
+									<td class="text-capitalize">{{emp.detalleCargo}}</td>
+									<td class="text-capitalize">{{emp.tipoAdmin.nombre}}</td>
+									<td class="text-capitalize">{{emp.tipoRelacion.nombre}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</accordion-group>
+				<accordion-group heading="Formacion Academica"> <!-- Formación Académica -->
+				<div class="panel panel-danger">
+					<div class="panel-heading">
+						<h5 class="panel-title">Formacion Academica</h5>
+					</div>
+					<div class="panel-body"
+						ng-show="docente.persona.formacionAcademica!=null && docente.persona.formacionAcademica.length!=0">
+						<table class="table table-hover table-condensed table-striped">
+							<thead>
+								<tr>
+									<th>Tipo</th>
+									<th>Titulo</th>
+									<th>Estado</th>
+									<th>Expedido por</th>
+									<th>Año expedido</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="form in docente.persona.formacionAcademica | orderBy:['anio']">
+									<td><strong>{{form.tipoFormacion.nombre}}</strong></td>
+									<td class="text-capitalize">{{form.titulo}}</td>
+									<td>{{form.tipoEstadoFormacion.nombre}}</td>
+									<td class="text-capitalize">{{form.expedidoPor}}</td>
+									<td>{{form.anio | date:'yyyy'}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</accordion-group>
+				<accordion-group heading="Medios de Contacto"> <!-- Medios de Contacto -->
+				<div class="panel panel-warning">
+					<div class="panel-heading">Medios de Contacto</div>
+					<div class="panel-body"
+						ng-show="docente.persona.mediosContacto!=null && docente.persona.mediosContacto.length!=0">
+						<table class="table table-hover table-condensed table-striped">
+							<thead>
+								<tr>
+									<th>Medio</th>
+									<th>Contacto</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="med in docente.persona.mediosContacto | orderBy:['medio']">
+									<td>{{med.tipoContacto.nombre}}</td>
+									<td>{{med.valor}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</accordion-group>
+			</div>
+			</accordion>
+		</div>
+	</div>
+</div>

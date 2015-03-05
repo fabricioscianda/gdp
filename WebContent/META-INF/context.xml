@@ -3,7 +3,7 @@
 	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 
 	<Resource 
-		name="jdbc/msegErpDS" 
+		name="jdbc/gedoDS" 
 		auth="Container" 
 		type="javax.sql.DataSource"
 		maxActive="20" 

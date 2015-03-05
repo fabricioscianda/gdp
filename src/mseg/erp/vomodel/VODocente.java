@@ -6,7 +6,6 @@ public class VODocente implements Serializable {
 
 	private static final long serialVersionUID = -7074989519547946920L;
 	private Long id;
-//	private List<VODesempenio> desempenios;
 	private VOPersona persona;
 	
 	public VODocente() {
@@ -31,14 +30,6 @@ public class VODocente implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-//	public List<VODesempenio> getDesempenios() {
-//		return desempenios;
-//	}
-//
-//	public void setDesempenios(List<VODesempenio> desempenios) {
-//		this.desempenios = desempenios;
-//	}
 
 	public VOPersona getPersona() {
 		return persona;

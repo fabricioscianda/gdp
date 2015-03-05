@@ -12,6 +12,7 @@ import mseg.erp.dao.tipodocumento.ITipoDocumentoDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
 import mseg.erp.vomodel.VOContacto;
 import mseg.erp.vomodel.VODocente;
+import mseg.erp.vomodel.VODocenteMini;
 import mseg.erp.vomodel.VODomicilio;
 import mseg.erp.vomodel.VOEmpleo;
 import mseg.erp.vomodel.VOFormacionAcademica;
@@ -126,8 +127,6 @@ public class DocenteService {
 			}
 
 			voInfoAdministrativa = gson.fromJson(object.get("infoAdministrativa"), VOInfoAdministrativa.class);
-//			Date t1 = new Date(voInfoAdministrativa.getFechaAlta());
-//			Date t2 = new Date(voInfoAdministrativa.getFechaMotivo());
 			
 			id_tipoDoc = Long.valueOf(tipoDoc_id);
 			VOTipoDocumento voTipoDocumento = tipoDocumentoDAO.encontrar(id_tipoDoc, em);
@@ -169,9 +168,9 @@ public class DocenteService {
 				voDocente = new VODocente();
 			}
 			
-			voDocente.setPersona(voPersona);
 			voInfoAdministrativa.setPersona(voPersona);
 			voPersona.setInfoAdministrativa(voInfoAdministrativa);
+			voDocente.setPersona(voPersona);
 			
 			emfh.beginTransaction(em);
 			
@@ -201,6 +200,21 @@ public class DocenteService {
 		EntityManager em = emfh.getEntityManager();
 		try {
 			List<VODocente> docentes = docenteDAO.listar(em);
+			voResponse.setData(gson.toJson(docentes));
+			voResponse.setOk(true);
+		} catch (Exception e) {
+			voResponse.setErrorMessage("No se pudieron listar los docentes.");
+			voResponse.setOk(false);
+		}
+		return gson.toJson(voResponse);
+	}
+	
+	@RequestMapping(value = "/docente/listarMinimo", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	public String listarMinimo(@RequestBody String data) {
+		VOResponse voResponse = new VOResponse();
+		EntityManager em = emfh.getEntityManager();
+		try {
+			List<VODocenteMini> docentes = docenteDAO.listarMinimo(em);
 			voResponse.setData(gson.toJson(docentes));
 			voResponse.setOk(true);
 		} catch (Exception e) {
