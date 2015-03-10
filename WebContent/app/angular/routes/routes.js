@@ -16,6 +16,10 @@ angular.module('routes', []).config(
 				template : 'app/views/asignaturas.html',
 				controller : "AsignaturaCtrl"
 			}, {
+				path : '/busquedas',
+				template : 'app/views/busquedas.html',
+				controller : "BusquedaCtrl"
+			}, {
 				path : '/carreras',
 				template : 'app/views/carreras.html',
 				controller : "CarreraCtrl"

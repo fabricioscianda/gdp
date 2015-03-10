@@ -71,4 +71,14 @@ angular.module('msegErpDirectives', [ 'ng' ])
 		restrict : 'E',
 		templateUrl : 'app/views/partials/docente/partialDocenteListadoActualesDetalle.html'
 	};
+}).directive('referencia', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/layout/referencias.html'
+	};
+}).directive('partialFiltroDocentes', function() {
+	return {
+		restrict : 'E',
+		templateUrl : 'app/views/partials/busquedas/partialFiltroDocentes.html'
+	};
 });

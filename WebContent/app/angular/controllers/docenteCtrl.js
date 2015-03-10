@@ -37,7 +37,11 @@ msegErpControllers.controller('DocenteCtrl', [
 			$scope.modulo = 'Docentes';
 			$scope.nombreForm = 'Docente';
 			$scope.urlModulo = 'docentes';
-
+			$scope.referencias = [ {
+				clase : 'glyphicon glyphicon-eye-open',
+				texto : 'Ver detalle'
+			} ];
+			
 			$scope.antiguedad = null;
 			$scope.apellido = null;
 			$scope.colapsarFormulario = true;

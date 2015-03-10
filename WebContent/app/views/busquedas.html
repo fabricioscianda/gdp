@@ -1,0 +1,60 @@
+<div class="row" ng-show="logueado">
+	<!-- Page Header -->
+	<page-header></page-header>
+	<!-- Alert Modal -->
+	<modal-alert></modal-alert>
+	<!-- Confirmacion Borrar -->
+	<modal-confirm></modal-confirm>
+	
+	<p>{{saludo}}</p>
+	
+	<tabset>  
+		<tab heading="Personal">
+			<tabset> 
+				<tab heading="Docente">
+					<br>
+					<div class="panel panel-default">
+						<div class="panel-heading">Filtros de búsqueda</div>
+						<div class="panel-body">
+							<br>
+							<partial-filtro-docentes></partial-filtro-docentes>
+						</div>
+					</div>
+				</tab> 
+				<tab heading="Desempeño">
+				</tab>
+			</tabset>
+		</tab> 
+		<tab heading="Planes">
+			<tabset> 
+				<tab heading="Asignaturas">
+				</tab> 
+				<tab heading="Carreras">
+				</tab>
+				<tab heading="Planes de Estudio">
+				</tab>
+			</tabset>
+		</tab> 
+		<tab heading="Instituciones">
+			<tabset> 
+				<tab heading="Institutos">
+				</tab> 
+				<tab heading="Sedes">
+				</tab>
+			</tabset>
+		</tab> 
+		<tab heading="Localizacion">
+			<tabset>
+				<tab heading="Provincias">
+				</tab> 
+				<tab heading="Partidos">
+				</tab>
+				<tab heading="Localidades">
+				</tab>
+			</tabset>
+		</tab> 
+		<tab heading="Tipos">
+		</tab> 
+	</tabset>
+
+</div>
