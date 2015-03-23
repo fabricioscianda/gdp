@@ -3,7 +3,6 @@
 /Contacto_.java
 /Desempenio_.java
 /Docente_.java
-/Documentacion_.java
 /Domicilio_.java
 /Empleo_.java
 /FormacionAcademica_.java
@@ -12,6 +11,7 @@
 /Localidad_.java
 /Partido_.java
 /Persona_.java
+/PlanEstudio_.java
 /Provincia_.java
 /Sede_.java
 /TipoAdministracion_.java
