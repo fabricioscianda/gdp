@@ -57,6 +57,25 @@ msegErpControllers.controller('BusquedaCtrl', [
 			$scope.provinciaSel = null;
 
 			var orderBy = $filter('orderBy');
+
+			var opts = {
+				lines : 7, // The number of lines to draw
+				length : 1, // The length of each line
+				width : 9, // The line thickness
+				radius : 9, // The radius of the inner circle
+				corners : 1, // Corner roundness (0..1)
+				rotate : 0, // The rotation offset
+				direction : 1, // 1: clockwise, -1: counterclockwise
+				color : '#000', // #rgb or #rrggbb or array of colors
+				speed : 1.0, // Rounds per second
+				trail : 60, // Afterglow percentage
+				shadow : false, // Whether to render a shadow
+				hwaccel : false, // Whether to use hardware acceleration
+				className : 'spinner', // The CSS class to assign to the spinner
+				zIndex : 2e9, // The z-index (defaults to 2000000000)
+				top : '50%', // Top position relative to parent
+				left : '50%' // Left position relative to parent
+			};
 			
 			/*
 			 * datetime picker
@@ -95,6 +114,8 @@ msegErpControllers.controller('BusquedaCtrl', [
 			$scope.format = $scope.formats[1];
 			
 			$scope.listarTiposPersonal = function() {
+				var target = document.getElementById('spinTP');
+				var spinner = new Spinner(opts).spin(target);
 				TipoPersonalService.listar({}, function (response){
 					$scope.success = response.ok;
 					if (response.ok) {
@@ -109,9 +130,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 				function(error) {
 					alert(error);
 				})
+				spinner.stop();
 			};
 			
 			$scope.listarTiposMotivo = function() {
+				var target = document.getElementById('spinTM');
+				var spinner = new Spinner(opts).spin(target);
 				TipoMotivoService.listar({}, function (response){
 					$scope.success = response.ok;
 					if (response.ok) {
@@ -126,9 +150,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 				function(error) {
 					alert(error);
 				})
+				spinner.stop();
 			};
 			
 			$scope.listarTiposSituacionActual = function() {
+				var target = document.getElementById('spinTSA');
+				var spinner = new Spinner(opts).spin(target);
 				TipoSituacionService.listar({}, function (response){
 					$scope.success = response.ok;
 					if (response.ok) {
@@ -143,9 +170,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 				function(error) {
 					alert(error);
 				})
+				spinner.stop();
 			};
 			
 			$scope.listarTiposSituacionRevista = function() {
+				var target = document.getElementById('spinTSR');
+				var spinner = new Spinner(opts).spin(target);
 				TipoSituacionRevistaService.listar({}, function (response){
 					$scope.success = response.ok;
 					if (response.ok) {
@@ -160,9 +190,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 				function(error) {
 					alert(error);
 				})
+				spinner.stop();
 			};
 			
 			$scope.listarTiposFormacion = function() {
+				var target = document.getElementById('spinTF');
+				var spinner = new Spinner(opts).spin(target);
 				TipoFormacionService.listar({}, function (response){
 					$scope.success = response.ok;
 					if (response.ok) {
@@ -177,9 +210,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 				function(error) {
 					alert(error);
 				})
+				spinner.stop();
 			};
 			
 			$scope.listarTiposEstadoFormacion = function() {
+				var target = document.getElementById('spinTEF');
+				var spinner = new Spinner(opts).spin(target);
 				TipoEstadoFormacionService.listar({}, function (response){
 					$scope.success = response.ok;
 					if (response.ok) {
@@ -194,9 +230,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 				function(error) {
 					alert(error);
 				})
+				spinner.stop();
 			};
 			
 			$scope.listarTiposEstadoContractual = function() {
+				var target = document.getElementById('spinTEC');
+				var spinner = new Spinner(opts).spin(target);
 				TipoEstadoContractualService.listar({}, function (response){
 					$scope.success = response.ok;
 					if (response.ok) {
@@ -211,9 +250,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 				function(error) {
 					alert(error);
 				})
+				spinner.stop();
 			};
 			
 			$scope.listarLocalidades = function() {
+				var target = document.getElementById('spinL');
+				var spinner = new Spinner(opts).spin(target);
 				LocalidadService.listar({}, 
 					function (response){
 						$scope.success = response.ok;
@@ -229,9 +271,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 					function(error) {
 						alert(error);
 					})
+					spinner.stop();
 			};
 
 			$scope.listarPartidos = function() {
+				var target = document.getElementById('spinPa');
+				var spinner = new Spinner(opts).spin(target);
 				PartidoService.listar({}, 
 					function(response) {
 						$scope.success = response.ok;
@@ -246,9 +291,12 @@ msegErpControllers.controller('BusquedaCtrl', [
 					}, function(error) {
 						alert(error);
 					});
+				spinner.stop();
 			};
 			
 			$scope.listarProvincias = function() {
+				var target = document.getElementById('spinPr');
+				var spinner = new Spinner(opts).spin(target);
 				ProvinciaService.listar({}, 
 					function(response) {
 						$scope.success = response.ok;
@@ -263,6 +311,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 					}, function(error) {
 						alert(error);
 					});
+				spinner.stop();
 			};
 			
 		} ]);
