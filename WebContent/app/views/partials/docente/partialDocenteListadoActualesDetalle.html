@@ -7,9 +7,9 @@
 				docente.persona.nombre + ' ' + docente.persona.apellido : ''}}</strong> (click en cada título para ver el contenido)</h4>
 		</div>
 		<div class="panel-body">
-			<accordion close-others="true"> <!-- Info. Personal -->
+			<accordion close-others="true"> 
 			<div ng-if="docente!=null">
-				<accordion-group heading="Informacion Personal">
+				<accordion-group heading="Informacion Personal"> <!-- Info. Personal -->
 				<div class="panel panel-success">
 					<div class="panel-heading">Informacion Personal</div>
 					<div class="panel-body">
@@ -36,8 +36,7 @@
 					</div>
 				</div>
 				</accordion-group>
-				<!-- Info. Administrativa -->
-				<accordion-group heading="Informacion Administrativa">
+				<accordion-group heading="Informacion Administrativa"> <!-- Info. Administrativa -->
 				<div class="panel panel-danger">
 					<div class="panel-heading">Informacion Administrativa</div>
 					<div class="panel-body">
@@ -86,6 +85,24 @@
 									<li ng-if="docente.persona.infoAdministrativa.certAnte">Certificado
 										de Antecedentes</li>
 									<li ng-if="docente.persona.infoAdministrativa.certReinc">Certificado
+										de Reincidencia</li>
+								</ul>
+							</dd>
+							<dt ng-if="(!docente.persona.infoAdministrativa.ddjj || !docente.persona.infoAdministrativa.fotoDoc || !docente.persona.infoAdministrativa.cuil
+	  							|| !docente.persona.infoAdministrativa.cv || !docente.persona.infoAdministrativa.titulos || !docente.persona.infoAdministrativa.certAnte
+	  							|| !docente.persona.infoAdministrativa.certReinc)">Doc. Adeudada</dt>
+							<dd>
+								<ul>
+									<li ng-if="!docente.persona.infoAdministrativa.ddjj">Declaración
+										Jurada</li>
+									<li ng-if="!docente.persona.infoAdministrativa.fotoDoc">Fotocopia
+										DNI</li>
+									<li ng-if="!docente.persona.infoAdministrativa.cuil">CUIL</li>
+									<li ng-if="!docente.persona.infoAdministrativa.cv">CV</li>
+									<li ng-if="!docente.persona.infoAdministrativa.titulos">Títulos</li>
+									<li ng-if="!docente.persona.infoAdministrativa.certAnte">Certificado
+										de Antecedentes</li>
+									<li ng-if="!docente.persona.infoAdministrativa.certReinc">Certificado
 										de Reincidencia</li>
 								</ul>
 							</dd>
