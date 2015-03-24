@@ -1,30 +1,39 @@
-<div class="row">
+<div class="row col-sm-11">
+	<div class="input-group">
+		<span class="input-group-btn">
+			<button class="btn btn-default" type="button">Filtrar</button>
+		</span> 
+		<pre type="text" class="form-control"> aca van los filtros seleccionados!! </pre>
+	</div>
+</div>
+<div class="row"></div>
+<div class="row"> <!-- Edad, Legajo, Fecha Alta y Antiguedad -->
 	<div class="col-sm-2">
-		<div class="panel panel-success">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				edad
 			</div>
 			<div class="panel-body">
 				<div class="btn-group" data-toggle="buttons">
-					<input class="form-control" type="number" placeholder="Edad" max="90" min="15" maxlength="2">
+					<input class="form-control" type="number" placeholder="Edad" max="90" min="15" maxlength="2" ng-model="edad">
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 		<div class="panel panel-warning">
 			<div class="panel-heading">
 				legajo
 			</div>
 			<div class="panel-body">
 				<div class="btn-group" data-toggle="buttons">
-					<input class="form-control" type="text" placeholder="Legajo" maxlength="10">
+					<input class="form-control" type="text" placeholder="Legajo" maxlength="10" ng-model="legajo">
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-danger">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				fechaAlta
 			</div>
@@ -35,7 +44,7 @@
 		              ng-model="fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" 
 		              clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
 		              <span class="input-group-btn">
-		              	<button type="button" class="btn btn-default" ng-click="openFechaAlta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+		              	<button type="button" class="btn btn-warning" ng-click="openFechaAlta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 		              </span>
 		            </p>
 				</div>
@@ -43,95 +52,19 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-info">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				antiguedad
 			</div>
 			<div class="panel-body">
 				<div class="btn-group" data-toggle="buttons">
-					<input class="form-control" type="number" maxlength="2" max="80" min="0" placeholder="Años">
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-sm-3">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				tiposPersonal 
-			</div>
-			<div class="panel-body" id="spinTP">
-				<div class="btn-group" data-toggle="buttons" ng-init="listarTiposPersonal()" >
-					<label class="btn btn-default" ng-repeat="tp in tiposPersonal"><input type="checkbox" autocomplete="off">{{tp.nombre}}</label> 
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-3">
-		<div class="panel panel-warning">
-			<div class="panel-heading">
-				tiposSituacionRevista
-			</div>
-			<div class="panel-body" id="spinTSR">
-				<div class="btn-group" data-toggle="buttons" ng-init="listarTiposSituacionRevista()">
-					<label class="btn btn-default" ng-repeat="tsr in tiposSituacionRevista"><input type="checkbox" autocomplete="off">{{tsr.nombre}}</label> 
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-4">
-		<div class="panel panel-danger">
-			<div class="panel-heading">
-				tiposSituacionActual
-			</div>
-			<div class="panel-body" id="spinTSA">
-				<div class="btn-group" data-toggle="buttons" ng-init="listarTiposSituacionActual()" >
-					<label class="btn btn-default" ng-repeat="tsa in tiposSituacionActual"><input type="checkbox" autocomplete="off">{{tsa.nombre}}</label> 
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-				tiposMotivo
-			</div>
-			<div class="panel-body" id="spinTM">
-				<div class="btn-group" data-toggle="buttons" ng-init="listarTiposMotivo()" >
-					<label class="btn btn-default" ng-repeat="tm in tiposMotivo"><input type="checkbox" autocomplete="off">{{tm.nombre}}</label> 
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				tiposFormacion
-			</div>
-			<div class="panel-body" id="spinTF">
-				<div class="btn-group" data-toggle="buttons" ng-init="listarTiposFormacion()">
-					<label class="btn btn-default" ng-repeat="tf in tiposFormacion"><input type="checkbox" autocomplete="off">{{tf.nombre}}</label> 
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-sm-4">
-		<div class="panel panel-warning">
-			<div class="panel-heading">
-				tiposEstadoContractual
-			</div>
-			<div class="panel-body" id="spinTEC">
-				<div class="btn-group" data-toggle="buttons" ng-init="listarTiposEstadoContractual()">
-					<label class="btn btn-default" ng-repeat="tec in tiposEstadoContractual"><input type="checkbox" autocomplete="off">{{tec.nombre}}</label> 
+					<input class="form-control" type="number" maxlength="2" max="80" min="0" placeholder="Años" ng-model="antiguedad">
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-danger">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				provincias
 			</div>
@@ -146,7 +79,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-info">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				partidos
 			</div>
@@ -161,8 +94,10 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-sm-2">
-		<div class="panel panel-success">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				localidades
 			</div>
@@ -177,4 +112,165 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-sm-2">
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				tiposPersonal 
+			</div>
+			<div class="panel-body" id="spinTP" ng-init="listarTiposPersonal()">
+				<ul>
+					<li ng-repeat="tp in tiposPersonal">
+						<label class="checkbox" for="{{tp.id}}"> 
+							<input type="checkbox" ng-model="tiposPersonalSel[tp.id]" name="group" id="{{tp.id}}" /> {{tp.nombre}}
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				tiposSituacionRevista
+			</div>
+			<div class="panel-body" id="spinTSR" ng-init="listarTiposSituacionRevista()">
+				<ul>
+					<li ng-repeat="tsr in tiposSituacionRevista">
+						<label class="checkbox" for="{{tsr.id}}"> 
+							<input type="checkbox" ng-model="tiposSituacionRevistaSel[tsr.id]" name="group" id="{{tsr.id}}" /> {{tsr.nombre}}
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				tiposSituacionActual
+			</div>
+			<div class="panel-body" id="spinTSA" ng-init="listarTiposSituacionActual()">
+				<ul>
+					<li ng-repeat="tsa in tiposSituacionActual">
+						<label class="checkbox" for="{{tsa.id}}"> 
+							<input type="checkbox" ng-model="tiposSituacionActualSel[tsa.id]" name="group" id="{{tsa.id}}" /> {{tsa.nombre}}
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				tiposMotivo
+			</div>
+			<div class="panel-body" id="spinTM" ng-init="listarTiposMotivo()">
+				<ul>
+					<li ng-repeat="tm in tiposMotivo">
+						<label class="checkbox" for="{{tm.id}}"> 
+							<input type="checkbox" ng-model="tiposMotivoSel[tm.id]" name="group" id="{{tm.id}}" /> {{tm.nombre}}
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				tiposFormacion
+			</div>
+			<div class="panel-body" id="spinTF" ng-init="listarTiposFormacion()">
+				<ul>
+					<li ng-repeat="tf in tiposFormacion">
+						<label class="checkbox" for="{{tf.id}}"> 
+							<input type="checkbox" ng-model="tiposFormacionSel[tf.id]" name="group" id="{{tf.id}}" /> {{tf.nombre}}
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				tiposEstadoContractual
+			</div>
+			<div class="panel-body" id="spinTEC" ng-init="listarTiposEstadoContractual()">
+				<ul>
+					<li ng-repeat="tec in tiposEstadoContractual">
+						<label class="checkbox" for="{{tec.id}}"> 
+							<input type="checkbox" ng-model="tiposEstadoContractualSel[tec.id]" name="group" id="{{tec.id}}" /> {{tec.nombre}}
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
+<!-- <div class="row"> -->
+<!-- 	<div class="col-sm-2"> -->
+<!-- 		<div class="panel panel-warning"> -->
+<!-- 			<div class="panel-heading"> -->
+<!-- 				tiposEstadoContractual -->
+<!-- 			</div> -->
+<!-- 			<div class="panel-body" id="spinTEC" ng-init="listarTiposEstadoContractual()"> -->
+<!-- 				<ul> -->
+<!-- 					<li ng-repeat="tec in tiposEstadoContractual"> -->
+<!-- 						<label class="checkbox" for="{{tec.id}}">  -->
+<!-- 							<input type="checkbox" ng-model="tiposEstadoContractualSel[tec.id]" name="group" id="{{tec.id}}" /> {{tec.nombre}} -->
+<!-- 						</label> -->
+<!-- 					</li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="col-sm-2"> -->
+<!-- 		<div class="panel panel-warning"> -->
+<!-- 			<div class="panel-heading"> -->
+<!-- 				provincias -->
+<!-- 			</div> -->
+<!-- 			<div class="panel-body" id="spinPr"> -->
+<!-- 				<div class="btn-group" ng-init="listarProvincias()"> -->
+<!-- 					<select id="provincia" class="form-control text-capitalize" -->
+<!-- 						ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel"> -->
+<!-- 						<option value="">-- Provincia --</option> -->
+<!-- 					</select> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="col-sm-2"> -->
+<!-- 		<div class="panel panel-warning"> -->
+<!-- 			<div class="panel-heading"> -->
+<!-- 				partidos -->
+<!-- 			</div> -->
+<!-- 			<div class="panel-body" id="spinPa"> -->
+<!-- 				<div class="btn-group" ng-init="listarPartidos()"> -->
+<!-- 					<select id="partido" class="form-control text-capitalize" -->
+<!-- 						ng-options="partido.nombre for partido in partidos | includeFromProvincia:provinciaSel.nombre" -->
+<!-- 						required ng-model="partidoSel"> -->
+<!-- 						<option value="">-- Partido --</option> -->
+<!-- 					</select> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="col-sm-2"> -->
+<!-- 		<div class="panel panel-warning"> -->
+<!-- 			<div class="panel-heading"> -->
+<!-- 				localidades -->
+<!-- 			</div> -->
+<!-- 			<div class="panel-body" id="spinL"> -->
+<!-- 				<div class="btn-group" ng-init="listarLocalidades()"> -->
+<!-- 					<select id="localidad" class="form-control text-capitalize" -->
+<!-- 						ng-options="local.nombre for local in localidades | includeFromPartido:partidoSel.nombre" -->
+<!-- 						required ng-model="localSel"> -->
+<!-- 						<option value="">-- Localidad --</option> -->
+<!-- 					</select> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
