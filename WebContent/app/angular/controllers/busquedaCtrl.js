@@ -3,6 +3,7 @@ var msegErpControllers = angular.module('msegErpControllers');
 
 /* Busquedas */
 msegErpControllers.controller('BusquedaCtrl', [
+	    '$rootScope',
 		'$scope',
 		'$filter',
 		'DocenteService',
@@ -22,7 +23,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 		'TipoSituacionService',
 		'TipoSituacionRevistaService',
 		'TipoMotivoService',
-		function($scope, $filter, DocenteService, TipoDocumentoService,
+		function($rootScope, $scope, $filter, DocenteService, TipoDocumentoService,
 				TipoContactoService, DomicilioService, LocalidadService,
 				PartidoService, ProvinciaService, TipoFormacionService,
 				TipoCargoService, TipoAdministracionService,
@@ -44,11 +45,17 @@ msegErpControllers.controller('BusquedaCtrl', [
 			$scope.fechaAlta = null;
 			$scope.antiguedad = null;
 			$scope.tiposPersonal = null; 
+			$scope.tiposPersonalSel = {}; 
 			$scope.tiposMotivo = null;
+			$scope.tiposMotivoSel = {};
 			$scope.tiposSituacionActual = null;
+			$scope.tiposSituacionActualSel = {};
 			$scope.tiposSituacionRevista = null;
+			$scope.tiposSituacionRevistaSel = {};
 			$scope.tiposFormacion = null;
+			$scope.tiposFormacionSel = {};
 			$scope.tiposEstadoContractual = null;
+			$scope.tiposEstadoContractualSel = {};
 			$scope.localidades = null;
 			$scope.localSel = null;
 			$scope.partidos = null;
