@@ -11,8 +11,11 @@
 			<tabset> 
 				<tab heading="Docente">
 					<br>
-					<div class="panel panel-default">
-						<div class="panel-heading">Filtros de búsqueda</div>
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							Filtros de búsqueda
+							<button type="button" class="center-block btn btn-info" ng-click="filtrar()">Aplicar Filtros</button>
+						</div>
 						<div class="panel-body">
 							<partial-filtro-docentes></partial-filtro-docentes>
 						</div>
@@ -53,5 +56,4 @@
 		<tab heading="Tipos">
 		</tab> 
 	</tabset>
-
 </div>
