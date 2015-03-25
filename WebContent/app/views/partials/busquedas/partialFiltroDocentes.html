@@ -1,15 +1,6 @@
-<div class="row col-sm-11">
-	<div class="input-group">
-		<span class="input-group-btn">
-			<button class="btn btn-default" type="button">Filtrar</button>
-		</span> 
-		<pre type="text" class="form-control"> aca van los filtros seleccionados!! </pre>
-	</div>
-</div>
-<div class="row"></div>
-<div class="row"> <!-- Edad, Legajo, Fecha Alta y Antiguedad -->
+<div class="row">
 	<div class="col-sm-2">
-		<div class="panel panel-warning">
+		<div class="panel panel-info">
 			<div class="panel-heading">
 				edad
 			</div>
@@ -21,7 +12,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-warning">
+		<div class="panel panel-info">
 			<div class="panel-heading">
 				legajo
 			</div>
@@ -33,26 +24,42 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-warning">
+		<div class="panel panel-info">
 			<div class="panel-heading">
 				fechaAlta
 			</div>
 			<div class="panel-body">
 				<div class="form-group form-inline">
-		            <p class="input-group">
-		              <input type="text" class="form-control" datepicker-popup="{{format}}" 
-		              ng-model="fechaAlta" is-open="openedFechaAlta" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" 
-		              clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
-		              <span class="input-group-btn">
-		              	<button type="button" class="btn btn-warning" ng-click="openFechaAlta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-		              </span>
-		            </p>
+					<p class="input-group" id="fechaAlta">
+						<input 
+							type="text" 
+							class="form-control"
+							is-open="openedFechaAlta" 
+							max-date="maxDate"
+							datepicker-options="dateOptions" 
+							ng-required="true"
+							clear-text="Borrar" 
+							current-text="Hoy" 
+							close-text="Cerrar"
+							disabled 
+							datepicker-popup="{{format}}" 
+							ng-model="fechaAlta"
+							/> 
+							<span class="input-group-btn">
+							<button 
+								type="button" 
+								class="btn btn-info"
+								ng-click="openFechaAlta($event)">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-warning">
+		<div class="panel panel-info">
 			<div class="panel-heading">
 				antiguedad
 			</div>
@@ -113,7 +120,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-warning">
+		<div class="panel panel-danger">
 			<div class="panel-heading">
 				tiposPersonal 
 			</div>
@@ -129,7 +136,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-warning">
+		<div class="panel panel-danger">
 			<div class="panel-heading">
 				tiposSituacionRevista
 			</div>
@@ -145,7 +152,7 @@
 		</div>
 	</div>
 	<div class="col-sm-3">
-		<div class="panel panel-warning">
+		<div class="panel panel-success">
 			<div class="panel-heading">
 				tiposSituacionActual
 			</div>
@@ -161,7 +168,7 @@
 		</div>
 	</div>
 	<div class="col-sm-3">
-		<div class="panel panel-warning">
+		<div class="panel panel-success">
 			<div class="panel-heading">
 				tiposMotivo
 			</div>
@@ -177,7 +184,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-warning">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 				tiposFormacion
 			</div>
@@ -193,7 +200,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<div class="panel panel-warning">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 				tiposEstadoContractual
 			</div>
@@ -209,68 +216,3 @@
 		</div>
 	</div>
 </div>
-<!-- <div class="row"> -->
-<!-- 	<div class="col-sm-2"> -->
-<!-- 		<div class="panel panel-warning"> -->
-<!-- 			<div class="panel-heading"> -->
-<!-- 				tiposEstadoContractual -->
-<!-- 			</div> -->
-<!-- 			<div class="panel-body" id="spinTEC" ng-init="listarTiposEstadoContractual()"> -->
-<!-- 				<ul> -->
-<!-- 					<li ng-repeat="tec in tiposEstadoContractual"> -->
-<!-- 						<label class="checkbox" for="{{tec.id}}">  -->
-<!-- 							<input type="checkbox" ng-model="tiposEstadoContractualSel[tec.id]" name="group" id="{{tec.id}}" /> {{tec.nombre}} -->
-<!-- 						</label> -->
-<!-- 					</li> -->
-<!-- 				</ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- 	<div class="col-sm-2"> -->
-<!-- 		<div class="panel panel-warning"> -->
-<!-- 			<div class="panel-heading"> -->
-<!-- 				provincias -->
-<!-- 			</div> -->
-<!-- 			<div class="panel-body" id="spinPr"> -->
-<!-- 				<div class="btn-group" ng-init="listarProvincias()"> -->
-<!-- 					<select id="provincia" class="form-control text-capitalize" -->
-<!-- 						ng-options="provincia.nombre for provincia in provincias" required ng-model="provinciaSel"> -->
-<!-- 						<option value="">-- Provincia --</option> -->
-<!-- 					</select> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- 	<div class="col-sm-2"> -->
-<!-- 		<div class="panel panel-warning"> -->
-<!-- 			<div class="panel-heading"> -->
-<!-- 				partidos -->
-<!-- 			</div> -->
-<!-- 			<div class="panel-body" id="spinPa"> -->
-<!-- 				<div class="btn-group" ng-init="listarPartidos()"> -->
-<!-- 					<select id="partido" class="form-control text-capitalize" -->
-<!-- 						ng-options="partido.nombre for partido in partidos | includeFromProvincia:provinciaSel.nombre" -->
-<!-- 						required ng-model="partidoSel"> -->
-<!-- 						<option value="">-- Partido --</option> -->
-<!-- 					</select> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- 	<div class="col-sm-2"> -->
-<!-- 		<div class="panel panel-warning"> -->
-<!-- 			<div class="panel-heading"> -->
-<!-- 				localidades -->
-<!-- 			</div> -->
-<!-- 			<div class="panel-body" id="spinL"> -->
-<!-- 				<div class="btn-group" ng-init="listarLocalidades()"> -->
-<!-- 					<select id="localidad" class="form-control text-capitalize" -->
-<!-- 						ng-options="local.nombre for local in localidades | includeFromPartido:partidoSel.nombre" -->
-<!-- 						required ng-model="localSel"> -->
-<!-- 						<option value="">-- Localidad --</option> -->
-<!-- 					</select> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- </div> -->
