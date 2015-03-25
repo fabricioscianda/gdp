@@ -65,6 +65,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 
 			var orderBy = $filter('orderBy');
 
+			/* configuracion para el spinner */
 			var opts = {
 				lines : 7, // The number of lines to draw
 				length : 1, // The length of each line
@@ -319,6 +320,22 @@ msegErpControllers.controller('BusquedaCtrl', [
 						alert(error);
 					});
 				spinner.stop();
+			};
+			
+			$scope.filtrar = function() {
+				edad
+				legajo
+				fechaAlta
+				antiguedad
+				provinciaSel
+				partidoSel
+				localSel
+				tiposPersonalSel
+				tiposSituacionRevistaSel
+				tiposSituacionActualSel
+				tiposMotivoSel
+				tiposFormacionSel
+				tiposEstadoContractualSel
 			};
 			
 		} ]);
