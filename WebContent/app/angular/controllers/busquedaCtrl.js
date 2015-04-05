@@ -3,8 +3,8 @@ var msegErpControllers = angular.module('msegErpControllers');
 
 /* Busquedas */
 msegErpControllers.controller('BusquedaCtrl', [
-	    '$rootScope',
 		'$scope',
+		'$rootScope',
 		'$filter',
 		'DocenteService',
 		'TipoDocumentoService',
@@ -23,7 +23,8 @@ msegErpControllers.controller('BusquedaCtrl', [
 		'TipoSituacionService',
 		'TipoSituacionRevistaService',
 		'TipoMotivoService',
-		function($rootScope, $scope, $filter, DocenteService, TipoDocumentoService,
+		function(
+				$scope, $rootScope, $filter, DocenteService, TipoDocumentoService,
 				TipoContactoService, DomicilioService, LocalidadService,
 				PartidoService, ProvinciaService, TipoFormacionService,
 				TipoCargoService, TipoAdministracionService,
@@ -129,6 +130,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 					if (response.ok) {
 						$scope.tiposPersonal = angular.fromJson(response.data);
 						$scope.tiposPersonal = orderBy($scope.tiposPersonal, 'nombre');
+						$scope.tiposPersonal = $rootScope.getCheckList($scope.tiposPersonal);
 					} else {
 						$scope.msgError = response.errorMessage;
 						console.log('No se pudieron obtener los Tipos de Personal');
@@ -149,6 +151,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 					if (response.ok) {
 						$scope.tiposMotivo = angular.fromJson(response.data);
 						$scope.tiposMotivo = orderBy($scope.tiposMotivo, 'nombre');
+						$scope.tiposMotivo = $rootScope.getCheckList($scope.tiposMotivo);
 					} else {
 						$scope.msgError = response.errorMessage;
 						console.log('No se pudieron obtener los Tipos de Motivo');
@@ -169,6 +172,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 					if (response.ok) {
 						$scope.tiposSituacionActual = angular.fromJson(response.data);
 						$scope.tiposSituacionActual = orderBy($scope.tiposSituacionActual, 'nombre');
+						$scope.tiposSituacionActual = $rootScope.getCheckList($scope.tiposSituacionActual);
 					} else {
 						$scope.msgError = response.errorMessage;
 						console.log('No se pudieron obtener los Tipos de Situacion');
@@ -189,6 +193,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 					if (response.ok) {
 						$scope.tiposSituacionRevista = angular.fromJson(response.data);
 						$scope.tiposSituacionRevista = orderBy($scope.tiposSituacionRevista, 'nombre');
+						$scope.tiposSituacionRevista = $rootScope.getCheckList($scope.tiposSituacionRevista);
 					} else {
 						$scope.msgError = response.errorMessage;
 						console.log('No se pudieron obtener los Tipos de Situacion de Revista');
@@ -209,6 +214,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 					if (response.ok) {
 						$scope.tiposFormacion = angular.fromJson(response.data);
 						$scope.tiposFormacion = orderBy($scope.tiposFormacion, 'nombre');
+						$scope.tiposFormacion = $rootScope.getCheckList($scope.tiposFormacion);
 					} else {
 						$scope.msgError = response.errorMessage;
 						console.log('No se pudieron obtener los Tipos de Formacion');
@@ -229,6 +235,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 					if (response.ok) {
 						$scope.tiposEstadoFormacion = angular.fromJson(response.data);
 						$scope.tiposEstadoFormacion = orderBy($scope.tiposEstadoFormacion, 'nombre');
+						$scope.tiposEstadoFormacion = $rootScope.getCheckList($scope.tiposEstadoFormacion);
 					} else {
 						$scope.msgError = response.errorMessage;
 						console.log('No se pudieron obtener los Estados de Formacion');
@@ -249,6 +256,7 @@ msegErpControllers.controller('BusquedaCtrl', [
 					if (response.ok) {
 						$scope.tiposEstadoContractual = angular.fromJson(response.data);
 						$scope.tiposEstadoContractual = orderBy($scope.tiposEstadoContractual, 'nombre');
+						$scope.tiposEstadoContractual = $rootScope.getCheckList($scope.tiposEstadoContractual);
 					} else {
 						$scope.msgError = response.errorMessage;
 						console.log('No se pudieron obtener los Estados Contractuales');
@@ -322,20 +330,42 @@ msegErpControllers.controller('BusquedaCtrl', [
 				spinner.stop();
 			};
 			
-			$scope.filtrar = function() {
-				edad
-				legajo
-				fechaAlta
-				antiguedad
-				provinciaSel
-				partidoSel
-				localSel
-				tiposPersonalSel
-				tiposSituacionRevistaSel
-				tiposSituacionActualSel
-				tiposMotivoSel
-				tiposFormacionSel
-				tiposEstadoContractualSel
+			$scope.filtrarTabDocente = function() {
+				var target = document.getElementById('spinDocentesListadoFiltro');
+				var spinner = new Spinner(opts).spin(target);
+				var fa = 0;
+				if ($scope.fechaAlta != null) {
+					fa = $scope.fechaAlta.getTime();
+				}
+				DocenteService.encontrarFiltrado({
+						'edad' : $scope.edad,
+						'legajo' : $scope.legajo,
+						'fechaAlta' : fa,
+						'antiguedad' : ($scope.antiguedad != null && $scope.antiguedad != undefined) ? $scope.antiguedad : 0,
+						'provinciaSel' : ($scope.provinciaSel != undefined && $scope.provinciaSel != null) ? $scope.provinciaSel.id : null,
+						'partidoSel' : ($scope.partidoSel != undefined && $scope.partidoSel != null) ? $scope.partidoSel.id : null,
+						'localSel' : ($scope.localSel != undefined && $scope.localSel != null) ? $scope.localSel.id : null,
+						'tiposPersonal' : $scope.tiposPersonal,
+						'tiposSituacionRevista' : $scope.tiposSituacionRevista,
+						'tiposSituacionActual' : $scope.tiposSituacionActual,
+						'tiposMotivo' : $scope.tiposMotivo,
+						'tiposFormacion' : $scope.tiposFormacion,
+						'tiposEstadoContractual' : $scope.tiposEstadoContractual
+					},
+					function(response){
+						$scope.success = response.ok;
+						if (response.ok) {
+							$scope.docentes = angular.fromJson(response.data);
+						} else {
+							$scope.msgError = response.errorMessage;
+							console.log(response.errorMessage);
+							$('#message-modal').modal('show');
+						}
+					},
+					function(error) {
+						alert(error);
+					});
+				spinner.stop();
 			};
 			
 		} ]);
