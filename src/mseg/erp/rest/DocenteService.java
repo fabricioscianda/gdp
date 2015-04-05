@@ -10,6 +10,7 @@ import mseg.erp.dao.docente.IDocenteDAO;
 import mseg.erp.dao.persona.IPersonaDAO;
 import mseg.erp.dao.tipodocumento.ITipoDocumentoDAO;
 import mseg.erp.spring.bootstrap.EntityManagerFactoryHolder;
+import mseg.erp.vomodel.VOCheckbox;
 import mseg.erp.vomodel.VOContacto;
 import mseg.erp.vomodel.VODocente;
 import mseg.erp.vomodel.VODocenteMini;
@@ -48,7 +49,7 @@ public class DocenteService {
 	private IDocenteDAO docenteDAO;
 	@Inject
 	private ITipoDocumentoDAO tipoDocumentoDAO;
-	
+
 	@Inject
 	private Gson gson;
 
@@ -61,30 +62,18 @@ public class DocenteService {
 		EntityManager em = emfh.getEntityManager();
 		JsonObject object = gson.fromJson(data, JsonObject.class);
 		try {
-			VOPersona voPersona = new VOPersona(),
-					  persona = null;
-			
-			VODocente voDocente = null,
-					  docente = null;
+			VOPersona voPersona = new VOPersona(), persona = null;
+
+			VODocente voDocente = null, docente = null;
 
 			VOInfoAdministrativa voInfoAdministrativa = null;
-			
-			Long id = null,
-				 id_tipoDoc = null,
-				 fechaNac = null;
-			
-			String nombre = null, 
-				   apellido = null, 
-				   numeroDoc = null, 
-				   numeroDocCuil = null, 
-				   tipoCuil = null, 
-				   validadorCuil = null,
-				   tipoDoc_id = null,
-				   cuil = null,
-				   cp = null;
-			
+
+			Long id = null, id_tipoDoc = null, fechaNac = null;
+
+			String nombre = null, apellido = null, numeroDoc = null, numeroDocCuil = null, tipoCuil = null, validadorCuil = null, tipoDoc_id = null, cuil = null, cp = null;
+
 			VOLocalidad localidad = null;
-			
+
 			id = gson.fromJson(object.get("id"), Long.class);
 			nombre = gson.fromJson(object.get("nombre"), String.class);
 			apellido = gson.fromJson(object.get("apellido"), String.class);
@@ -93,45 +82,49 @@ public class DocenteService {
 			fechaNac = gson.fromJson(object.get("fechaNac"), Long.class);
 			cp = gson.fromJson(object.get("cp"), String.class);
 			localidad = gson.fromJson(object.get("localidad"), VOLocalidad.class);
-			
+
 			numeroDocCuil = gson.fromJson(object.get("numeroDocCuil"), String.class);
-			tipoCuil = gson.fromJson(object.get("tipoCuil"), String.class); 
+			tipoCuil = gson.fromJson(object.get("tipoCuil"), String.class);
 			validadorCuil = gson.fromJson(object.get("validadorCuil"), String.class);
-			
+
 			List<VOContacto> mediosContactoList = null;
 			JsonArray mediosContactoJson = object.get("mediosContacto").getAsJsonArray();
 			if (!mediosContactoJson.isJsonNull()) {
-				Type listType = new TypeToken<List<VOContacto>>() {}.getType();
+				Type listType = new TypeToken<List<VOContacto>>() {
+				}.getType();
 				mediosContactoList = gson.fromJson(mediosContactoJson, listType);
 			}
-			
+
 			List<VODomicilio> domiciliosList = null;
 			JsonArray domiciliosJson = object.get("domicilios").getAsJsonArray();
 			if (!domiciliosJson.isJsonNull()) {
-				Type listType = new TypeToken<List<VODomicilio>>() {}.getType();
+				Type listType = new TypeToken<List<VODomicilio>>() {
+				}.getType();
 				domiciliosList = gson.fromJson(domiciliosJson, listType);
 			}
-			
+
 			List<VOFormacionAcademica> formacionAcademicas = null;
 			JsonArray formacionesJson = object.get("formacionAcademica").getAsJsonArray();
 			if (!formacionesJson.isJsonNull()) {
-				Type listType = new TypeToken<List<VOFormacionAcademica>>() {}.getType();
+				Type listType = new TypeToken<List<VOFormacionAcademica>>() {
+				}.getType();
 				formacionAcademicas = gson.fromJson(formacionesJson, listType);
 			}
-			
+
 			List<VOEmpleo> empleos = null;
 			JsonArray empleosJson = object.get("empleos").getAsJsonArray();
 			if (!empleosJson.isJsonNull()) {
-				Type listType = new TypeToken<List<VOEmpleo>>() {}.getType();
+				Type listType = new TypeToken<List<VOEmpleo>>() {
+				}.getType();
 				empleos = gson.fromJson(empleosJson, listType);
 			}
 
 			voInfoAdministrativa = gson.fromJson(object.get("infoAdministrativa"), VOInfoAdministrativa.class);
-			
+
 			id_tipoDoc = Long.valueOf(tipoDoc_id);
 			VOTipoDocumento voTipoDocumento = tipoDocumentoDAO.encontrar(id_tipoDoc, em);
 			cuil = tipoCuil + numeroDocCuil + validadorCuil;
-			
+
 			voPersona.setNombre(StringUtils.capitalize(nombre));
 			voPersona.setApellido(StringUtils.capitalize(apellido));
 			voPersona.setNumeroDoc(numeroDoc);
@@ -140,40 +133,40 @@ public class DocenteService {
 			voPersona.setTipoDoc(voTipoDocumento);
 			voPersona.setLocalidad(localidad);
 			voPersona.setCp(cp);
-			
+
 			for (int i = 0; i < formacionAcademicas.size(); i++) {
 				formacionAcademicas.get(i).setPersona(voPersona);
 			}
 			voPersona.setFormacionAcademica(formacionAcademicas);
-			
+
 			for (int i = 0; i < domiciliosList.size(); i++) {
 				domiciliosList.get(i).setPersona(voPersona);
 			}
 			voPersona.setDomicilios(domiciliosList);
-			
+
 			for (int i = 0; i < mediosContactoList.size(); i++) {
 				mediosContactoList.get(i).setPersona(voPersona);
 			}
 			voPersona.setMediosContacto(mediosContactoList);
-			
+
 			for (int i = 0; i < empleos.size(); i++) {
 				empleos.get(i).setPersona(voPersona);
 			}
 			voPersona.setEmpleos(empleos);
-			
+
 			if (id != null && !id.equals(new Long("0"))) {
 				voDocente = docenteDAO.encontrar(id, em);
 				voPersona.setId(voDocente.getPersona().getId());
 			} else {
 				voDocente = new VODocente();
 			}
-			
+
 			voInfoAdministrativa.setPersona(voPersona);
 			voPersona.setInfoAdministrativa(voInfoAdministrativa);
 			voDocente.setPersona(voPersona);
-			
+
 			emfh.beginTransaction(em);
-			
+
 			if (id != null && !id.equals(new Long("0"))) {
 				persona = personaDAO.modificar(voPersona, em);
 				docente = voDocente;
@@ -181,9 +174,9 @@ public class DocenteService {
 			} else {
 				docente = docenteDAO.guardar(voDocente, em);
 			}
-			
+
 			emfh.commitTransaction(em);
-			
+
 			voResponse.setData(gson.toJson(docente));
 			voResponse.setOk(true);
 		} catch (Exception e) {
@@ -208,7 +201,7 @@ public class DocenteService {
 		}
 		return gson.toJson(voResponse);
 	}
-	
+
 	@RequestMapping(value = "/docente/listarMinimo", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
 	public String listarMinimo(@RequestBody String data) {
 		VOResponse voResponse = new VOResponse();
@@ -230,8 +223,7 @@ public class DocenteService {
 		EntityManager em = emfh.getEntityManager();
 		try {
 			JsonObject object = gson.fromJson(data, JsonObject.class);
-			Long id_docente = object.get("id").getAsLong(),
-				 id_persona = null;
+			Long id_docente = object.get("id").getAsLong(), id_persona = null;
 			if (id_docente != null) {
 				VODocente docente = docenteDAO.encontrar(id_docente, em);
 				id_persona = docente.getPersona().getId();
@@ -262,6 +254,83 @@ public class DocenteService {
 			voResponse.setOk(true);
 		} catch (Exception e) {
 			voResponse.setErrorMessage("No se pudo encontrar el docente.");
+			voResponse.setOk(false);
+		}
+		return gson.toJson(voResponse);
+	}
+
+	@RequestMapping(value = "/docente/encontrar/filtros", method = RequestMethod.POST, produces = { "application/json; charset=UTF-8" })
+	public String encontrarFiltrado(@RequestBody String data) {
+		VOResponse voResponse = new VOResponse();
+		EntityManager em = emfh.getEntityManager();
+		try {
+			List<VODocente> voDocentes = null;
+			JsonObject object = gson.fromJson(data, JsonObject.class);
+			Integer edad = object.get("edad").getAsInt();
+			String legajo = object.get("legajo").getAsString();
+			Long fechaAlta = object.get("fechaAlta").getAsLong();
+			Integer antiguedad = object.get("antiguedad").getAsInt();
+			Long provinciaID = object.get("provinciaSel").getAsLong();
+			Long partidoID = object.get("partidoSel").getAsLong();
+			Long localidadID = object.get("localSel").getAsLong();
+
+			List<VOCheckbox> tiposPersonal = null;
+			JsonArray tiposPersonalJson = object.get("tiposPersonal").getAsJsonArray();
+			if (!tiposPersonalJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOCheckbox>>() {
+				}.getType();
+				tiposPersonal = gson.fromJson(tiposPersonalJson, listType);
+			}
+
+			List<VOCheckbox> tiposSituacionRevista = null;
+			JsonArray tiposSituacionRevistaJson = object.get("tiposSituacionRevista").getAsJsonArray();
+			if (!tiposPersonalJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOCheckbox>>() {
+				}.getType();
+				tiposSituacionRevista = gson.fromJson(tiposSituacionRevistaJson, listType);
+			}
+
+			List<VOCheckbox> tiposSituacionActual = null;
+			JsonArray tiposSituacionActualJson = object.get("tiposSituacionActual").getAsJsonArray();
+			if (!tiposSituacionActualJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOCheckbox>>() {
+				}.getType();
+				tiposSituacionActual = gson.fromJson(tiposSituacionActualJson, listType);
+			}
+
+			List<VOCheckbox> tiposMotivo = null;
+			JsonArray tiposMotivoJson = object.get("tiposMotivo").getAsJsonArray();
+			if (!tiposMotivoJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOCheckbox>>() {
+				}.getType();
+				tiposMotivo = gson.fromJson(tiposMotivoJson, listType);
+			}
+
+			List<VOCheckbox> tiposFormacion = null;
+			JsonArray tiposFormacionJson = object.get("tiposFormacion").getAsJsonArray();
+			if (!tiposFormacionJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOCheckbox>>() {
+				}.getType();
+				tiposFormacion = gson.fromJson(tiposFormacionJson, listType);
+			}
+
+			List<VOCheckbox> tiposEstadoContractual = null;
+			JsonArray tiposEstadoContractualJson = object.get("tiposEstadoContractual").getAsJsonArray();
+			if (!tiposEstadoContractualJson.isJsonNull()) {
+				Type listType = new TypeToken<List<VOCheckbox>>() {
+				}.getType();
+				tiposEstadoContractual = gson.fromJson(tiposEstadoContractualJson, listType);
+			}
+
+			voDocentes = docenteDAO.encontrarFiltrado(em, edad, legajo, fechaAlta, antiguedad, provinciaID, partidoID,
+					localidadID, tiposPersonal, tiposSituacionRevista, tiposSituacionActual, tiposMotivo,
+					tiposFormacion, tiposEstadoContractual);
+
+			voResponse.setData(gson.toJson(voDocentes));
+			voResponse.setOk(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			voResponse.setErrorMessage("No se encontraron docentes para los parametros seleccionados.");
 			voResponse.setOk(false);
 		}
 		return gson.toJson(voResponse);
