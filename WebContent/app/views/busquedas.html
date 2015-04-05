@@ -6,54 +6,30 @@
 	<!-- Confirmacion Borrar -->
 	<modal-confirm></modal-confirm>
 	
-	<tabset>  
-		<tab heading="Personal">
-			<tabset> 
-				<tab heading="Docente">
-					<br>
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							Filtros de búsqueda
-							<button type="button" class="center-block btn btn-info" ng-click="filtrar()">Aplicar Filtros</button>
-						</div>
-						<div class="panel-body">
-							<partial-filtro-docentes></partial-filtro-docentes>
-						</div>
-					</div>
-				</tab> 
-				<tab heading="Desempeño">
-				</tab>
-			</tabset>
-		</tab> 
-		<tab heading="Planes">
-			<tabset> 
-				<tab heading="Asignaturas">
-				</tab> 
-				<tab heading="Carreras">
-				</tab>
-				<tab heading="Planes de Estudio">
-				</tab>
-			</tabset>
-		</tab> 
-		<tab heading="Instituciones">
-			<tabset> 
-				<tab heading="Institutos">
-				</tab> 
-				<tab heading="Sedes">
-				</tab>
-			</tabset>
-		</tab> 
-		<tab heading="Localizacion">
-			<tabset>
-				<tab heading="Provincias">
-				</tab> 
-				<tab heading="Partidos">
-				</tab>
-				<tab heading="Localidades">
-				</tab>
-			</tabset>
-		</tab> 
-		<tab heading="Tipos">
-		</tab> 
-	</tabset>
+	<partial-filtro-docentes></partial-filtro-docentes>
+	
+<!-- 		<tab heading="Personal"> -->
+<!-- 				<tab heading="Docente"> -->
+<!-- 				<tab heading="Desempeño"> -->
+<!-- 		</tab>  -->
+<!-- 		<tab heading="Planes"> -->
+<!-- 				<tab heading="Asignaturas"> -->
+<!-- 				<tab heading="Carreras"> -->
+<!-- 				<tab heading="Planes de Estudio"> -->
+<!-- 		</tab>  -->
+<!-- 		<tab heading="Instituciones"> -->
+<!-- 				<tab heading="Institutos"> -->
+<!-- 				<tab heading="Sedes"> -->
+<!-- 		</tab>  -->
+<!-- 		<tab heading="Localizacion"> -->
+<!-- 				<tab heading="Provincias"> -->
+<!-- 				<tab heading="Partidos"> -->
+<!-- 				<tab heading="Localidades"> -->
+<!-- 		</tab>  -->
+<!-- 		<tab heading="Tipos"> -->
+<!-- 		</tab>  -->
+<!-- 	</tabset> -->
+	
+	<docente-listado-filtrado></docente-listado-filtrado>
+	
 </div>
