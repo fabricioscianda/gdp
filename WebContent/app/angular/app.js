@@ -36,4 +36,12 @@ msegErpApp.run(function($rootScope, $location, $cookieStore) {
 		return -1;
 	}
 	
+	/* LISTA CHECKEABLE */
+	$rootScope.getCheckList = function (array) {
+		for (var i = 0, len = array.length; i < len; i++) {
+			array[i]['checked'] = false;
+		}
+		return array;
+	}
+	
 });
