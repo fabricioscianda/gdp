@@ -6,11 +6,19 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.Root;
 
 import mseg.erp.dao.generic.GenericDAOImpl;
 import mseg.erp.exceptions.DAOException;
 import mseg.erp.model.Docente;
+import mseg.erp.model.Docente_;
 import mseg.erp.model.InfoAdministrativa;
+import mseg.erp.model.Persona;
+import mseg.erp.utils.MapperUtils;
+import mseg.erp.vomodel.VOCheckbox;
 import mseg.erp.vomodel.VODocente;
 import mseg.erp.vomodel.VODocenteMini;
 
@@ -20,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implements IDocenteDAO {
 
 	private Logger _logger = LoggerFactory.getLogger(DocenteDAOImpl.class);
-	
+
 	public DocenteDAOImpl() {
 		super(Docente.class, VODocente.class);
 	}
@@ -51,7 +59,8 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 				InfoAdministrativa infoAdministrativa = docente.getPersona().getInfoAdministrativa();
 				if (infoAdministrativa != null) {
 					if (infoAdministrativa.getTipoEstadoContractual() != null) {
-						docenteMini.setEstadoContractual(docente.getPersona().getInfoAdministrativa().getTipoEstadoContractual().getNombre());
+						docenteMini.setEstadoContractual(docente.getPersona().getInfoAdministrativa()
+								.getTipoEstadoContractual().getNombre());
 					}
 					if (infoAdministrativa.getFechaAlta() != null) {
 						docenteMini.setFechaAlta(docente.getPersona().getInfoAdministrativa().getFechaAlta());
@@ -63,18 +72,21 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 						docenteMini.setNroLegajo(docente.getPersona().getInfoAdministrativa().getNroLegajo());
 					}
 					if (infoAdministrativa.getTipoPersonal() != null) {
-						docenteMini.setPersonal(docente.getPersona().getInfoAdministrativa().getTipoPersonal().getNombre());
+						docenteMini.setPersonal(docente.getPersona().getInfoAdministrativa().getTipoPersonal()
+								.getNombre());
 					}
 					if (infoAdministrativa.getTipoSituacion() != null) {
-						docenteMini.setSituacion(docente.getPersona().getInfoAdministrativa().getTipoSituacion().getNombre());
+						docenteMini.setSituacion(docente.getPersona().getInfoAdministrativa().getTipoSituacion()
+								.getNombre());
 					}
 					if (infoAdministrativa.getTipoSituacionRevista() != null) {
-						docenteMini.setSituacionRevista(docente.getPersona().getInfoAdministrativa().getTipoSituacionRevista().getNombre());
+						docenteMini.setSituacionRevista(docente.getPersona().getInfoAdministrativa()
+								.getTipoSituacionRevista().getNombre());
 					}
 				}
 				voDocentesMini.add(docenteMini);
 			}
-			
+
 			_logger.info(Docente.class.getSimpleName() + " listado correctamente.");
 		} catch (Exception ex) {
 			_logger.error("Error listando " + persistentClass.getSimpleName(), ex);
@@ -82,5 +94,39 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 		}
 		return voDocentesMini;
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<VODocente> encontrarFiltrado(EntityManager em, Integer edad, String legajo, Long fechaAlta,
+			Integer antiguedad, Long provinciaID, Long partidoID, Long localidadID, List<VOCheckbox> tiposPersonal,
+			List<VOCheckbox> tiposSituacionRevista, List<VOCheckbox> tiposSituacionActual,
+			List<VOCheckbox> tiposMotivo, List<VOCheckbox> tiposFormacion, List<VOCheckbox> tiposEstadoContractual)
+			throws DAOException {
+
+		List<Docente> docentes = new ArrayList<Docente>();
+		List<VODocente> voDocentes = new ArrayList<VODocente>();
+		
+		try {
+			_logger.info("Intentando filtrar " + persistentClass.getSimpleName());
+
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Docente> cq = cb.createQuery(Docente.class);
+			Root<Docente> from = cq.from(Docente.class);
+			Fetch<Docente, Persona> persona = from.fetch(Docente_.persona);
+			cq.select(from);
+			Query query = em.createQuery(cq);
+			docentes = query.getResultList();
+			voDocentes = MapperUtils.map(docentes, VODocente.class);
+			
+			_logger.info("Listado filtrado " + persistentClass.getSimpleName());
+			
+		} catch (Exception ex) {
+			_logger.error("Error filtrando " + persistentClass.getSimpleName(), ex);
+			throw new DAOException(ex);
+		}
+
+		return voDocentes;
+
+	}
+
 }
