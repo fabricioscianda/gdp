@@ -16,6 +16,9 @@ msegErpServices.factory('DocenteService', function(srvHttp) {
 		encontrar : function(data, success, error) {
 			return srvHttp.authPost('docenteService/docente/encontrar', data, success, error);
 		},
+		encontrarFiltrado : function(data, success, error) {
+			return srvHttp.authPost('docenteService/docente/encontrar/filtros', data, success, error);
+		},
 		modificar : function(data, success, error) {
 			return srvHttp.authPost('docenteService/docente/editar', data, success, error);
 		},
