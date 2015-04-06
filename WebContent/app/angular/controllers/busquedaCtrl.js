@@ -338,13 +338,13 @@ msegErpControllers.controller('BusquedaCtrl', [
 					fa = $scope.fechaAlta.getTime();
 				}
 				DocenteService.encontrarFiltrado({
-						'edad' : $scope.edad,
-						'legajo' : $scope.legajo,
+						'edad' : ($scope.edad != null && $scope.edad != undefined) ? $scope.edad : 0,
+						'legajo' : ($scope.legajo != null && $scope.legajo != undefined) ? $scope.legajo : '',
 						'fechaAlta' : fa,
 						'antiguedad' : ($scope.antiguedad != null && $scope.antiguedad != undefined) ? $scope.antiguedad : 0,
-						'provinciaSel' : ($scope.provinciaSel != undefined && $scope.provinciaSel != null) ? $scope.provinciaSel.id : null,
-						'partidoSel' : ($scope.partidoSel != undefined && $scope.partidoSel != null) ? $scope.partidoSel.id : null,
-						'localSel' : ($scope.localSel != undefined && $scope.localSel != null) ? $scope.localSel.id : null,
+						'provinciaSel' : ($scope.provinciaSel != undefined && $scope.provinciaSel != null) ? $scope.provinciaSel.id : 0,
+						'partidoSel' : ($scope.partidoSel != undefined && $scope.partidoSel != null) ? $scope.partidoSel.id : 0,
+						'localSel' : ($scope.localSel != undefined && $scope.localSel != null) ? $scope.localSel.id : 0,
 						'tiposPersonal' : $scope.tiposPersonal,
 						'tiposSituacionRevista' : $scope.tiposSituacionRevista,
 						'tiposSituacionActual' : $scope.tiposSituacionActual,
