@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -14,17 +15,28 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import mseg.erp.dao.generic.GenericDAOImpl;
+import mseg.erp.dao.localidad.ILocalidadDAO;
+import mseg.erp.dao.partido.IPartidoDAO;
+import mseg.erp.dao.provincia.IProvinciaDAO;
 import mseg.erp.exceptions.DAOException;
 import mseg.erp.model.Docente;
 import mseg.erp.model.Docente_;
 import mseg.erp.model.InfoAdministrativa;
 import mseg.erp.model.InfoAdministrativa_;
+import mseg.erp.model.Localidad;
+import mseg.erp.model.Localidad_;
+import mseg.erp.model.Partido;
+import mseg.erp.model.Partido_;
 import mseg.erp.model.Persona;
 import mseg.erp.model.Persona_;
+import mseg.erp.model.Provincia;
 import mseg.erp.utils.MapperUtils;
 import mseg.erp.vomodel.VOCheckbox;
 import mseg.erp.vomodel.VODocente;
 import mseg.erp.vomodel.VODocenteMini;
+import mseg.erp.vomodel.VOLocalidad;
+import mseg.erp.vomodel.VOPartido;
+import mseg.erp.vomodel.VOProvincia;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +44,15 @@ import org.slf4j.LoggerFactory;
 public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implements IDocenteDAO {
 
 	private Logger _logger = LoggerFactory.getLogger(DocenteDAOImpl.class);
+
+	@Inject
+	ILocalidadDAO localidadDAO;
+
+	@Inject
+	IPartidoDAO partidoDAO;
+
+	@Inject
+	IProvinciaDAO provinciaDAO;
 
 	public DocenteDAOImpl() {
 		super(Docente.class, VODocente.class);
@@ -109,18 +130,24 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 
 		List<Docente> docentes = new ArrayList<Docente>();
 		List<VODocente> voDocentes = new ArrayList<VODocente>();
-		
+
 		try {
 			_logger.info("Intentando filtrar " + persistentClass.getSimpleName());
-			
+
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<Docente> cq = cb.createQuery(Docente.class);
 			Root<Docente> from = cq.from(Docente.class);
 			Join<Docente, Persona> joinPersona = null;
 			Join<Persona, InfoAdministrativa> joinInfoAdministrativa = null;
+			Join<Persona, Localidad> joinLocalidad = null;
+			Join<Localidad, Partido> joinPartido = null;
+			Join<Partido, Provincia> joinProvincia = null;
 			List<Predicate> predicados = new ArrayList<Predicate>();
-//			Predicate igualEdad = null, igualLegajo = null;
-			
+
+			VOLocalidad voLocalidad = null;
+			VOPartido voPartido = null;
+			VOProvincia voProvincia = null;
+
 			// join con persona
 			joinPersona = from.join(Docente_.persona);
 			// join con info administrativa
@@ -131,16 +158,31 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 					|| contieneElementosChequeados(tiposFormacion)
 					|| contieneElementosChequeados(tiposEstadoContractual)) {
 				joinInfoAdministrativa = joinPersona.join(Persona_.infoAdministrativa);
+				if (provinciaID != 0) {
+					voProvincia = provinciaDAO.encontrar(provinciaID, em);
+					joinLocalidad = joinPersona.join(Persona_.localidad);
+					joinPartido = joinLocalidad.join(Localidad_.partido);
+					joinProvincia = joinPartido.join(Partido_.provincia);
+				}
+				if (partidoID != 0) {
+					voPartido = partidoDAO.encontrar(partidoID, em);
+				}
+				if (localidadID != 0) {
+					voLocalidad = localidadDAO.encontrar(localidadID, em);
+				}
 			}
 			cq.select(from);
-			predicados = crearPredicados(cb, joinPersona, joinInfoAdministrativa, edad, legajo, fechaAlta, antiguedad, provinciaID, partidoID, localidadID, tiposPersonal, tiposSituacionRevista, tiposSituacionActual, tiposMotivo, tiposFormacion, tiposEstadoContractual);
+			predicados = crearPredicados(cb, joinPersona, joinInfoAdministrativa, joinLocalidad, joinPartido,
+					joinProvincia, edad, legajo, fechaAlta, antiguedad, voProvincia, voPartido, voLocalidad,
+					tiposPersonal, tiposSituacionRevista, tiposSituacionActual, tiposMotivo, tiposFormacion,
+					tiposEstadoContractual);
 			cq.where(cb.and(predicados.toArray(new Predicate[predicados.size()])));
 			Query query = em.createQuery(cq);
 			docentes = query.getResultList();
 			voDocentes = MapperUtils.map(docentes, VODocente.class);
-			
+
 			_logger.info("Listado filtrado " + persistentClass.getSimpleName());
-			
+
 		} catch (Exception ex) {
 			_logger.error("Error filtrando " + persistentClass.getSimpleName(), ex);
 			throw new DAOException(ex);
@@ -152,16 +194,19 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 
 	/**
 	 * 
-	 * @param joinInfoAdministrativa 
-	 * @param joinPersona 
-	 * @param cb 
-	 * @param edad 
+	 * @param joinInfoAdministrativa
+	 * @param joinPersona
+	 * @param cb
+	 * @param joinPartido
+	 * @param joinLocalidad
+	 * @param joinProvincia
+	 * @param edad
 	 * @param legajo
 	 * @param fechaAlta
 	 * @param antiguedad
-	 * @param provinciaID
-	 * @param partidoID
-	 * @param localidadID
+	 * @param voProvincia
+	 * @param voPartido
+	 * @param voLocalidad
 	 * @param tiposPersonal
 	 * @param tiposSituacionRevista
 	 * @param tiposSituacionActual
@@ -171,13 +216,15 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 	 * @return
 	 */
 	private List<Predicate> crearPredicados(CriteriaBuilder cb, Join<Docente, Persona> joinPersona,
-			Join<Persona, InfoAdministrativa> joinInfoAdministrativa, Integer edad, String legajo, Long fechaAlta,
-			Integer antiguedad, Long provinciaID, Long partidoID, Long localidadID, List<VOCheckbox> tiposPersonal,
-			List<VOCheckbox> tiposSituacionRevista, List<VOCheckbox> tiposSituacionActual,
-			List<VOCheckbox> tiposMotivo, List<VOCheckbox> tiposFormacion, List<VOCheckbox> tiposEstadoContractual) {
-		
+			Join<Persona, InfoAdministrativa> joinInfoAdministrativa, Join<Persona, Localidad> joinLocalidad,
+			Join<Localidad, Partido> joinPartido, Join<Partido, Provincia> joinProvincia, Integer edad, String legajo,
+			Long fechaAlta, Integer antiguedad, VOProvincia voProvincia, VOPartido voPartido, VOLocalidad voLocalidad,
+			List<VOCheckbox> tiposPersonal, List<VOCheckbox> tiposSituacionRevista,
+			List<VOCheckbox> tiposSituacionActual, List<VOCheckbox> tiposMotivo, List<VOCheckbox> tiposFormacion,
+			List<VOCheckbox> tiposEstadoContractual) {
+
 		List<Predicate> predicados = new ArrayList<Predicate>();
-		
+
 		// si se filtra por legajo deberia haber solo una coincidencia, por eso
 		// el resto de los filtros van por el "else"
 		// where legajo.
@@ -188,30 +235,48 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 			if (edad != 0) {
 				List<Long> fechasEdad = calcularRangoFechasEdadAntiguedad(edad);
 				if (fechasEdad != null) {
-					predicados.add(cb.between(joinPersona.get(Persona_.fechaNac), fechasEdad.get(0), fechasEdad.get(1)));
+					predicados
+							.add(cb.between(joinPersona.get(Persona_.fechaNac), fechasEdad.get(0), fechasEdad.get(1)));
 				}
 			}
 			// where antiguedad
 			if (antiguedad != 0) {
 				List<Long> fechasAntiguedad = calcularRangoFechasEdadAntiguedad(antiguedad);
 				if (fechasAntiguedad != null) {
-					predicados.add(cb.between(joinInfoAdministrativa.get(InfoAdministrativa_.fechaAlta), fechasAntiguedad.get(0), fechasAntiguedad.get(1)));
+					predicados.add(cb.between(joinInfoAdministrativa.get(InfoAdministrativa_.fechaAlta),
+							fechasAntiguedad.get(0), fechasAntiguedad.get(1)));
+				}
+			}
+			// where provincia
+			if (voProvincia != null) {
+				Provincia provincia = MapperUtils.map(voProvincia, Provincia.class);
+				predicados.add(cb.equal(joinPartido.get(Partido_.provincia), provincia));
+				// where partido
+				if (voPartido != null) {
+					Partido partido = MapperUtils.map(voPartido, Partido.class);
+					predicados.add(cb.equal(joinLocalidad.get(Localidad_.partido), partido));
+					// where localidad
+					if (voLocalidad != null) {
+						Localidad localidad = MapperUtils.map(voLocalidad, Localidad.class);
+						predicados.add(cb.equal(joinPersona.get(Persona_.localidad), localidad));
+					}
 				}
 			}
 			/*
-			 * falta filtrar por Long provinciaID, Long partidoID, Long
-			 * localidadID, List<VOCheckbox> tiposPersonal, List<VOCheckbox>
-			 * tiposSituacionRevista, List<VOCheckbox> tiposSituacionActual,
-			 * List<VOCheckbox> tiposMotivo, List<VOCheckbox> tiposFormacion,
-			 * List<VOCheckbox> tiposEstadoContractual
+			 * falta filtrar por List<VOCheckbox> tiposPersonal,
+			 * List<VOCheckbox> tiposSituacionRevista, List<VOCheckbox>
+			 * tiposSituacionActual, List<VOCheckbox> tiposMotivo,
+			 * List<VOCheckbox> tiposFormacion, List<VOCheckbox>
+			 * tiposEstadoContractual
 			 */
 		}
-		
+
 		return predicados;
 	}
 
 	/**
-	 * Retorna true si alguno de los elementos de la lista de {@link VOCheckbox} esta chequeado
+	 * Retorna true si alguno de los elementos de la lista de {@link VOCheckbox}
+	 * esta chequeado
 	 * 
 	 * @param lista
 	 * @return
