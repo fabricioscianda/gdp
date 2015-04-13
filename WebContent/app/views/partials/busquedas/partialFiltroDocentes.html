@@ -1,14 +1,14 @@
 <div ng-show="logueado">
 	<form>
-		<div class="row">
-			<div class="row col-sm-2">
-				<button type="submit" class="form-control btn btn-default"
+		<div class="row col-sm-8">
+			<div class="form-group">
+				<button type="submit" class="form-control btn btn-success"
 					ng-click="filtrarTabDocente()">Filtrar</button>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-2">
-				<div class="panel panel-info">
+			<div class="col-sm-6">
+				<div class="panel panel-primary">
 					<div class="panel-heading">edad</div>
 					<div class="panel-body">
 						<div class="btn-group" data-toggle="buttons">
@@ -18,8 +18,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
+			<div class="col-sm-6">
+				<div class="panel panel-primary">
 					<div class="panel-heading">legajo</div>
 					<div class="panel-body">
 						<div class="btn-group" data-toggle="buttons">
@@ -29,8 +29,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
+		</div>
+		<div class="row">
+			<div class="col-sm-7">
+				<div class="panel panel-primary">
 					<div class="panel-heading">fechaAlta</div>
 					<div class="panel-body">
 						<div class="form-group form-inline">
@@ -41,7 +43,7 @@
 									clear-text="Borrar" current-text="Hoy" close-text="Cerrar"
 									disabled datepicker-popup="{{format}}" ng-model="fechaAlta" />
 								<span class="input-group-btn">
-									<button type="button" class="btn btn-info"
+									<button type="button" class="btn btn-primary"
 										ng-click="openFechaAlta($event)">
 										<i class="glyphicon glyphicon-calendar"></i>
 									</button>
@@ -51,8 +53,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
+			<div class="col-sm-5">
+				<div class="panel panel-primary">
 					<div class="panel-heading">antiguedad</div>
 					<div class="panel-body">
 						<div class="btn-group" data-toggle="buttons">
@@ -62,127 +64,140 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
-					<div class="panel-heading">provincias</div>
-					<div class="panel-body" id="spinPr">
-						<div class="btn-group" ng-init="listarProvincias()">
-							<select id="provincia" class="form-control text-capitalize"
-								ng-options="provincia.nombre for provincia in provincias"
-								ng-model="provinciaSel">
-								<option value="">-- Provincia --</option>
-							</select>
-						</div>
+		</div>
+		<div class="row col-sm-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">provincias</div>
+				<div class="panel-body" id="spinPr">
+					<div class="btn-group" ng-init="listarProvincias()">
+						<select id="provincia" class="form-control text-capitalize"
+							ng-options="provincia.nombre for provincia in provincias"
+							ng-model="provinciaSel" ng-click="filtrarTabDocente()">
+							<option value="">-- Provincia --</option>
+						</select>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
-					<div class="panel-heading">partidos</div>
-					<div class="panel-body" id="spinPa">
-						<div class="btn-group" ng-init="listarPartidos()">
-							<select id="partido" class="form-control text-capitalize"
-								ng-options="partido.nombre for partido in partidos | includeFromProvincia:provinciaSel.nombre"
-								ng-model="partidoSel">
-								<option value="">-- Partido --</option>
-							</select>
-						</div>
+		</div>
+		<div class="row col-sm-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">partidos</div>
+				<div class="panel-body" id="spinPa">
+					<div class="btn-group" ng-init="listarPartidos()">
+						<select id="partido" class="form-control text-capitalize"
+							ng-options="partido.nombre for partido in partidos | includeFromProvincia:provinciaSel.nombre"
+							ng-model="partidoSel" ng-click="filtrarTabDocente()">
+							<option value="">-- Partido --</option>
+						</select>
 					</div>
 				</div>
 			</div>
-			<!-- 		</div> -->
-			<!-- 		<div class="row"> -->
-			<div class="col-sm-2">
-				<div class="panel panel-info">
-					<div class="panel-heading">localidades</div>
-					<div class="panel-body" id="spinL">
-						<div class="btn-group" ng-init="listarLocalidades()">
-							<select id="localidad" class="form-control text-capitalize"
-								ng-options="local.nombre for local in localidades | includeFromPartido:partidoSel.nombre"
-								ng-model="localSel">
-								<option value="">-- Localidad --</option>
-							</select>
-						</div>
+		</div>
+		<div class="row col-sm-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">localidades</div>
+				<div class="panel-body" id="spinL">
+					<div class="btn-group" ng-init="listarLocalidades()">
+						<select id="localidad" class="form-control text-capitalize"
+							ng-options="local.nombre for local in localidades | includeFromPartido:partidoSel.nombre"
+							ng-model="localSel" ng-click="filtrarTabDocente()">
+							<option value="">-- Localidad --</option>
+						</select>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="panel panel-primary">
 					<div class="panel-heading">tiposPersonal</div>
 					<div class="panel-body" id="spinTP" ng-init="listarTiposPersonal()">
 						<ul>
 							<li ng-repeat="tp in tiposPersonal"><label class="checkbox">
-									<input type="checkbox" ng-model="tp.checked" name="group" />
-									{{tp.nombre}}
+									<input type="checkbox" ng-model="tp.checked" name="group"
+									ng-click="filtrarTabDocente()" /> {{tp.nombre}}
 							</label></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="panel panel-primary">
 					<div class="panel-heading">tiposSituacionRevista</div>
 					<div class="panel-body" id="spinTSR"
 						ng-init="listarTiposSituacionRevista()">
 						<ul>
 							<li ng-repeat="tsr in tiposSituacionRevista"><label
 								class="checkbox"> <input type="checkbox"
-									ng-model="tsr.checked" name="group" /> {{tsr.nombre}}
+									ng-model="tsr.checked" name="group"
+									ng-click="filtrarTabDocente()" /> {{tsr.nombre}}
 							</label></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-3">
-				<div class="panel panel-info">
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="panel panel-primary">
 					<div class="panel-heading">tiposSituacionActual</div>
 					<div class="panel-body" id="spinTSA"
 						ng-init="listarTiposSituacionActual()">
 						<ul>
 							<li ng-repeat="tsa in tiposSituacionActual"><label
 								class="checkbox"> <input type="checkbox"
-									ng-model="tsa.checked" name="group" /> {{tsa.nombre}}
+									ng-model="tsa.checked" name="group"
+									ng-click="filtrarTabDocente()" /> {{tsa.nombre}}
 							</label></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-3">
-				<div class="panel panel-info">
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="panel panel-primary">
 					<div class="panel-heading">tiposMotivo</div>
 					<div class="panel-body" id="spinTM" ng-init="listarTiposMotivo()">
 						<ul>
 							<li ng-repeat="tm in tiposMotivo"><label class="checkbox">
-									<input type="checkbox" ng-model="tm.checked" name="group" />
-									{{tm.nombre}}
+									<input type="checkbox" ng-model="tm.checked" name="group"
+									ng-click="filtrarTabDocente()" /> {{tm.nombre}}
 							</label></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="panel panel-primary">
 					<div class="panel-heading">tiposFormacion</div>
 					<div class="panel-body" id="spinTF"
 						ng-init="listarTiposFormacion()">
 						<ul>
 							<li ng-repeat="tf in tiposFormacion"><label class="checkbox">
-									<input type="checkbox" ng-model="tf.checked" name="group" />
-									{{tf.nombre}}
+									<input type="checkbox" ng-model="tf.checked" name="group"
+									ng-click="filtrarTabDocente()" /> {{tf.nombre}}
 							</label></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-info">
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="panel panel-primary">
 					<div class="panel-heading">tiposEstadoContractual</div>
 					<div class="panel-body" id="spinTEC"
 						ng-init="listarTiposEstadoContractual()">
 						<ul>
 							<li ng-repeat="tec in tiposEstadoContractual"><label
 								class="checkbox"> <input type="checkbox"
-									ng-model="tec.checked" name="group" /> {{tec.nombre}}
+									ng-model="tec.checked" name="group"
+									ng-click="filtrarTabDocente()" /> {{tec.nombre}}
 							</label></li>
 						</ul>
 					</div>
