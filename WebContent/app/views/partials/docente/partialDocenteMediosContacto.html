@@ -19,12 +19,14 @@
 				</tr>
 				<tr>
 					<td>
-						<select class="form-control" ng-options="medio.nombre for medio in mediosContacto" required ng-model="medioSel" ng-init="listarMediosContacto()">
-							<option value="">-- Medio de Contacto --</option>
-						</select>
+						<div class="form-group form-group-sm">
+							<select class="form-control" ng-options="medio.nombre for medio in mediosContacto" required ng-model="medioSel" ng-init="listarMediosContacto()">
+								<option value="">-- Medio de Contacto --</option>
+							</select>
+						</div>
 					</td>
 					<td>
-						<div class="form-group">
+						<div class="form-group form-group-sm">
 							<input class="form-control" type="text" placeholder="Contacto" ng-model="nuevoMedio.valor">
 						</div>
 					</td>
@@ -36,5 +38,8 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<div class="panel-footer bg-info">
+		<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	</div>
 </div>

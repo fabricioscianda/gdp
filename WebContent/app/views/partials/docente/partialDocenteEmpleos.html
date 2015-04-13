@@ -25,37 +25,46 @@
 				</tr>
 				<tr>
 					<td>
-						<div class="form-group">
+						<div class="form-group form-group-sm">
 							<input class="form-control text-capitalize" type="text" placeholder="Razon Social" ng-model="nuevoEmpleo.razonSocial">
 						</div>
 					</td>
 					<td>
-						<select class="form-control" ng-options="tipoCargo.nombre for tipoCargo in tiposCargo" required ng-model="tipoCargoSel" ng-init="listarTiposCargo()">
-							<option value="">-- Cargo --</option>
-						</select>
+						<div class="form-group form-group-sm">
+							<select class="form-control" ng-options="tipoCargo.nombre for tipoCargo in tiposCargo" required ng-model="tipoCargoSel" ng-init="listarTiposCargo()">
+								<option value="">-- Cargo --</option>
+							</select>
+						</div>
 					</td>
 					<td>
-						<div class="form-group">
+						<div class="form-group form-group-sm">
 							<input class="form-control text-capitalize" type="text" placeholder="Detalle del Cargo" ng-model="nuevoEmpleo.detalleCargo">
 						</div>
 					</td>
 					<td>
-						<select class="form-control" ng-options="tipoAdmin.nombre for tipoAdmin in tiposAdmin" required ng-model="tipoAdminSel" ng-init="listarTiposAdmin()">
-							<option value="">-- Administracion --</option>
-						</select>
+						<div class="form-group form-group-sm">
+							<select class="form-control form-group-sm" ng-options="tipoAdmin.nombre for tipoAdmin in tiposAdmin" required ng-model="tipoAdminSel" ng-init="listarTiposAdmin()">
+								<option value="">-- Administracion --</option>
+							</select>
+						</div>
 					</td>
 					<td>
-						<select class="form-control" ng-options="tipoRelacion.nombre for tipoRelacion in tiposRelacion" required ng-model="tipoRelacionSel" ng-init="listarTiposRelacion()">
-							<option value="">-- Tipo de Relacion --</option>
-						</select>
+						<div class="form-group form-group-sm">
+							<select class="form-control form-group-sm" ng-options="tipoRelacion.nombre for tipoRelacion in tiposRelacion" required ng-model="tipoRelacionSel" ng-init="listarTiposRelacion()">
+								<option value="">-- Tipo de Relacion --</option>
+							</select>
+						</div>
 					</td>
 					<td>
-						<div class="text-center btn btn-md">
+						<div class="text-center btn btn-sm">
 							<a href="#/{{urlModulo}}" ng-click="addEmpleo()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 						</div>	
 					</td>
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<div class="panel-footer bg-success">
+		<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	</div>
 </div>

@@ -21,27 +21,32 @@
 				</tr>
 				<tr>
 					<td>
-						<div class="text-center">
+						<div class="text-center form-group-sm">
 							<input type="checkbox" ng-model="nuevoDomicilio.actual">
 						</div>
 					</td>
 					<td>
-						<div class="form-group">
+						<div class="form-group form-group-sm">
 							<input class="form-control text-capitalize" type="text" placeholder="Domicilio" ng-model="nuevoDomicilio.domicilio">
 						</div>
 					</td>
 					<td>
-						<select class="form-control text-capitalize" ng-options="localidad.nombre for localidad in localidades" required ng-model="localidadSel" ng-init="listarLocalidades()">
-							<option value="">-- Localidad --</option>
-						</select>
+						<div class="input-group input-group-sm">
+							<select class="form-control text-capitalize" ng-options="localidad.nombre for localidad in localidades" required ng-model="localidadSel" ng-init="listarLocalidades()">
+								<option value="">-- Localidad --</option>
+							</select>
+						</div>
 					</td>
 					<td>
-						<div class="text-center btn btn-md">
+						<div class="text-center btn btn-sm">
 							<a href="#/{{urlModulo}}" ng-click="addDomicilio()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<div class="panel-footer bg-warning">
+		<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	</div>
 </div>

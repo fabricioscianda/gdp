@@ -3,48 +3,68 @@
 		<h5 class="panel-title">Información Personal</h5>
 	</div>
 	<div class="panel-body bg-success">
-		<!-- Nombre y Apellido -->
-		<div class="row">
-			<div class="col-sm-5">
-				<div class="form-group">
-					<label for="nombre">Nombre/s</label>
-					<input type="text" class="form-control text-capitalize" id="nombre" name="nombre" ng-model="nombre" placeholder="Nombre/s">
+		<div class="form-group form-group-sm">
+			<!-- Nombre -->
+			<div class="row">
+				<div class="col-sm-5">
+					<div class="form-group">
+						<label for="nombre">Nombre/s</label> <input type="text"
+							class="form-control text-capitalize" id="nombre" name="nombre"
+							ng-model="nombre" placeholder="Nombre/s">
+					</div>
 				</div>
 			</div>
-			<div class="col-sm-5">
-				<div class="form-group">
-					<label for="apellido">Apellido</label>
-					<input type="text" class="form-control text-capitalize" id="apellido" name="apellido" ng-model="apellido" placeholder="Apellido">
+			<!-- Apellido -->
+			<div class="row">
+				<div class="col-sm-5">
+					<div class="form-group">
+						<label for="apellido">Apellido</label> <input type="text"
+							class="form-control text-capitalize" id="apellido"
+							name="apellido" ng-model="apellido" placeholder="Apellido">
+					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Tipo Documento y CUIL -->
 		<div class="row">
+			<!-- Tipo Documento -->
 			<div class="col-sm-7">
-				<div class="form-group form-inline">
+				<div class="form-group form-inline form-group-sm">
 					<div class="form-group">
 						<label for="numeroDoc" class="control-label pull-left">Documento</label>
 					</div>
 					<div class="form-group" ng-init="listarTiposDoc()">
-						<label class="radio-inline" ng-repeat="tipoDoc in tiposDoc"> 
-							<input type="radio" id="tipoDocSel" name="tipoDocSel" value="{{tipoDoc.id}}" ng-blur="rellenarDNICuil()" ng-model="$parent.tipoDocSel"> {{tipoDoc.nombre}}
-						</label>
-						<input type="text" class="form-control" id="numeroDoc" name="numeroDoc" ng-model="numeroDoc" maxlength="8" placeholder="Número" ng-blur="rellenarDNICuil()">
+						<label class="radio-inline" ng-repeat="tipoDoc in tiposDoc">
+							<input type="radio" id="tipoDocSel" name="tipoDocSel"
+							value="{{tipoDoc.id}}" ng-blur="rellenarDNICuil()"
+							ng-model="$parent.tipoDocSel"> {{tipoDoc.nombre}}
+						</label> <input type="text" class="form-control" id="numeroDoc"
+							name="numeroDoc" ng-model="numeroDoc" maxlength="8"
+							placeholder="Número" ng-blur="rellenarDNICuil()">
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="row">
+			<!-- CUIL -->
 			<div class="col-sm-5">
-				<div class="form-group form-inline">
+				<div class="form-group form-inline form-group-sm">
 					<div class="form-group">
 						<label for="cuil" class="control-label pull-left">CUIL</label>
 					</div>
 					<div class="form-group">
-						<div class="input-group">
-							<select class="form-control" ng-options="tipoCuil for tipoCuil in tiposCuil" ng-model="cuilTipoSel" ng-blur="validarCuit(cuilTipoSel, numeroDocCuil)"></select>
-							<span class="input-group-addon" id="basic-addon1">-</span>
-							<input class="form-control text-center" type="text" name="cuil" ng-model="numeroDocCuil" placeholder="DNI" maxlength="8" ng-blur="validarCuit(cuilTipoSel, numeroDocCuil)">
-							<span class="input-group-addon" id="basic-addon1">-</span>
-							<select class="form-control" ng-options="validadorCuil for validadorCuil in validadoresCuil" ng-model="cuilValidadorSel" disabled></select>
+						<div class="input-group input-group-sm">
+							<select class="form-control"
+								ng-options="tipoCuil for tipoCuil in tiposCuil"
+								ng-model="cuilTipoSel"
+								ng-blur="validarCuit(cuilTipoSel, numeroDocCuil)"></select> <span
+								class="input-group-addon" id="basic-addon1">-</span> <input
+								class="form-control text-center" type="text" name="cuil"
+								ng-model="numeroDocCuil" placeholder="DNI" maxlength="8"
+								ng-blur="validarCuit(cuilTipoSel, numeroDocCuil)"> <span
+								class="input-group-addon" id="basic-addon1">-</span> <select
+								class="form-control"
+								ng-options="validadorCuil for validadorCuil in validadoresCuil"
+								ng-model="cuilValidadorSel" disabled></select>
 						</div>
 					</div>
 				</div>
@@ -53,47 +73,58 @@
 		<!-- Fecha Nacimiento y Edad -->
 		<div class="row">
 			<div class="col-sm-4">
-				<div class="form-group">
+				<div class="form-group form-group-sm">
 					<div class="form-group">
-						<label for="fechaNac" class="control-label pull-left">Fecha de Nacimiento</label>
+						<label for="fechaNac" class="control-label pull-left">Fecha
+							de Nacimiento</label>
 					</div>
-					<div class="form-group form-inline">
-			            <p id="fechaNac" class="input-group">
-			              <input type="text" ng-change="actualizarEdad(fechaNac)" class="form-control" datepicker-popup="{{format}}" ng-model="fechaNac" is-open="opened" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
-			              <span class="input-group-btn">
-			                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-			              </span>
-			            </p>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-2">
-				<div class="form-group">
-					<div class="form-group">
-						<label for="edad">Edad</label>
-					</div>
-					<div class="form-group form-inline">
-						<input type="text" class="form-control text-capitalize" id="edad" ng-model="edad" disabled>
+					<div class="form-group form-inline form-group-sm">
+						<p id="fechaNac" class="input-group input-group-sm">
+							<input type="text" ng-change="actualizarEdad(fechaNac)"
+								class="form-control" datepicker-popup="{{format}}"
+								ng-model="fechaNac" is-open="opened" max-date="maxDate"
+								datepicker-options="dateOptions" ng-required="true"
+								clear-text="Borrar" current-text="Hoy" close-text="Cerrar"
+								disabled /> <span class="input-group-btn">
+								<button type="button" class="btn btn-default"
+									ng-click="open($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+						</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Provincia y Partido -->
+		<!-- Edad -->
+		<div class="row">
+			<div class="col-sm-2">
+				<div class="form-group form-group-sm">
+					<label for="edad">Edad</label> <input type="text"
+						class="form-control text-capitalize" id="edad" ng-model="edad"
+						disabled>
+				</div>
+			</div>
+		</div>
+		<!-- Provincia -->
 		<div class="row">
 			<div class="col-sm-4">
-				<div class="form-group" ng-init="listarProvincias()">
-					<label for="provincia">Provincia</label> 
-					<select id="provincia" class="form-control text-capitalize"
+				<div class="form-group form-group-sm" ng-init="listarProvincias()">
+					<label for="provincia">Provincia</label> <select id="provincia"
+						class="form-control text-capitalize"
 						ng-options="provincia.nombre for provincia in provincias" required
 						ng-model="provinciaSel">
 						<option value="">-- Provincia --</option>
 					</select>
 				</div>
 			</div>
+		</div>
+		<!-- Partido -->
+		<div class="row">
 			<div class="col-sm-4">
-				<div class="form-group" ng-init="listarPartidos()">
-					<label for="partido">Partido</label> 
-					<select id="partido" class="form-control text-capitalize"
+				<div class="form-group form-group-sm" ng-init="listarPartidos()">
+					<label for="partido">Partido</label> <select id="partido"
+						class="form-control text-capitalize"
 						ng-options="partido.nombre for partido in partidos | includeFromProvincia:provinciaSel.nombre"
 						required ng-model="partidoSel">
 						<option value="">-- Partido --</option>
@@ -104,24 +135,28 @@
 		<!-- Localidad y CP -->
 		<div class="row">
 			<div class="col-sm-4">
-				<div class="form-group" ng-init="listarLocalidades()">
-					<label for="localidad">Localidad</label> 
-					<select id="localidad" class="form-control text-capitalize"
+				<div class="form-group form-group-sm" ng-init="listarLocalidades()">
+					<label for="localidad">Localidad</label> <select id="localidad"
+						class="form-control text-capitalize"
 						ng-options="local.nombre for local in localidades | includeFromPartido:partidoSel.nombre"
 						required ng-model="localSel">
 						<option value="">-- Localidad --</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-sm-4">
-				<div class="form-group">
+			<div class="col-sm-2">
+				<div class="form-group form-group-sm">
 					<label for="cp">Código Postal</label>
-					<div class="input-group">
-				      	<input type="text" class="form-control" id="cp" placeholder="CP" ng-model="cp" maxlength="9">
-				      	<div class="input-group-addon">CP</div>
-				    </div>
-			    </div>
+					<!-- 					<div class="input-group"> -->
+					<input type="text" class="form-control" id="cp" placeholder="CP"
+						ng-model="cp" maxlength="9">
+					<!-- 						<div class="input-group-addon">CP</div> -->
+					<!-- 					</div> -->
+				</div>
 			</div>
 		</div>
+	</div>
+	<div class="panel-footer bg-success">
+		<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	</div>
 </div>

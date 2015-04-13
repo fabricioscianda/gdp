@@ -25,28 +25,32 @@
 				</tr>
 				<tr>
 					<td>
-						<select class="form-control" ng-options="tipo.nombre for tipo in tiposFormacion" required ng-model="tipoFormacionSel" ng-init="listarTiposFormacion()">
-							<option value="">-- Formacion --</option>
-						</select>
+						<div class="form-group form-group-sm">
+							<select class="form-control" ng-options="tipo.nombre for tipo in tiposFormacion" required ng-model="tipoFormacionSel" ng-init="listarTiposFormacion()">
+								<option value="">-- Formacion --</option>
+							</select>
+						</div>
 					</td>
 					<td>
-						<div class="form-group">
+						<div class="form-group form-group-sm">
 							<input class="form-control text-capitalize" type="text" placeholder="Titulo" ng-model="nuevaFormacion.titulo">
 						</div>
 					</td>
 					<td>
-						<select class="form-control" ng-options="tipo.nombre for tipo in tiposEstadoFormacion" required ng-model="tipoEstadoFormacionSel" ng-init="listarTiposEstadoFormacion()">
-							<option value="">-- Estado --</option>
-						</select>
+						<div class="form-group form-group-sm">
+							<select class="form-control" ng-options="tipo.nombre for tipo in tiposEstadoFormacion" required ng-model="tipoEstadoFormacionSel" ng-init="listarTiposEstadoFormacion()">
+								<option value="">-- Estado --</option>
+							</select>
+						</div>
 					</td>
 					<td>
-						<div class="form-group">
+						<div class="form-group form-group-sm">
 							<input class="form-control text-capitalize" type="text" placeholder="Expedido por" ng-model="nuevaFormacion.expedidoPor">
 						</div>
 					</td>
 					<td class="col-sm-2">
-						<div class="form-group form-inline">
-				            <p class="input-group">
+						<div class="form-group form-inline form-group-sm">
+				            <p class="input-group input-group-sm">
 				              <input type="text" class="form-control" datepicker-popup="{{formatYearOnly}}" ng-model="nuevaFormacion.anio" is-open="openedAnio" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" clear-text="Borrar" current-text="Hoy" close-text="Cerrar" disabled/>
 				              <span class="input-group-btn">
 				                <button type="button" class="btn btn-default" ng-click="openAnio($event)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -62,5 +66,8 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<div class="panel-footer bg-danger">
+		<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	</div>
 </div>
