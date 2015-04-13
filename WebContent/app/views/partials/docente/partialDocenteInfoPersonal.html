@@ -1,12 +1,12 @@
-<div class="panel panel-success" ng-show="logueado">
+<div class="panel panel-primary" ng-show="logueado">
 	<div class="panel-heading">
 		<h5 class="panel-title">Información Personal</h5>
 	</div>
-	<div class="panel-body bg-success">
+	<div class="panel-body ">
 		<div class="form-group form-group-sm">
 			<!-- Nombre -->
 			<div class="row">
-				<div class="col-sm-5">
+				<div class="col-sm-11">
 					<div class="form-group">
 						<label for="nombre">Nombre/s</label> <input type="text"
 							class="form-control text-capitalize" id="nombre" name="nombre"
@@ -16,7 +16,7 @@
 			</div>
 			<!-- Apellido -->
 			<div class="row">
-				<div class="col-sm-5">
+				<div class="col-sm-11">
 					<div class="form-group">
 						<label for="apellido">Apellido</label> <input type="text"
 							class="form-control text-capitalize" id="apellido"
@@ -27,7 +27,7 @@
 		</div>
 		<div class="row">
 			<!-- Tipo Documento -->
-			<div class="col-sm-7">
+			<div class="col-sm-11">
 				<div class="form-group form-inline form-group-sm">
 					<div class="form-group">
 						<label for="numeroDoc" class="control-label pull-left">Documento</label>
@@ -46,7 +46,7 @@
 		</div>
 		<div class="row">
 			<!-- CUIL -->
-			<div class="col-sm-5">
+			<div class="col-sm-11">
 				<div class="form-group form-inline form-group-sm">
 					<div class="form-group">
 						<label for="cuil" class="control-label pull-left">CUIL</label>
@@ -70,14 +70,15 @@
 				</div>
 			</div>
 		</div>
-		<!-- Fecha Nacimiento y Edad -->
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-11">
 				<div class="form-group form-group-sm">
+					<!-- Fecha Nacimiento -->
 					<div class="form-group">
 						<label for="fechaNac" class="control-label pull-left">Fecha
 							de Nacimiento</label>
 					</div>
+					<!-- Edad -->
 					<div class="form-group form-inline form-group-sm">
 						<p id="fechaNac" class="input-group input-group-sm">
 							<input type="text" ng-change="actualizarEdad(fechaNac)"
@@ -96,9 +97,9 @@
 				</div>
 			</div>
 		</div>
-		<!-- Edad -->
 		<div class="row">
-			<div class="col-sm-2">
+			<!-- Edad -->
+			<div class="col-sm-11">
 				<div class="form-group form-group-sm">
 					<label for="edad">Edad</label> <input type="text"
 						class="form-control text-capitalize" id="edad" ng-model="edad"
@@ -106,9 +107,9 @@
 				</div>
 			</div>
 		</div>
-		<!-- Provincia -->
 		<div class="row">
-			<div class="col-sm-4">
+			<!-- Provincia -->
+			<div class="col-sm-5">
 				<div class="form-group form-group-sm" ng-init="listarProvincias()">
 					<label for="provincia">Provincia</label> <select id="provincia"
 						class="form-control text-capitalize"
@@ -118,10 +119,8 @@
 					</select>
 				</div>
 			</div>
-		</div>
-		<!-- Partido -->
-		<div class="row">
-			<div class="col-sm-4">
+			<!-- Partido -->
+			<div class="col-sm-5">
 				<div class="form-group form-group-sm" ng-init="listarPartidos()">
 					<label for="partido">Partido</label> <select id="partido"
 						class="form-control text-capitalize"
@@ -132,9 +131,9 @@
 				</div>
 			</div>
 		</div>
-		<!-- Localidad y CP -->
 		<div class="row">
-			<div class="col-sm-4">
+			<!-- Localidad -->
+			<div class="col-sm-5">
 				<div class="form-group form-group-sm" ng-init="listarLocalidades()">
 					<label for="localidad">Localidad</label> <select id="localidad"
 						class="form-control text-capitalize"
@@ -144,19 +143,17 @@
 					</select>
 				</div>
 			</div>
-			<div class="col-sm-2">
+			<!-- CP -->
+			<div class="col-sm-5">
 				<div class="form-group form-group-sm">
-					<label for="cp">Código Postal</label>
-					<!-- 					<div class="input-group"> -->
-					<input type="text" class="form-control" id="cp" placeholder="CP"
-						ng-model="cp" maxlength="9">
-					<!-- 						<div class="input-group-addon">CP</div> -->
-					<!-- 					</div> -->
+					<label for="cp">Código Postal</label> <input type="text"
+						class="form-control" id="cp" placeholder="CP" ng-model="cp"
+						maxlength="9">
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="panel-footer bg-success">
+	<div class="panel-footer ">
 		<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	</div>
 </div>

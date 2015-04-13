@@ -1,8 +1,8 @@
-<div class="panel panel-info" ng-show="logueado">
+<div class="panel panel-primary" ng-show="logueado">
 	<div class="panel-heading">
 		<h5 class="panel-title">Medios de Contacto</h5>
 	</div>
-	<div class="panel-body bg-info">
+	<div class="panel-body ">
 		<table class="table table-hover table-condensed table-striped">
 			<thead>
 				<tr>
@@ -12,34 +12,39 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="medio in nuevosMediosContacto | orderBy:['medio']" >
+				<tr ng-repeat="medio in nuevosMediosContacto | orderBy:['medio']">
 					<td><strong>{{medio.tipoContacto.nombre}}</strong></td>
 					<td><strong>{{medio.valor}}</strong></td>
-					<td><a href="#/{{urlModulo}}" ng-click="removeMedio(medio)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+					<td><a href="#/{{urlModulo}}" ng-click="removeMedio(medio)"><span
+							class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
 				</tr>
 				<tr>
 					<td>
 						<div class="form-group form-group-sm">
-							<select class="form-control" ng-options="medio.nombre for medio in mediosContacto" required ng-model="medioSel" ng-init="listarMediosContacto()">
+							<select class="form-control"
+								ng-options="medio.nombre for medio in mediosContacto" required
+								ng-model="medioSel" ng-init="listarMediosContacto()">
 								<option value="">-- Medio de Contacto --</option>
 							</select>
 						</div>
 					</td>
 					<td>
 						<div class="form-group form-group-sm">
-							<input class="form-control" type="text" placeholder="Contacto" ng-model="nuevoMedio.valor">
+							<input class="form-control" type="text" placeholder="Contacto"
+								ng-model="nuevoMedio.valor">
 						</div>
 					</td>
 					<td>
 						<div class="text-center btn btn-md">
-							<a href="#/{{urlModulo}}" ng-click="addMedio()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-						</div>	
+							<a href="#/{{urlModulo}}" ng-click="addMedio()"><span
+								class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<div class="panel-footer bg-info">
+	<div class="panel-footer ">
 		<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	</div>
 </div>

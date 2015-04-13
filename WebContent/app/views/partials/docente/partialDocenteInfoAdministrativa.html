@@ -1,11 +1,11 @@
-<div class="panel panel-danger" ng-show="logueado">
+<div class="panel panel-primary" ng-show="logueado">
 	<div class="panel-heading">
 		<h5 class="panel-title">Información Administrativa</h5>
 	</div>
-	<div class="panel-body bg-danger">
-		<!-- Legajo -->
+	<div class="panel-body ">
 		<div class="row">
-			<div class="col-sm-4">
+			<!-- Legajo -->
+			<div class="col-sm-5">
 				<div class="form-group form-group-sm">
 					<label for="nroLegajo">Legajo</label> <input type="text"
 						class="form-control" id="nroLegajo" name="nroLegajo"
@@ -13,10 +13,8 @@
 						placeholder="Legajo">
 				</div>
 			</div>
-		</div>
-		<!-- Fecha Alta y Antiguedad -->
-		<div class="row">
-			<div class="col-sm-4">
+			<!-- Fecha Alta -->
+			<div class="col-sm-5">
 				<div class="form-group form-group-sm form-inline">
 					<div class="form-group">
 						<label for="fechaAlta" class="control-label pull-left">Fecha
@@ -40,8 +38,11 @@
 						</p>
 					</div>
 				</div>
-				<!-- 			</div> -->
-				<!-- 			<div class="col-sm-3"> -->
+			</div>
+		</div>
+		<!-- Antiguedad -->
+		<div class="row">
+			<div class="col-sm-6">
 				<div class="form-group form-group-sm">
 					<label></label>
 					<div class="input-group input-group-sm">
@@ -55,7 +56,7 @@
 		</div>
 		<!-- Tipo de Personal y Tipo Situacion Revista -->
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-5">
 				<div class="form-group form-group-sm">
 					<label>Personal</label> <select class="form-control"
 						ng-change="activarSituacionRevista(tipoPersonalSel)"
@@ -65,7 +66,7 @@
 					</select>
 				</div>
 			</div>
-			<div class="col-sm-5">
+			<div class="col-sm-6">
 				<div class="form-group form-group-sm"
 					ng-show="situacionRevistaActivo">
 					<label>Situacion Revista</label> <select class="form-control"
@@ -79,7 +80,7 @@
 		</div>
 		<!-- Tipo de Situacion Actual, Motivo y Fecha de Motivo -->
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-5">
 				<div class="form-group form-group-sm">
 					<label>Situacion Actual</label> <select class="form-control"
 						ng-change="activarMotivo(tipoSituacionActualSel)"
@@ -90,7 +91,7 @@
 					</select>
 				</div>
 			</div>
-			<div class="col-sm-4">
+			<div class="col-sm-6">
 				<div class="form-group form-group-sm" ng-show="motivoActivo">
 					<label>Motivo</label> <select class="form-control"
 						ng-options="tipo.nombre for tipo in tiposMotivo" required
@@ -101,7 +102,7 @@
 			</div>
 			<div class="col-sm-4">
 				<div class="form-group form-group-sm form-inline"
-					ng-show="motivoActivo">
+					ng-if="motivoActivo">
 					<div class="form-group col-sm-12">
 						<label for="fechaMotivo" class="control-label pull-left">Fecha
 							baja</label>
@@ -140,14 +141,14 @@
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<div class="form-group form-group-sm" ng-show="nroExpedienteActivo">
+				<div class="form-group form-group-sm" ng-if="nroExpedienteActivo">
 					<label for="nroExpe">N° Expediente</label> <input type="text"
 						class="form-control" id="nroExpe" name="nroExpe"
 						ng-model="infoAdministrativa.nroExpe" placeholder="N° Expediente">
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<div class="form-group form-group-sm" ng-show="nroResolucionActivo">
+				<div class="form-group form-group-sm" ng-if="nroResolucionActivo">
 					<label for="nroResol">N° Resolucion</label> <input type="text"
 						class="form-control" id="nroResol" name="nroResol"
 						ng-model="infoAdministrativa.nroResol"
@@ -156,9 +157,9 @@
 			</div>
 		</div>
 		<!-- Documentacion Entregada -->
-		<div class="row col-sm-4">
+		<div class="row col-sm-8">
 			<!-- Panel -->
-			<div class="panel panel-default" ng-show="documentacionActivo">
+			<div class="panel panel-default" ng-if="documentacionActivo">
 				<!-- Panel Header -->
 				<div class="panel-heading">
 					<h4 class="panel-title">Documentacion Entregada</h4>
@@ -207,7 +208,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="panel-footer bg-danger">
+	<div class="panel-footer ">
 		<button type="submit" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	</div>
 </div>
