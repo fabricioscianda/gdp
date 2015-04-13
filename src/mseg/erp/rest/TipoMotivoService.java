@@ -92,7 +92,7 @@ public class TipoMotivoService {
 			}
 			voResponse.setOk(true);
 		} catch (Exception e) {
-			voResponse.setErrorMessage("No se pudo borrar el elemento.");
+			voResponse.setErrorMessage("No se pudo borrar el elemento." + e.getCause());
 			voResponse.setOk(false);
 			emfh.rollbackTransaction(em);
 		}
