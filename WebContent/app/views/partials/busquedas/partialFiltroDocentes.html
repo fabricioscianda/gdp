@@ -1,9 +1,15 @@
 <div ng-show="logueado">
 	<form>
-		<div class="row col-sm-8">
+		<div class="row col-sm-10">
 			<div class="form-group">
-				<button type="submit" class="form-control btn btn-success"
-					ng-click="filtrarTabDocente()">Filtrar</button>
+				<div class="col-sm-6">
+					<button type="submit" class="form-control btn btn-success"
+						ng-click="filtrarTabDocente()">Filtrar</button>
+				</div>
+				<div class="col-sm-6">
+					<button type="submit" class="form-control btn btn-danger"
+						ng-click="limpiarFormulario()">Limpiar</button>
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -115,7 +121,7 @@
 						<ul>
 							<li ng-repeat="tp in tiposPersonal"><label class="checkbox">
 									<input type="checkbox" ng-model="tp.checked" name="group"
-									ng-click="filtrarTabDocente()" /> {{tp.nombre}}
+									ng-change="filtrarTabDocente()" /> {{tp.nombre}}
 							</label></li>
 						</ul>
 					</div>
@@ -132,7 +138,7 @@
 							<li ng-repeat="tsr in tiposSituacionRevista"><label
 								class="checkbox"> <input type="checkbox"
 									ng-model="tsr.checked" name="group"
-									ng-click="filtrarTabDocente()" /> {{tsr.nombre}}
+									ng-change="filtrarTabDocente()" /> {{tsr.nombre}}
 							</label></li>
 						</ul>
 					</div>
@@ -149,7 +155,7 @@
 							<li ng-repeat="tsa in tiposSituacionActual"><label
 								class="checkbox"> <input type="checkbox"
 									ng-model="tsa.checked" name="group"
-									ng-click="filtrarTabDocente()" /> {{tsa.nombre}}
+									ng-change="filtrarTabDocente()" /> {{tsa.nombre}}
 							</label></li>
 						</ul>
 					</div>
@@ -164,7 +170,7 @@
 						<ul>
 							<li ng-repeat="tm in tiposMotivo"><label class="checkbox">
 									<input type="checkbox" ng-model="tm.checked" name="group"
-									ng-click="filtrarTabDocente()" /> {{tm.nombre}}
+									ng-change="filtrarTabDocente()" /> {{tm.nombre}}
 							</label></li>
 						</ul>
 					</div>
@@ -180,7 +186,7 @@
 						<ul>
 							<li ng-repeat="tf in tiposFormacion"><label class="checkbox">
 									<input type="checkbox" ng-model="tf.checked" name="group"
-									ng-click="filtrarTabDocente()" /> {{tf.nombre}}
+									ng-change="filtrarTabDocente()" /> {{tf.nombre}}
 							</label></li>
 						</ul>
 					</div>
@@ -197,7 +203,7 @@
 							<li ng-repeat="tec in tiposEstadoContractual"><label
 								class="checkbox"> <input type="checkbox"
 									ng-model="tec.checked" name="group"
-									ng-click="filtrarTabDocente()" /> {{tec.nombre}}
+									ng-change="filtrarTabDocente()" /> {{tec.nombre}}
 							</label></li>
 						</ul>
 					</div>
