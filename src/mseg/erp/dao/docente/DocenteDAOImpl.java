@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -18,6 +19,12 @@ import mseg.erp.dao.generic.GenericDAOImpl;
 import mseg.erp.dao.localidad.ILocalidadDAO;
 import mseg.erp.dao.partido.IPartidoDAO;
 import mseg.erp.dao.provincia.IProvinciaDAO;
+import mseg.erp.dao.tipoestadocontractual.ITipoEstadoContractualDAO;
+import mseg.erp.dao.tipoformacion.ITipoFormacionDAO;
+import mseg.erp.dao.tipomotivo.ITipoMotivoDAO;
+import mseg.erp.dao.tipopersonal.ITipoPersonalDAO;
+import mseg.erp.dao.tiposituacion.ITipoSituacionDAO;
+import mseg.erp.dao.tiposituacionrevista.ITipoSituacionRevistaDAO;
 import mseg.erp.exceptions.DAOException;
 import mseg.erp.model.Docente;
 import mseg.erp.model.Docente_;
@@ -30,6 +37,8 @@ import mseg.erp.model.Partido_;
 import mseg.erp.model.Persona;
 import mseg.erp.model.Persona_;
 import mseg.erp.model.Provincia;
+import mseg.erp.model.TipoPersonal;
+import mseg.erp.model.TipoSituacionRevista;
 import mseg.erp.utils.MapperUtils;
 import mseg.erp.vomodel.VOCheckbox;
 import mseg.erp.vomodel.VODocente;
@@ -37,6 +46,8 @@ import mseg.erp.vomodel.VODocenteMini;
 import mseg.erp.vomodel.VOLocalidad;
 import mseg.erp.vomodel.VOPartido;
 import mseg.erp.vomodel.VOProvincia;
+import mseg.erp.vomodel.VOTipoPersonal;
+import mseg.erp.vomodel.VOTipoSituacionRevista;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,12 +58,22 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 
 	@Inject
 	ILocalidadDAO localidadDAO;
-
 	@Inject
 	IPartidoDAO partidoDAO;
-
 	@Inject
 	IProvinciaDAO provinciaDAO;
+	@Inject
+	ITipoPersonalDAO tipoPersonalDAO;
+	@Inject
+	ITipoSituacionDAO tipoSituacionDAO;
+	@Inject
+	ITipoSituacionRevistaDAO tipoSituacionRevistaDAO;
+	@Inject
+	ITipoMotivoDAO tipoMotivoDAO;
+	@Inject
+	ITipoFormacionDAO tipoFormacionDAO;
+	@Inject
+	ITipoEstadoContractualDAO tipoEstadoContractualDAO;
 
 	public DocenteDAOImpl() {
 		super(Docente.class, VODocente.class);
@@ -172,7 +193,7 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 				}
 			}
 			cq.select(from);
-			predicados = crearPredicados(cb, joinPersona, joinInfoAdministrativa, joinLocalidad, joinPartido,
+			predicados = crearPredicados(em, cb, joinPersona, joinInfoAdministrativa, joinLocalidad, joinPartido,
 					joinProvincia, edad, legajo, fechaAlta, antiguedad, voProvincia, voPartido, voLocalidad,
 					tiposPersonal, tiposSituacionRevista, tiposSituacionActual, tiposMotivo, tiposFormacion,
 					tiposEstadoContractual);
@@ -215,7 +236,7 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 	 * @param tiposEstadoContractual
 	 * @return
 	 */
-	private List<Predicate> crearPredicados(CriteriaBuilder cb, Join<Docente, Persona> joinPersona,
+	private List<Predicate> crearPredicados(EntityManager em, CriteriaBuilder cb, Join<Docente, Persona> joinPersona,
 			Join<Persona, InfoAdministrativa> joinInfoAdministrativa, Join<Persona, Localidad> joinLocalidad,
 			Join<Localidad, Partido> joinPartido, Join<Partido, Provincia> joinProvincia, Integer edad, String legajo,
 			Long fechaAlta, Integer antiguedad, VOProvincia voProvincia, VOPartido voPartido, VOLocalidad voLocalidad,
@@ -235,8 +256,7 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 			if (edad != 0) {
 				List<Long> fechasEdad = calcularRangoFechasEdadAntiguedad(edad);
 				if (fechasEdad != null) {
-					predicados
-							.add(cb.between(joinPersona.get(Persona_.fechaNac), fechasEdad.get(0), fechasEdad.get(1)));
+					predicados.add(cb.between(joinPersona.get(Persona_.fechaNac), fechasEdad.get(0), fechasEdad.get(1)));
 				}
 			}
 			// where antiguedad
@@ -262,13 +282,47 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 					}
 				}
 			}
-			/*
-			 * falta filtrar por List<VOCheckbox> tiposPersonal,
-			 * List<VOCheckbox> tiposSituacionRevista, List<VOCheckbox>
-			 * tiposSituacionActual, List<VOCheckbox> tiposMotivo,
-			 * List<VOCheckbox> tiposFormacion, List<VOCheckbox>
-			 * tiposEstadoContractual
-			 */
+			VOCheckbox checkbox = null;
+			// where tiposPersonal
+			List<TipoPersonal> v_tiposPers = new ArrayList<TipoPersonal>();
+			for (Iterator<VOCheckbox> iterator = tiposPersonal.iterator(); iterator.hasNext();) {
+				checkbox = (VOCheckbox) iterator.next();
+				if (checkbox.getChecked()) {
+					try {
+						VOTipoPersonal votp = tipoPersonalDAO.encontrar(checkbox.getId(), em);
+						TipoPersonal tp = MapperUtils.map(votp, TipoPersonal.class);
+						v_tiposPers.add(tp);
+					} catch (DAOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			if (v_tiposPers.size() != 0) {
+				Expression<TipoPersonal> eTipoPersonal = joinInfoAdministrativa.get(InfoAdministrativa_.tipoPersonal);
+				predicados.add(eTipoPersonal.in(v_tiposPers));
+			}
+			// where tiposSituacionRevista
+			List<TipoSituacionRevista> v_situacionRevistas = new ArrayList<TipoSituacionRevista>();
+			for (Iterator<VOCheckbox> iterator = tiposSituacionRevista.iterator(); iterator.hasNext();) {
+				checkbox = (VOCheckbox) iterator.next();
+				if (checkbox.getChecked()) {
+					try {
+						VOTipoSituacionRevista vtsr = tipoSituacionRevistaDAO.encontrar(checkbox.getId(), em);
+						TipoSituacionRevista sr = MapperUtils.map(vtsr, TipoSituacionRevista.class);
+						v_situacionRevistas.add(sr);
+					} catch (DAOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			if (v_situacionRevistas.size() != 0) {
+				Expression<TipoSituacionRevista> eTipoSituacionRevista = joinInfoAdministrativa.get(InfoAdministrativa_.tipoSituacionRevista);
+				predicados.add(eTipoSituacionRevista.in(v_situacionRevistas));
+			}
+			// where tiposSituacionActual
+			// where tiposMotivo
+			// where tiposFormacion
+			// where tiposEstadoContractual
 		}
 
 		return predicados;
