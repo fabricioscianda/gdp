@@ -122,6 +122,28 @@ msegErpControllers.controller('BusquedaCtrl', [
 			$scope.formats = [ 'dd-MMMM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy', 'shortDate', 'yyyy' ];
 			$scope.format = $scope.formats[1];
 			
+			$scope.limpiarFormulario = function(){
+				$scope.edad = null;
+				$scope.legajo = null;
+				$scope.fechaAlta = null;
+				$scope.antiguedad = null;
+				$scope.tiposPersonal = $rootScope.getCheckList($scope.tiposPersonal);
+				$scope.tiposPersonalSel = {}; 
+				$scope.tiposMotivo = $rootScope.getCheckList($scope.tiposMotivo);
+				$scope.tiposMotivoSel = {};
+				$scope.tiposSituacionActual = $rootScope.getCheckList($scope.tiposSituacionActual);
+				$scope.tiposSituacionActualSel = {};
+				$scope.tiposSituacionRevista = $rootScope.getCheckList($scope.tiposSituacionRevista);
+				$scope.tiposSituacionRevistaSel = {};
+				$scope.tiposFormacion = $rootScope.getCheckList($scope.tiposFormacion);
+				$scope.tiposFormacionSel = {};
+				$scope.tiposEstadoContractual = $rootScope.getCheckList($scope.tiposEstadoContractual);
+				$scope.tiposEstadoContractualSel = {};
+				$scope.localSel = null;
+				$scope.partidoSel = null;
+				$scope.provinciaSel = null;
+			};
+			
 			$scope.listarTiposPersonal = function() {
 				var target = document.getElementById('spinTP');
 				var spinner = new Spinner(opts).spin(target);
