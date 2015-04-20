@@ -1,5 +1,6 @@
 package mseg.erp.dao.docente;
 
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -28,6 +29,8 @@ import mseg.erp.dao.tiposituacionrevista.ITipoSituacionRevistaDAO;
 import mseg.erp.exceptions.DAOException;
 import mseg.erp.model.Docente;
 import mseg.erp.model.Docente_;
+import mseg.erp.model.FormacionAcademica;
+import mseg.erp.model.FormacionAcademica_;
 import mseg.erp.model.InfoAdministrativa;
 import mseg.erp.model.InfoAdministrativa_;
 import mseg.erp.model.Localidad;
@@ -37,7 +40,11 @@ import mseg.erp.model.Partido_;
 import mseg.erp.model.Persona;
 import mseg.erp.model.Persona_;
 import mseg.erp.model.Provincia;
+import mseg.erp.model.TipoEstadoContractual;
+import mseg.erp.model.TipoFormacion;
+import mseg.erp.model.TipoMotivo;
 import mseg.erp.model.TipoPersonal;
+import mseg.erp.model.TipoSituacion;
 import mseg.erp.model.TipoSituacionRevista;
 import mseg.erp.utils.MapperUtils;
 import mseg.erp.vomodel.VOCheckbox;
@@ -46,7 +53,11 @@ import mseg.erp.vomodel.VODocenteMini;
 import mseg.erp.vomodel.VOLocalidad;
 import mseg.erp.vomodel.VOPartido;
 import mseg.erp.vomodel.VOProvincia;
+import mseg.erp.vomodel.VOTipoEstadoContractual;
+import mseg.erp.vomodel.VOTipoFormacion;
+import mseg.erp.vomodel.VOTipoMotivo;
 import mseg.erp.vomodel.VOTipoPersonal;
+import mseg.erp.vomodel.VOTipoSituacion;
 import mseg.erp.vomodel.VOTipoSituacionRevista;
 
 import org.slf4j.Logger;
@@ -160,6 +171,7 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 			Root<Docente> from = cq.from(Docente.class);
 			Join<Docente, Persona> joinPersona = null;
 			Join<Persona, InfoAdministrativa> joinInfoAdministrativa = null;
+			Join<Persona, FormacionAcademica> joinFormacionAcademica = null;
 			Join<Persona, Localidad> joinLocalidad = null;
 			Join<Localidad, Partido> joinPartido = null;
 			Join<Partido, Provincia> joinProvincia = null;
@@ -179,6 +191,7 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 					|| contieneElementosChequeados(tiposFormacion)
 					|| contieneElementosChequeados(tiposEstadoContractual)) {
 				joinInfoAdministrativa = joinPersona.join(Persona_.infoAdministrativa);
+				joinFormacionAcademica = joinPersona.join(Persona_.formacionAcademica);
 				if (provinciaID != 0) {
 					voProvincia = provinciaDAO.encontrar(provinciaID, em);
 					joinLocalidad = joinPersona.join(Persona_.localidad);
@@ -193,7 +206,7 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 				}
 			}
 			cq.select(from);
-			predicados = crearPredicados(em, cb, joinPersona, joinInfoAdministrativa, joinLocalidad, joinPartido,
+			predicados = crearPredicados(em, cb, joinPersona, joinInfoAdministrativa, joinFormacionAcademica, joinLocalidad, joinPartido,
 					joinProvincia, edad, legajo, fechaAlta, antiguedad, voProvincia, voPartido, voLocalidad,
 					tiposPersonal, tiposSituacionRevista, tiposSituacionActual, tiposMotivo, tiposFormacion,
 					tiposEstadoContractual);
@@ -237,7 +250,7 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 	 * @return
 	 */
 	private List<Predicate> crearPredicados(EntityManager em, CriteriaBuilder cb, Join<Docente, Persona> joinPersona,
-			Join<Persona, InfoAdministrativa> joinInfoAdministrativa, Join<Persona, Localidad> joinLocalidad,
+			Join<Persona, InfoAdministrativa> joinInfoAdministrativa, Join<Persona, FormacionAcademica> joinFormacionAcademica, Join<Persona, Localidad> joinLocalidad,
 			Join<Localidad, Partido> joinPartido, Join<Partido, Provincia> joinProvincia, Integer edad, String legajo,
 			Long fechaAlta, Integer antiguedad, VOProvincia voProvincia, VOPartido voPartido, VOLocalidad voLocalidad,
 			List<VOCheckbox> tiposPersonal, List<VOCheckbox> tiposSituacionRevista,
@@ -252,80 +265,262 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 		if (!legajo.isEmpty()) {
 			predicados.add(cb.equal(joinInfoAdministrativa.get(InfoAdministrativa_.nroLegajo), legajo));
 		} else {
-			// where edad
-			if (edad != 0) {
-				List<Long> fechasEdad = calcularRangoFechasEdadAntiguedad(edad);
-				if (fechasEdad != null) {
-					predicados.add(cb.between(joinPersona.get(Persona_.fechaNac), fechasEdad.get(0), fechasEdad.get(1)));
-				}
-			}
-			// where antiguedad
-			if (antiguedad != 0) {
-				List<Long> fechasAntiguedad = calcularRangoFechasEdadAntiguedad(antiguedad);
-				if (fechasAntiguedad != null) {
-					predicados.add(cb.between(joinInfoAdministrativa.get(InfoAdministrativa_.fechaAlta),
-							fechasAntiguedad.get(0), fechasAntiguedad.get(1)));
-				}
-			}
-			// where provincia
-			if (voProvincia != null) {
-				Provincia provincia = MapperUtils.map(voProvincia, Provincia.class);
-				predicados.add(cb.equal(joinPartido.get(Partido_.provincia), provincia));
-				// where partido
-				if (voPartido != null) {
-					Partido partido = MapperUtils.map(voPartido, Partido.class);
-					predicados.add(cb.equal(joinLocalidad.get(Localidad_.partido), partido));
-					// where localidad
-					if (voLocalidad != null) {
-						Localidad localidad = MapperUtils.map(voLocalidad, Localidad.class);
-						predicados.add(cb.equal(joinPersona.get(Persona_.localidad), localidad));
-					}
-				}
-			}
-			VOCheckbox checkbox = null;
-			// where tiposPersonal
-			List<TipoPersonal> v_tiposPers = new ArrayList<TipoPersonal>();
-			for (Iterator<VOCheckbox> iterator = tiposPersonal.iterator(); iterator.hasNext();) {
-				checkbox = (VOCheckbox) iterator.next();
-				if (checkbox.getChecked()) {
-					try {
-						VOTipoPersonal votp = tipoPersonalDAO.encontrar(checkbox.getId(), em);
-						TipoPersonal tp = MapperUtils.map(votp, TipoPersonal.class);
-						v_tiposPers.add(tp);
-					} catch (DAOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			if (v_tiposPers.size() != 0) {
-				Expression<TipoPersonal> eTipoPersonal = joinInfoAdministrativa.get(InfoAdministrativa_.tipoPersonal);
-				predicados.add(eTipoPersonal.in(v_tiposPers));
-			}
-			// where tiposSituacionRevista
-			List<TipoSituacionRevista> v_situacionRevistas = new ArrayList<TipoSituacionRevista>();
-			for (Iterator<VOCheckbox> iterator = tiposSituacionRevista.iterator(); iterator.hasNext();) {
-				checkbox = (VOCheckbox) iterator.next();
-				if (checkbox.getChecked()) {
-					try {
-						VOTipoSituacionRevista vtsr = tipoSituacionRevistaDAO.encontrar(checkbox.getId(), em);
-						TipoSituacionRevista sr = MapperUtils.map(vtsr, TipoSituacionRevista.class);
-						v_situacionRevistas.add(sr);
-					} catch (DAOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			if (v_situacionRevistas.size() != 0) {
-				Expression<TipoSituacionRevista> eTipoSituacionRevista = joinInfoAdministrativa.get(InfoAdministrativa_.tipoSituacionRevista);
-				predicados.add(eTipoSituacionRevista.in(v_situacionRevistas));
-			}
-			// where tiposSituacionActual
-			// where tiposMotivo
-			// where tiposFormacion
-			// where tiposEstadoContractual
+			predicadoEdad(cb, joinPersona, edad, predicados);
+			predicadoAntiguedad(cb, joinInfoAdministrativa, antiguedad, predicados);
+			predicadoLocalizacion(cb, joinPersona, joinLocalidad, joinPartido, voProvincia, voPartido, voLocalidad, predicados);
+			predicadoTipoPersonal(em, joinInfoAdministrativa, tiposPersonal, predicados);
+			predicadoTipoSituacionRevista(em, joinInfoAdministrativa, tiposSituacionRevista, predicados);
+			predicadoTipoSituacion(em, joinInfoAdministrativa, tiposSituacionActual, predicados);
+			predicadoTipoMotivo(em, joinInfoAdministrativa, tiposMotivo, predicados);
+			predicadoTipoEstadoContractual(em, joinInfoAdministrativa, tiposEstadoContractual, predicados);
+			predicadoTipoFormacion(em, joinFormacionAcademica, tiposFormacion, predicados);
 		}
 
 		return predicados;
+	}
+
+	/**
+	 * 
+	 * @param em
+	 * @param joinInfoAdministrativa
+	 * @param tiposEstadoContractual
+	 * @param predicados
+	 */
+	private void predicadoTipoEstadoContractual(EntityManager em,
+			Join<Persona, InfoAdministrativa> joinInfoAdministrativa, List<VOCheckbox> tiposEstadoContractual,
+			List<Predicate> predicados) {
+		VOCheckbox checkbox;
+		List<TipoEstadoContractual> v_estadoContr = new ArrayList<TipoEstadoContractual>();
+		for (Iterator<VOCheckbox> iterator = tiposEstadoContractual.iterator(); iterator.hasNext();) {
+			checkbox = (VOCheckbox) iterator.next();
+			if (checkbox.getChecked()) {
+				try {
+					VOTipoEstadoContractual vec = tipoEstadoContractualDAO.encontrar(checkbox.getId(), em);
+					TipoEstadoContractual mo = MapperUtils.map(vec, TipoEstadoContractual.class);
+					v_estadoContr.add(mo);
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (v_estadoContr.size() != 0) {
+			Expression<TipoEstadoContractual> eTipoEstadoContractual = joinInfoAdministrativa
+					.get(InfoAdministrativa_.tipoEstadoContractual);
+			predicados.add(eTipoEstadoContractual.in(v_estadoContr));
+		}
+	}
+
+	/**
+	 * 
+	 * @param em
+	 * @param joinInfoAdministrativa
+	 * @param tiposFormacion
+	 * @param predicados
+	 */
+	private void predicadoTipoFormacion(EntityManager em, Join<Persona, FormacionAcademica> joinFormacionAcademica,
+			List<VOCheckbox> tiposFormacion, List<Predicate> predicados) {
+		VOCheckbox checkbox;
+		List<TipoFormacion> v_formacion = new ArrayList<TipoFormacion>();
+		for (Iterator<VOCheckbox> iterator = tiposFormacion.iterator(); iterator.hasNext();) {
+			checkbox = (VOCheckbox) iterator.next();
+			if (checkbox.getChecked()) {
+				try {
+					VOTipoFormacion vf = tipoFormacionDAO.encontrar(checkbox.getId(), em);
+					TipoFormacion mo = MapperUtils.map(vf, TipoFormacion.class);
+					v_formacion.add(mo);
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (v_formacion.size() != 0) {
+			Expression<TipoFormacion> eTipoFormacion = joinFormacionAcademica.get(FormacionAcademica_.tipoFormacion);
+			predicados.add(eTipoFormacion.in(v_formacion));
+		}
+	}
+
+	/**
+	 * 
+	 * @param em
+	 * @param joinInfoAdministrativa
+	 * @param tiposMotivo
+	 * @param predicados
+	 */
+	private void predicadoTipoMotivo(EntityManager em, Join<Persona, InfoAdministrativa> joinInfoAdministrativa,
+			List<VOCheckbox> tiposMotivo, List<Predicate> predicados) {
+		VOCheckbox checkbox;
+		List<TipoMotivo> v_motivo = new ArrayList<TipoMotivo>();
+		for (Iterator<VOCheckbox> iterator = tiposMotivo.iterator(); iterator.hasNext();) {
+			checkbox = (VOCheckbox) iterator.next();
+			if (checkbox.getChecked()) {
+				try {
+					VOTipoMotivo vm = tipoMotivoDAO.encontrar(checkbox.getId(), em);
+					TipoMotivo mo = MapperUtils.map(vm, TipoMotivo.class);
+					v_motivo.add(mo);
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (v_motivo.size() != 0) {
+			Expression<TipoMotivo> eTipoMotivo = joinInfoAdministrativa.get(InfoAdministrativa_.tipoMotivo);
+			predicados.add(eTipoMotivo.in(v_motivo));
+		}
+	}
+
+	/**
+	 * 
+	 * @param em
+	 * @param joinInfoAdministrativa
+	 * @param tiposSituacionActual
+	 * @param predicados
+	 */
+	private void predicadoTipoSituacion(EntityManager em, Join<Persona, InfoAdministrativa> joinInfoAdministrativa,
+			List<VOCheckbox> tiposSituacionActual, List<Predicate> predicados) {
+		VOCheckbox checkbox;
+		List<TipoSituacion> v_situacion = new ArrayList<TipoSituacion>();
+		for (Iterator<VOCheckbox> iterator = tiposSituacionActual.iterator(); iterator.hasNext();) {
+			checkbox = (VOCheckbox) iterator.next();
+			if (checkbox.getChecked()) {
+				try {
+					VOTipoSituacion vts = tipoSituacionDAO.encontrar(checkbox.getId(), em);
+					TipoSituacion s = MapperUtils.map(vts, TipoSituacion.class);
+					v_situacion.add(s);
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (v_situacion.size() != 0) {
+			Expression<TipoSituacion> eTipoSituacion = joinInfoAdministrativa.get(InfoAdministrativa_.tipoSituacion);
+			predicados.add(eTipoSituacion.in(v_situacion));
+		}
+	}
+
+	/**
+	 * 
+	 * @param em
+	 * @param joinInfoAdministrativa
+	 * @param tiposSituacionRevista
+	 * @param predicados
+	 */
+	private void predicadoTipoSituacionRevista(EntityManager em,
+			Join<Persona, InfoAdministrativa> joinInfoAdministrativa, List<VOCheckbox> tiposSituacionRevista,
+			List<Predicate> predicados) {
+		VOCheckbox checkbox;
+		List<TipoSituacionRevista> v_situacionRevistas = new ArrayList<TipoSituacionRevista>();
+		for (Iterator<VOCheckbox> iterator = tiposSituacionRevista.iterator(); iterator.hasNext();) {
+			checkbox = (VOCheckbox) iterator.next();
+			if (checkbox.getChecked()) {
+				try {
+					VOTipoSituacionRevista vtsr = tipoSituacionRevistaDAO.encontrar(checkbox.getId(), em);
+					TipoSituacionRevista sr = MapperUtils.map(vtsr, TipoSituacionRevista.class);
+					v_situacionRevistas.add(sr);
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (v_situacionRevistas.size() != 0) {
+			Expression<TipoSituacionRevista> eTipoSituacionRevista = joinInfoAdministrativa
+					.get(InfoAdministrativa_.tipoSituacionRevista);
+			predicados.add(eTipoSituacionRevista.in(v_situacionRevistas));
+		}
+	}
+
+	/**
+	 * 
+	 * @param em
+	 * @param joinInfoAdministrativa
+	 * @param tiposPersonal
+	 * @param predicados
+	 */
+	private void predicadoTipoPersonal(EntityManager em, Join<Persona, InfoAdministrativa> joinInfoAdministrativa,
+			List<VOCheckbox> tiposPersonal, List<Predicate> predicados) {
+		VOCheckbox checkbox = null;
+		List<TipoPersonal> v_tiposPers = new ArrayList<TipoPersonal>();
+		for (Iterator<VOCheckbox> iterator = tiposPersonal.iterator(); iterator.hasNext();) {
+			checkbox = (VOCheckbox) iterator.next();
+			if (checkbox.getChecked()) {
+				try {
+					VOTipoPersonal votp = tipoPersonalDAO.encontrar(checkbox.getId(), em);
+					TipoPersonal tp = MapperUtils.map(votp, TipoPersonal.class);
+					v_tiposPers.add(tp);
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (v_tiposPers.size() != 0) {
+			Expression<TipoPersonal> eTipoPersonal = joinInfoAdministrativa.get(InfoAdministrativa_.tipoPersonal);
+			predicados.add(eTipoPersonal.in(v_tiposPers));
+		}
+	}
+
+	/**
+	 * 
+	 * @param cb
+	 * @param joinPersona
+	 * @param joinLocalidad
+	 * @param joinPartido
+	 * @param voProvincia
+	 * @param voPartido
+	 * @param voLocalidad
+	 * @param predicados
+	 */
+	private void predicadoLocalizacion(CriteriaBuilder cb, Join<Docente, Persona> joinPersona,
+			Join<Persona, Localidad> joinLocalidad, Join<Localidad, Partido> joinPartido, VOProvincia voProvincia,
+			VOPartido voPartido, VOLocalidad voLocalidad, List<Predicate> predicados) {
+		// where provincia
+		if (voProvincia != null) {
+			Provincia provincia = MapperUtils.map(voProvincia, Provincia.class);
+			predicados.add(cb.equal(joinPartido.get(Partido_.provincia), provincia));
+			// where partido
+			if (voPartido != null) {
+				Partido partido = MapperUtils.map(voPartido, Partido.class);
+				predicados.add(cb.equal(joinLocalidad.get(Localidad_.partido), partido));
+				// where localidad
+				if (voLocalidad != null) {
+					Localidad localidad = MapperUtils.map(voLocalidad, Localidad.class);
+					predicados.add(cb.equal(joinPersona.get(Persona_.localidad), localidad));
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param cb
+	 * @param joinInfoAdministrativa
+	 * @param antiguedad
+	 * @param predicados
+	 */
+	private void predicadoAntiguedad(CriteriaBuilder cb, Join<Persona, InfoAdministrativa> joinInfoAdministrativa,
+			Integer antiguedad, List<Predicate> predicados) {
+		if (antiguedad != 0) {
+			List<Long> fechasAntiguedad = calcularRangoFechasEdadAntiguedad(antiguedad);
+			if (fechasAntiguedad != null) {
+				predicados.add(cb.between(joinInfoAdministrativa.get(InfoAdministrativa_.fechaAlta),
+						fechasAntiguedad.get(0), fechasAntiguedad.get(1)));
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param cb
+	 * @param joinPersona
+	 * @param edad
+	 * @param predicados
+	 */
+	private void predicadoEdad(CriteriaBuilder cb, Join<Docente, Persona> joinPersona, Integer edad,
+			List<Predicate> predicados) {
+		if (edad != 0) {
+			List<Long> fechasEdad = calcularRangoFechasEdadAntiguedad(edad);
+			if (fechasEdad != null) {
+				predicados.add(cb.between(joinPersona.get(Persona_.fechaNac), fechasEdad.get(0), fechasEdad.get(1)));
+			}
+		}
 	}
 
 	/**
