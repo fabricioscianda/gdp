@@ -1,6 +1,5 @@
 package mseg.erp.dao.docente;
 
-import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -116,8 +115,7 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 				InfoAdministrativa infoAdministrativa = docente.getPersona().getInfoAdministrativa();
 				if (infoAdministrativa != null) {
 					if (infoAdministrativa.getTipoEstadoContractual() != null) {
-						docenteMini.setEstadoContractual(docente.getPersona().getInfoAdministrativa()
-								.getTipoEstadoContractual().getNombre());
+						docenteMini.setEstadoContractual(docente.getPersona().getInfoAdministrativa().getTipoEstadoContractual().getNombre());
 					}
 					if (infoAdministrativa.getFechaAlta() != null) {
 						docenteMini.setFechaAlta(docente.getPersona().getInfoAdministrativa().getFechaAlta());
@@ -129,16 +127,13 @@ public class DocenteDAOImpl extends GenericDAOImpl<VODocente, Docente> implement
 						docenteMini.setNroLegajo(docente.getPersona().getInfoAdministrativa().getNroLegajo());
 					}
 					if (infoAdministrativa.getTipoPersonal() != null) {
-						docenteMini.setPersonal(docente.getPersona().getInfoAdministrativa().getTipoPersonal()
-								.getNombre());
+						docenteMini.setPersonal(docente.getPersona().getInfoAdministrativa().getTipoPersonal().getNombre());
 					}
 					if (infoAdministrativa.getTipoSituacion() != null) {
-						docenteMini.setSituacion(docente.getPersona().getInfoAdministrativa().getTipoSituacion()
-								.getNombre());
+						docenteMini.setSituacion(docente.getPersona().getInfoAdministrativa().getTipoSituacion().getNombre());
 					}
 					if (infoAdministrativa.getTipoSituacionRevista() != null) {
-						docenteMini.setSituacionRevista(docente.getPersona().getInfoAdministrativa()
-								.getTipoSituacionRevista().getNombre());
+						docenteMini.setSituacionRevista(docente.getPersona().getInfoAdministrativa().getTipoSituacionRevista().getNombre());
 					}
 				}
 				voDocentesMini.add(docenteMini);
